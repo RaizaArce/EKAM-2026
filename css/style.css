@@ -303,6 +303,7 @@ h1, h2, h3, h4, h5, h6 {
 .header__logo-icon {
     width: 36px;
     height: 36px;
+    object-fit: contain;
 }
 
 .header__logo-text {
@@ -423,6 +424,16 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 100px;
     margin-bottom: var(--space-xl);
     letter-spacing: 0.04em;
+}
+
+.hero__logo-wrap {
+    margin-bottom: var(--space-lg);
+}
+
+.hero__navasoft-logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
 }
 
 .hero__title {
@@ -1179,6 +1190,13 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--color-primary-dark);
 }
 
+.about__visual-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: var(--space-md);
+}
+
 .about__visual-desc {
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
@@ -1352,6 +1370,7 @@ h1, h2, h3, h4, h5, h6 {
 .footer__logo-icon {
     width: 36px;
     height: 36px;
+    object-fit: contain;
 }
 
 .footer__logo-text {
@@ -1652,6 +1671,10 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 480px) {
     .hero__title {
         font-size: clamp(1.75rem, 1.5rem + 1.5vw, 2.25rem);
+    }
+
+    .hero__navasoft-logo {
+        height: 36px;
     }
 
     .hero__actions {
