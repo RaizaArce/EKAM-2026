@@ -128,7 +128,7 @@
 
     if (!prefersReducedMotion) {
         const animateElements = document.querySelectorAll(
-            '.challenge-card, .pillar-card, .module-card, .sector-card, .client-logo, .trust-strip__item, .about__feature, .about__visual-card'
+            '.challenge-card, .pillar-card, .module-card, .sector-card, .trust-strip__item, .about__feature, .about__visual-card'
         );
 
         animateElements.forEach(function (el) {
@@ -136,7 +136,7 @@
         });
 
         // Add stagger to grids
-        document.querySelectorAll('.challenges__grid, .pillars__grid, .modules__grid, .sectors__grid, .clients__grid, .trust-strip__grid').forEach(function (grid) {
+        document.querySelectorAll('.challenges__grid, .pillars__grid, .modules__grid, .sectors__grid, .trust-strip__grid').forEach(function (grid) {
             grid.classList.add('animate-stagger');
         });
 
