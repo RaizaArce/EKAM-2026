@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soluciones por sector | EKAM Perú y NAVASOFT</title>
+    <meta name="description" content="Conoce cómo EKAM Perú implementa NAVASOFT según los procesos y necesidades de distintos sectores empresariales.">
+    <meta name="author" content="EKAM Perú">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/png" href="assets/icons/Logo-EKAM.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=20260909-1">
+    <link rel="stylesheet" href="css/sectores.css?v=20260909-7">
+</head>
+<body class="sectors-page">
+    <header class="header header--scrolled" id="header">
+        <div class="container header__inner">
+            <a href="index.html#inicio" class="header__logo" aria-label="EKAM Perú - Ir al inicio">
+                <span class="header__logo-text">EKAM</span>
+                <span class="header__logo-divider" aria-hidden="true"></span>
+                <span class="header__logo-img-wrap">
+                    <img src="assets/icons/Logo-Navasoft.png" alt="NAVASOFT" class="header__logo-img" width="200" height="200">
+                </span>
+            </a>
+
+            <nav class="header__nav" id="mainNav" aria-label="Navegación principal">
+                <ul class="header__menu">
+                    <li><a href="index.html#inicio" class="header__link">Inicio</a></li>
+                    <li><a href="soluciones.html" class="header__link">Soluciones</a></li>
+                    <li><a href="index.html#navasoft" class="header__link">NAVASOFT</a></li>
+                    <li><a href="sectores.html" class="header__link header__link--active" aria-current="page">Sectores</a></li>
+                    <li><a href="index.html#clientes" class="header__link">Clientes</a></li>
+                    <li><a href="index.html#empresa" class="header__link">Nosotros</a></li>
+                    <li><a href="index.html#contacto" class="header__link">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <a href="index.html#contacto" class="btn btn--primary header__cta">Solicitar demostración</a>
+
+            <button class="header__toggle" id="menuToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
+                <span class="header__toggle-bar"></span>
+                <span class="header__toggle-bar"></span>
+                <span class="header__toggle-bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+
+    <main class="sector-explorer">
+        <section class="sector-intro" aria-labelledby="sectorPageTitle">
+            <div class="container">
+                <div class="sector-editorial">
+                <aside class="sector-editorial__aside">
+                <div class="sector-intro__heading">
+                    <span class="sector-intro__eyebrow">Inicio &nbsp;›&nbsp; Sectores</span>
+                            <h1 id="sectorPageTitle">Conoce NAVASOFT en tu sector</h1>
+                            <p>Selecciona tu rubro y revisa una referencia de las necesidades y módulos que podemos evaluar contigo.</p>
+                </div>
+
+                <div class="sector-tabs-wrap">
+                    <button class="sector-tabs__arrow sector-tabs__arrow--prev" id="sectorPrev" type="button" aria-label="Ver sectores anteriores">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                    </button>
+                    <div class="sector-tabs" id="sectorTabs" role="tablist" aria-label="Seleccionar sector">
+                        <button class="sector-tab" type="button" role="tab" data-sector="agroexportacion" aria-selected="true">Agroexportación</button>
+                        <button class="sector-tab" type="button" role="tab" data-sector="industria" aria-selected="false">Industria</button>
+                        <button class="sector-tab" type="button" role="tab" data-sector="comercio" aria-selected="false">Comercio</button>
+                        <button class="sector-tab" type="button" role="tab" data-sector="transporte" aria-selected="false">Transporte</button>
+                        <button class="sector-tab" type="button" role="tab" data-sector="salud" aria-selected="false">Salud</button>
+                        <button class="sector-tab" type="button" role="tab" data-sector="educacion" aria-selected="false">Educación</button>
+                        <button class="sector-tab" type="button" role="tab" data-sector="hoteles-restaurantes" aria-selected="false">Hoteles y restaurantes</button>
+                        <button class="sector-tab" type="button" role="tab" data-sector="servicios" aria-selected="false">Servicios</button>
+                        <button class="sector-tab" type="button" role="tab" data-sector="otros" aria-selected="false">Otros sectores</button>
+                    </div>
+                    <button class="sector-tabs__arrow sector-tabs__arrow--next" id="sectorNext" type="button" aria-label="Ver más sectores">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                    </button>
+                </div>
+
+                </aside>
+                <article class="sector-detail sector-feature" id="sectorDetail" role="tabpanel" aria-live="polite">
+                    <img class="sector-feature__visual" id="sectorVisual" src="assets/screenshots/navasoft-general.jpeg" alt="Pantalla de NAVASOFT para agroexportación">
+                    <div class="sector-detail__content">
+                        <span class="sector-detail__brand">EKAM Perú</span>
+                        <h2 id="sectorTitle">Agroexportación</h2>
+                        <p class="sector-detail__kicker" id="sectorKicker">Gestión integrada para operaciones agroexportadoras</p>
+                        <p class="sector-detail__description" id="sectorDescription">EKAM Perú implementa NAVASOFT para conectar el control de insumos, compras, producción, costos y la información administrativa de tu operación.</p>
+                        <div class="sector-feature__chips" id="sectorChips" aria-label="Áreas clave"></div>
+                        <a class="sector-feature__cta" id="sectorWhatsapp" href="#" target="_blank" rel="noopener noreferrer">Conocer la solución para mi sector</a>
+
+                        <div class="sector-detail__cards">
+                            <section class="info-card" aria-labelledby="needsTitle">
+                                <div class="info-card__heading">
+                                    <span class="info-card__icon info-card__icon--blue" aria-hidden="true">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11H3v10h6V11Z"></path><path d="M21 3h-6v18h6V3Z"></path><path d="M15 7H9v14h6V7Z"></path></svg>
+                                    </span>
+                                    <h3 id="needsTitle">Necesidades frecuentes</h3>
+                                </div>
+                                <ul class="info-card__list" id="sectorNeeds"></ul>
+                            </section>
+
+                            <section class="info-card" aria-labelledby="modulesTitle">
+                                <div class="info-card__heading">
+                                    <span class="info-card__icon info-card__icon--green" aria-hidden="true">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 2 9 5-9 5-9-5 9-5Z"></path><path d="m3 12 9 5 9-5"></path><path d="m3 17 9 5 9-5"></path></svg>
+                                    </span>
+                                    <h3 id="modulesTitle">Módulos recomendados</h3>
+                                </div>
+                                <ul class="info-card__list" id="sectorModules"></ul>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="sector-dashboard" aria-label="Representación visual de NAVASOFT ERP">
+                        <div class="sector-dashboard__topbar">
+                            <span class="sector-dashboard__name">NAVASOFT ERP</span>
+                            <div class="sector-dashboard__user"><span>Usuario</span><span class="sector-dashboard__avatar" aria-hidden="true"></span></div>
+                        </div>
+                        <div class="sector-dashboard__body">
+                            <aside class="sector-dashboard__sidebar" aria-label="Módulos NAVASOFT">
+                                <span class="sector-dashboard__logo">N</span>
+                                <span class="sector-dashboard__nav sector-dashboard__nav--active"></span>
+                                <span class="sector-dashboard__nav"></span>
+                                <span class="sector-dashboard__nav"></span>
+                                <span class="sector-dashboard__nav"></span>
+                            </aside>
+                            <div class="sector-dashboard__workspace">
+                                <p class="sector-dashboard__welcome">Resumen de operación</p>
+                                <h3 id="dashboardTitle">Hoteles y restaurantes</h3>
+                                <div class="sector-dashboard__metrics">
+                                    <div class="sector-dashboard__metric">
+                                        <span id="metricOneLabel">Ventas y facturación</span>
+                                        <strong id="metricOneValue">Control integrado</strong>
+                                        <span class="sector-dashboard__trend">Información centralizada</span>
+                                    </div>
+                                    <div class="sector-dashboard__metric">
+                                        <span id="metricTwoLabel">Inventario</span>
+                                        <strong id="metricTwoValue">Seguimiento diario</strong>
+                                        <span class="sector-dashboard__trend">Procesos conectados</span>
+                                    </div>
+                                </div>
+                                <div class="sector-dashboard__chart">
+                                    <div class="sector-dashboard__chart-heading"><span>Resumen gerencial</span><span>Semana</span></div>
+                                    <div class="sector-dashboard__bars" aria-hidden="true">
+                                        <span style="height: 36%"></span><span style="height: 52%"></span><span style="height: 45%"></span><span style="height: 68%"></span><span style="height: 60%"></span><span style="height: 82%"></span><span style="height: 74%"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                </div>
+
+                <section class="sector-process sector-process--editorial" aria-labelledby="processTitle">
+                    <div class="sector-process__intro">
+                        <span>Así trabaja EKAM Perú</span>
+                        <h2 id="processTitle">Te acompañamos en todo el proceso</h2>
+                    </div>
+                    <ol class="sector-process__steps">
+                        <li><span>01</span><strong>Análisis</strong><small>Entendemos tus procesos</small></li>
+                        <li><span>02</span><strong>Implementación</strong><small>Configuramos NAVASOFT</small></li>
+                        <li><span>03</span><strong>Capacitación</strong><small>Preparamos a tu equipo</small></li>
+                        <li><span>04</span><strong>Soporte</strong><small>Acompañamos la operación</small></li>
+                    </ol>
+                </section>
+
+                <p class="sector-note">Los módulos mostrados son referenciales. La configuración final se define después de analizar los procesos y necesidades de cada empresa.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid sectors-footer__grid">
+                <div class="footer__brand">
+                    <a href="index.html#inicio" class="footer__logo" aria-label="EKAM Perú - Inicio">
+                        <span class="footer__logo-icon-wrap">
+                            <img src="assets/icons/Logo-EKAM.png" alt="Logo EKAM Perú" class="footer__logo-icon" width="249" height="203">
+                        </span>
+                        <span class="footer__logo-text">EKAM PERÚ</span>
+                    </a>
+                    <p class="footer__desc">EKAM Perú impulsa la transformación digital mediante la implementación y el acompañamiento del ERP NAVASOFT.</p>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Navegación</h3>
+                    <ul class="footer__list">
+                        <li><a href="soluciones.html">Soluciones</a></li>
+                        <li><a href="index.html#navasoft">NAVASOFT</a></li>
+                        <li><a href="index.html#clientes">Clientes</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Empresa</h3>
+                    <ul class="footer__list">
+                        <li><a href="index.html#empresa">Nosotros</a></li>
+                        <li><a href="index.html#contacto">Contacto</a></li>
+                        <li><a href="index.html#contacto">Solicitar demostración</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Ubicación</h3>
+                    <p class="footer__location">Chiclayo, Lambayeque<br>Perú</p>
+                </div>
+            </div>
+            <div class="footer__bottom"><p>&copy; 2026 EKAM PERÚ S.A.C. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+
+    <a class="sector-whatsapp" id="floatingWhatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="Consultar este sector por WhatsApp">
+        <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884M20.463 3.488A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"></path></svg>
+    </a>
+
+    <div class="chatbot" id="ekamChatbot"><button type="button" class="chatbot__launcher" id="chatbotLauncher" aria-expanded="false" aria-controls="ekamChatbotPanel" aria-label="Abrir asistente virtual de EKAM Perú"><img src="assets/images/asistente-ekam-avatar.webp" alt="Robot asistente virtual de EKAM Perú" class="chatbot__launcher-img" width="240" height="240"></button><p class="chatbot__launcher-label" id="chatbotLauncherLabel" aria-hidden="true">¿Necesitas ayuda?</p><section class="chatbot__panel" id="ekamChatbotPanel" role="dialog" aria-label="Asistente virtual de EKAM Perú" aria-hidden="true" tabindex="-1"><header class="chatbot__header"><img src="assets/images/asistente-ekam-avatar.webp" alt="" class="chatbot__header-avatar" width="240" height="240"><div class="chatbot__header-info"><h2 class="chatbot__header-title">Asistente EKAM Perú</h2><span class="chatbot__header-status"><span class="chatbot__status-dot" aria-hidden="true"></span>Respuestas rápidas</span></div><button type="button" class="chatbot__close" id="chatbotClose" aria-label="Cerrar asistente virtual de EKAM Perú">&times;</button></header><div class="chatbot__body"><div class="chatbot__messages" id="chatbotMessages" aria-live="polite"></div><div class="chatbot__replies" id="chatbotReplies" aria-live="polite"></div></div></section></div>
+
+    <script src="js/sectores.js?v=20260909-2"></script>
+    <script src="js/chatbot.js?v=20260909-1"></script>
+</body>
+</html>

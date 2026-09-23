@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKAM Perú - Implementación ERP NAVASOFT | Transformación Digital Empresarial</title>
+    <meta name="description" content="EKAM Perú implementa NAVASOFT ERP para centralizar ventas, inventarios, compras, contabilidad y facturación electrónica con diagnóstico, capacitación y soporte especializado.">
+    <meta name="keywords" content="ERP, NAVASOFT, software empresarial, Perú, facturación electrónica, contabilidad, ventas, inventarios">
+    <meta name="author" content="EKAM Perú">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.ekamperu.com/">
+    <meta name="theme-color" content="#0877C9">
+
+    <meta property="og:title" content="EKAM Perú - Implementación ERP NAVASOFT | Transformación Digital">
+    <meta property="og:description" content="EKAM Perú implementa NAVASOFT para centralizar ventas, inventarios, compras, contabilidad y facturación electrónica.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ekamperu.com/">
+    <meta property="og:image" content="https://www.ekamperu.com/assets/screenshots/navasoft-general.jpeg">
+    <meta property="og:locale" content="es_PE">
+    <meta property="og:site_name" content="EKAM Perú">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="EKAM Perú - Implementación ERP NAVASOFT | Transformación Digital">
+    <meta name="twitter:description" content="EKAM Perú implementa NAVASOFT para centralizar ventas, inventarios, compras, contabilidad y facturación electrónica.">
+    <meta name="twitter:image" content="https://www.ekamperu.com/assets/screenshots/navasoft-general.jpeg">
+
+    <link rel="icon" type="image/png" href="assets/icons/Logo-EKAM.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=20260923-1">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="container header__inner">
+            <a href="#inicio" class="header__logo" aria-label="EKAM - Inicio">
+                <span class="header__logo-text">EKAM</span>
+                <span class="header__logo-divider" aria-hidden="true"></span>
+                <span class="header__logo-img-wrap">
+                    <img src="assets/icons/Logo-Navasoft.png" alt="NAVASOFT" class="header__logo-img" loading="eager">
+                </span>
+            </a>
+
+            <nav class="header__nav" id="mainNav" aria-label="Navegación principal">
+                <ul class="header__menu">
+                    <li><a href="#inicio" class="header__link header__link--active">Inicio</a></li>
+                    <li><a href="soluciones.html" class="header__link">Soluciones</a></li>
+                    <li><a href="#navasoft" class="header__link">NAVASOFT</a></li>
+                    <li><a href="sectores.html" class="header__link">Sectores</a></li>
+                    <li><a href="#clientes" class="header__link">Clientes</a></li>
+                    <li><a href="#empresa" class="header__link">Nosotros</a></li>
+                    <li><a href="#contacto" class="header__link">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <a href="#contacto" class="btn btn--primary header__cta">Solicitar demostración</a>
+
+            <button class="header__toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav">
+                <span class="header__toggle-bar"></span>
+                <span class="header__toggle-bar"></span>
+                <span class="header__toggle-bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE OVERLAY -->
+    <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero" id="inicio">
+            <div class="container hero__inner">
+                <div class="hero__content">
+                    <span class="hero__badge">Implementación ERP en Perú</span>
+                    <h1 class="hero__title">NAVASOFT ERP implementado para ordenar y controlar tu empresa</h1>
+                    <p class="hero__subtitle">EKAM Perú analiza tus procesos, configura NAVASOFT por áreas y acompaña a tu equipo para centralizar ventas, inventarios, compras, contabilidad y facturación electrónica.</p>
+                    <div class="hero__actions">
+                        <a href="#contacto" class="btn btn--primary btn--lg">Solicitar demostración</a>
+                        <a href="soluciones.html" class="btn btn--outline btn--lg">Conocer nuestras soluciones</a>
+                    </div>
+                    <div class="hero__proof" aria-label="Resumen comercial de EKAM Perú">
+                        <span><strong>Trayectoria</strong> empresarial</span>
+                        <span><strong>Clientes</strong> de distintos sectores</span>
+                        <span><strong>SUNAT</strong> facturación electrónica</span>
+                    </div>
+                </div>
+                <div class="hero__visual">
+                    <div class="hero__mockup">
+                        <div class="hero__mockup-screen">
+                            <div class="hero__mockup-topbar">
+                                <span class="hero__mockup-dot"></span>
+                                <span class="hero__mockup-dot"></span>
+                                <span class="hero__mockup-dot"></span>
+                                <span class="hero__mockup-title">NAVASOFT ERP</span>
+                            </div>
+                            <div class="hero__mockup-body">
+                                <div class="hero__mockup-sidebar">
+                                    <div class="hero__mockup-sidebar-item hero__mockup-sidebar-item--active"></div>
+                                    <div class="hero__mockup-sidebar-item"></div>
+                                    <div class="hero__mockup-sidebar-item"></div>
+                                    <div class="hero__mockup-sidebar-item"></div>
+                                    <div class="hero__mockup-sidebar-item"></div>
+                                </div>
+                                <div class="hero__mockup-content">
+                                    <div class="hero__mockup-card-row">
+                                        <div class="hero__mockup-card">
+                                            <span>Ventas</span>
+                                            <strong>S/ 128k</strong>
+                                            <small>Mes actual</small>
+                                        </div>
+                                        <div class="hero__mockup-card">
+                                            <span>Stock</span>
+                                            <strong>94%</strong>
+                                            <small>Disponibilidad</small>
+                                        </div>
+                                        <div class="hero__mockup-card">
+                                            <span>Facturación</span>
+                                            <strong>SUNAT</strong>
+                                            <small>Integrado</small>
+                                        </div>
+                                    </div>
+                                    <div class="hero__mockup-chart">
+                                        <div class="hero__chart-head">
+                                            <span>Resumen operativo</span>
+                                            <strong>En línea</strong>
+                                        </div>
+                                        <div class="hero__chart-bars" aria-hidden="true">
+                                            <span style="height: 42%"></span>
+                                            <span style="height: 68%"></span>
+                                            <span style="height: 52%"></span>
+                                            <span style="height: 82%"></span>
+                                            <span style="height: 64%"></span>
+                                            <span style="height: 74%"></span>
+                                        </div>
+                                        <div class="hero__mockup-table" aria-hidden="true">
+                                            <span>Pedido</span><strong>Aprobado</strong>
+                                            <span>Inventario</span><strong>Actualizado</strong>
+                                            <span>Factura</span><strong>Emitida</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero__floating hero__floating--1" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            <span>Ventas en tiempo real</span>
+                        </div>
+                        <div class="hero__floating hero__floating--2" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-light)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                            <span>Inventarios</span>
+                        </div>
+                        <div class="hero__floating hero__floating--3" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span>Facturación</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero__bg-shape" aria-hidden="true"></div>
+        </section>
+
+        <!-- TRUST STRIP -->
+        <section class="trust-strip" aria-label="Características principales">
+            <div class="container">
+                <div class="trust-strip__grid">
+                    <div class="trust-strip__item">
+                        <div class="trust-strip__icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        </div>
+                        <div>
+                            <strong>ERP implementado por EKAM</strong>
+                            <span>Soluciones adaptadas a tu empresa</span>
+                        </div>
+                    </div>
+                    <div class="trust-strip__item">
+                        <div class="trust-strip__icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        </div>
+                        <div>
+                            <strong>Implementación modular</strong>
+                            <span>Configurada según tus procesos</span>
+                        </div>
+                    </div>
+                    <div class="trust-strip__item">
+                        <div class="trust-strip__icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <div>
+                            <strong>Capacitación y soporte</strong>
+                            <span>Acompañamiento continuo</span>
+                        </div>
+                    </div>
+                    <div class="trust-strip__item">
+                        <div class="trust-strip__icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </div>
+                        <div>
+                            <strong>Experiencia empresarial</strong>
+                            <span>Conocimiento del sector</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMERCIAL SUMMARY -->
+        <section class="commercial-summary" aria-labelledby="commercialTitle">
+            <div class="container">
+                <div class="commercial-summary__panel">
+                    <div class="commercial-summary__content">
+                        <span class="section__label">Decisión gerencial</span>
+                        <h2 class="commercial-summary__title" id="commercialTitle">Implementar un ERP es ordenar la operación, no solo instalar software</h2>
+                        <p>EKAM Perú acompaña la adopción de NAVASOFT con diagnóstico, alcance por módulos, capacitación y soporte. Así cada área trabaja con procesos claros y gerencia recibe información confiable para decidir.</p>
+                    </div>
+                    <div class="commercial-summary__cards" aria-label="Valor comercial">
+                        <article class="commercial-summary__card">
+                            <span class="commercial-summary__number">01</span>
+                            <strong>Diagnóstico inicial</strong>
+                            <span>Necesidades, áreas críticas y prioridades antes de definir módulos.</span>
+                        </article>
+                        <article class="commercial-summary__card">
+                            <span class="commercial-summary__number">02</span>
+                            <strong>Alcance por etapas</strong>
+                            <span>Implementación ordenada para reducir fricción y facilitar adopción.</span>
+                        </article>
+                        <article class="commercial-summary__card">
+                            <span class="commercial-summary__number">03</span>
+                            <strong>Acompañamiento real</strong>
+                            <span>Capacitación y soporte para sostener el uso diario del ERP.</span>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROBLEMS + SOLUTIONS (integrado) -->
+        <section class="section section--alt" id="beneficios">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__label">Transformación digital</span>
+                    <h2 class="section__title">Integra tus procesos en una sola gestión</h2>
+                    <p class="section__subtitle">Te ayudamos a integrar procesos, centralizar información y mejorar el control de tu operación mediante una implementación adaptada a las necesidades de tu organización.</p>
+                </div>
+                <div class="challenges__grid challenges-grid--four">
+                    <div class="challenge-card challenge-card--sol">
+                        <div class="challenge-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><ellipse cx="12" cy="5" rx="7" ry="3"></ellipse><path d="M19 5v7"></path><path d="M12 8C8.13 8 5 6.66 5 5"></path><path d="M5 5v7c0 1.66 3.13 3 7 3s7-1.34 7-3"></path></svg>
+                        </div>
+                        <h3 class="challenge-card__title">Integración de procesos</h3>
+                        <span class="challenge-card__sol">Información centralizada</span>
+                        <p class="challenge-card__text">Reunimos ventas, inventarios, contabilidad y administración en un solo sistema.</p>
+                    </div>
+                    <div class="challenge-card challenge-card--sol">
+                        <div class="challenge-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="15"></line></svg>
+                        </div>
+                        <h3 class="challenge-card__title">Mayor control operativo</h3>
+                        <span class="challenge-card__sol">Información en tiempo real</span>
+                        <p class="challenge-card__text">Consulta el estado de tus operaciones y accede a datos actualizados cuando los necesites.</p>
+                    </div>
+                    <div class="challenge-card challenge-card--sol">
+                        <div class="challenge-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </div>
+                        <h3 class="challenge-card__title">Menos tareas manuales</h3>
+                        <span class="challenge-card__sol">Procesos más eficientes</span>
+                        <p class="challenge-card__text">Reducimos tareas repetitivas y mejoramos el flujo de trabajo de tu equipo.</p>
+                    </div>
+                    <div class="challenge-card challenge-card--sol">
+                        <div class="challenge-card__icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                        </div>
+                        <h3 class="challenge-card__title">Decisiones con información</h3>
+                        <span class="challenge-card__sol">Reportes confiables</span>
+                        <p class="challenge-card__text">Obtén información organizada para analizar resultados y tomar decisiones con mayor rapidez.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOLUTIONS / MODULES -->
+        <section class="section section--alt" id="soluciones">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__label">Áreas integradas</span>
+                    <h2 class="section__title">Áreas que puedes integrar con NAVASOFT</h2>
+                    <p class="section__subtitle">Configuramos cada módulo de acuerdo con la operación y los procesos de tu organización.</p>
+                </div>
+                <div class="modules__grid">
+                    <div class="module-card">
+                        <div class="module-card__icon">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><line x1="9" y1="12" x2="15" y2="12"></line><line x1="9" y1="16" x2="15" y2="16"></line></svg>
+                        </div>
+                        <h3 class="module-card__title">Gestión Administrativa</h3>
+                        <p class="module-card__desc">Implementamos y configuramos el control de procesos administrativos, documentos y flujo de información de la empresa.</p>
+                        <ul class="module-card__features">
+                            <li>Control documental</li>
+                            <li>Flujos de aprobación</li>
+                            <li>Reportes gerenciales</li>
+                        </ul>
+                    </div>
+                    <div class="module-card">
+                        <div class="module-card__icon">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        </div>
+                        <h3 class="module-card__title">Contabilidad</h3>
+                        <p class="module-card__desc">Implementamos la gestión contable completa con conciliación, libros electrónicos y reportes financieros.</p>
+                        <ul class="module-card__features">
+                            <li>Libros electrónicos</li>
+                            <li>Conciliación bancaria</li>
+                            <li>Estados financieros</li>
+                        </ul>
+                    </div>
+                    <div class="module-card">
+                        <div class="module-card__icon">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        </div>
+                        <h3 class="module-card__title">Ventas</h3>
+                        <p class="module-card__desc">Implementamos la administración de cotizaciones, pedidos, clientes y seguimiento comercial de forma integrada.</p>
+                        <ul class="module-card__features">
+                            <li>Cotizaciones y pedidos</li>
+                            <li>Gestión de clientes</li>
+                            <li>Seguimiento comercial</li>
+                        </ul>
+                    </div>
+                    <div class="module-card">
+                        <div class="module-card__icon">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 15l2 2 4-4"></path></svg>
+                        </div>
+                        <h3 class="module-card__title">Facturación Electrónica</h3>
+                        <p class="module-card__desc">Configuramos la emisión de comprobantes electrónicos válidos ante SUNAT de manera automática.</p>
+                        <ul class="module-card__features">
+                            <li>Facturas y boletas</li>
+                            <li>Notas de crédito</li>
+                            <li>Cumplimiento SUNAT</li>
+                        </ul>
+                    </div>
+                    <div class="module-card">
+                        <div class="module-card__icon">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        </div>
+                        <h3 class="module-card__title">Inventarios</h3>
+                        <p class="module-card__desc">Controla existencias, movimientos, despachos y disponibilidad de productos.</p>
+                        <ul class="module-card__features">
+                            <li>Control de stock</li>
+                            <li>Movimientos de almacén</li>
+                            <li>Despachos</li>
+                        </ul>
+                    </div>
+                    <div class="module-card">
+                        <div class="module-card__icon">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                        </div>
+                        <h3 class="module-card__title">Compras y logística</h3>
+                        <p class="module-card__desc">Organiza requerimientos, compras y proveedores para mantener la operación abastecida.</p>
+                        <ul class="module-card__features">
+                            <li>Requerimientos internos</li>
+                            <li>Órdenes de compra</li>
+                            <li>Gestión de proveedores</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section__cta">
+                    <a href="soluciones.html" class="btn btn--outline">Explorar todas las soluciones</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- NAVASOFT IN ACTION -->
+        <section class="section" id="navasoft">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__label">NAVASOFT ERP</span>
+                    <h2 class="section__title">Explora las áreas de NAVASOFT</h2>
+                    <p class="section__subtitle">Explora algunas de las funciones de NAVASOFT que EKAM Perú configura e implementa para centralizar la gestión de sus clientes.</p>
+                </div>
+                <div class="showcase">
+                    <div class="showcase__tabs" role="tablist" aria-label="Vistas de NAVASOFT">
+                        <button class="showcase__tab showcase__tab--active" role="tab" aria-selected="true" tabindex="0" data-tab="general" id="tab-general" aria-controls="panel-general">General</button>
+                        <button class="showcase__tab" role="tab" aria-selected="false" tabindex="-1" data-tab="ventas" id="tab-ventas" aria-controls="panel-ventas">Ventas</button>
+                        <button class="showcase__tab" role="tab" aria-selected="false" tabindex="-1" data-tab="inventarios" id="tab-inventarios" aria-controls="panel-inventarios">Inventarios</button>
+                        <button class="showcase__tab" role="tab" aria-selected="false" tabindex="-1" data-tab="contabilidad" id="tab-contabilidad" aria-controls="panel-contabilidad">Contabilidad</button>
+                        <button class="showcase__tab" role="tab" aria-selected="false" tabindex="-1" data-tab="facturacion" id="tab-facturacion" aria-controls="panel-facturacion">Facturación</button>
+                        <button class="showcase__tab" role="tab" aria-selected="false" tabindex="-1" data-tab="reportes" id="tab-reportes" aria-controls="panel-reportes">Reportes</button>
+                    </div>
+                    <div class="showcase__viewport">
+                        <div class="showcase__panel showcase__panel--active" role="tabpanel" id="panel-general" aria-labelledby="tab-general">
+                            <figure class="showcase__figure">
+                                <button class="showcase__image-button" type="button" data-lightbox-src="assets/screenshots/navasoft-general.jpeg" data-lightbox-alt="Pantalla principal de NAVASOFT ERP" aria-label="Ampliar pantalla principal de NAVASOFT ERP">
+                                    <img class="showcase__image" src="assets/screenshots/navasoft-general.jpeg" alt="Pantalla principal de NAVASOFT ERP con accesos a los módulos empresariales" width="888" height="694" loading="lazy">
+                                    <span class="showcase__zoom" aria-hidden="true">Ampliar imagen</span>
+                                </button>
+                                <figcaption><strong>Gestión centralizada</strong><span>Accede desde una sola pantalla a las principales operaciones de tu empresa.</span></figcaption>
+                            </figure>
+                        </div>
+                        <div class="showcase__panel" role="tabpanel" id="panel-ventas" aria-labelledby="tab-ventas" hidden>
+                            <figure class="showcase__figure">
+                                <button class="showcase__image-button" type="button" data-lightbox-src="assets/screenshots/navasoft-ventas.jpeg" data-lightbox-alt="Módulo de ventas de NAVASOFT ERP" aria-label="Ampliar módulo de ventas">
+                                    <img class="showcase__image" src="assets/screenshots/navasoft-ventas.jpeg" alt="Módulo de ventas de NAVASOFT ERP mostrando el ingreso de una cotización" width="888" height="694" loading="lazy">
+                                    <span class="showcase__zoom" aria-hidden="true">Ampliar imagen</span>
+                                </button>
+                                <figcaption><strong>Ventas</strong><span>Registra cotizaciones, pedidos y documentos de venta desde un mismo flujo.</span></figcaption>
+                            </figure>
+                        </div>
+                        <div class="showcase__panel" role="tabpanel" id="panel-inventarios" aria-labelledby="tab-inventarios" hidden>
+                            <figure class="showcase__figure">
+                                <button class="showcase__image-button" type="button" data-lightbox-src="assets/screenshots/navasoft-inventario.jpeg" data-lightbox-alt="Módulo de inventarios de NAVASOFT ERP" aria-label="Ampliar módulo de inventarios">
+                                    <img class="showcase__image" src="assets/screenshots/navasoft-inventario.jpeg" alt="Módulo de inventarios de NAVASOFT ERP mostrando el ingreso de mercadería" width="888" height="694" loading="lazy">
+                                    <span class="showcase__zoom" aria-hidden="true">Ampliar imagen</span>
+                                </button>
+                                <figcaption><strong>Inventarios</strong><span>Controla ingresos, salidas, almacenes y disponibilidad de productos.</span></figcaption>
+                            </figure>
+                        </div>
+                        <div class="showcase__panel" role="tabpanel" id="panel-contabilidad" aria-labelledby="tab-contabilidad" hidden>
+                            <figure class="showcase__figure">
+                                <button class="showcase__image-button" type="button" data-lightbox-src="assets/screenshots/navasoft-contabilidad.jpeg" data-lightbox-alt="Módulo de contabilidad de NAVASOFT ERP" aria-label="Ampliar módulo de contabilidad">
+                                    <img class="showcase__image" src="assets/screenshots/navasoft-contabilidad.jpeg" alt="Módulo de contabilidad de NAVASOFT ERP con opciones de clientes y análisis" width="888" height="694" loading="lazy">
+                                    <span class="showcase__zoom" aria-hidden="true">Ampliar imagen</span>
+                                </button>
+                                <figcaption><strong>Contabilidad</strong><span>Centraliza cuentas, entidades, movimientos y análisis financiero.</span></figcaption>
+                            </figure>
+                        </div>
+                        <div class="showcase__panel" role="tabpanel" id="panel-facturacion" aria-labelledby="tab-facturacion" hidden>
+                            <figure class="showcase__figure">
+                                <button class="showcase__image-button" type="button" data-lightbox-src="assets/screenshots/navasoft-facturacion.jpeg" data-lightbox-alt="Módulo de facturación de NAVASOFT ERP" aria-label="Ampliar módulo de facturación">
+                                    <img class="showcase__image" src="assets/screenshots/navasoft-facturacion.jpeg" alt="Módulo de facturación de NAVASOFT ERP mostrando el registro de una factura" width="888" height="694" loading="lazy">
+                                    <span class="showcase__zoom" aria-hidden="true">Ampliar imagen</span>
+                                </button>
+                                <figcaption><strong>Facturación</strong><span>Emite documentos comerciales y administra condiciones de pago.</span></figcaption>
+                            </figure>
+                        </div>
+                        <div class="showcase__panel" role="tabpanel" id="panel-reportes" aria-labelledby="tab-reportes" hidden>
+                            <figure class="showcase__figure">
+                                <button class="showcase__image-button" type="button" data-lightbox-src="assets/screenshots/navasoft-reportes.jpeg" data-lightbox-alt="Reportes de ventas de NAVASOFT ERP" aria-label="Ampliar reportes de NAVASOFT">
+                                    <img class="showcase__image" src="assets/screenshots/navasoft-reportes.jpeg" alt="Panel de reportes de ventas de NAVASOFT ERP con diferentes consultas disponibles" width="888" height="694" loading="lazy">
+                                    <span class="showcase__zoom" aria-hidden="true">Ampliar imagen</span>
+                                </button>
+                                <figcaption><strong>Reportes</strong><span>Consulta indicadores comerciales, estadísticas y saldos detallados.</span></figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIDEO DEMO -->
+        <section class="section section--alt" id="video-demo">
+            <div class="container">
+                <div class="video-demo__card">
+                    <div class="video-demo__media">
+                        <video class="video-demo__player" id="videoDemoPlayer" controls preload="metadata" playsinline aria-label="Video demostrativo de NAVASOFT ERP" poster="assets/videos/demostracion-navasoft-poster.webp">
+                            <source src="assets/videos/demostracion-navasoft-web.mp4" type="video/mp4">
+                            Tu navegador no puede reproducir este video.
+                        </video>
+                        <button class="video-demo__play" id="videoDemoPlay" type="button" aria-label="Reproducir video demostrativo">
+                            <span aria-hidden="true"></span>
+                        </button>
+                        <div class="video-demo__duration">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg>
+                            Demo de 30 segundos
+                        </div>
+                    </div>
+                    <div class="video-demo__content">
+                        <span class="section__label">Video demostrativo</span>
+                        <h2 class="section__title">Mira NAVASOFT en funcionamiento</h2>
+                        <p class="section__subtitle">Observa cómo funciona el ERP que EKAM Perú implementa y adapta para integrar los procesos de sus clientes.</p>
+                        <div class="video-demo__benefits">
+                            <div class="video-demo__benefit">
+                                <span class="video-demo__benefit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="9" y="3" width="6" height="4" rx="1"></rect><rect x="3" y="17" width="6" height="4" rx="1"></rect><rect x="15" y="17" width="6" height="4" rx="1"></rect><path d="M12 7v5M6 17v-5h12v5"></path></svg></span>
+                                <span>Procesos<br>centralizados</span>
+                            </div>
+                            <div class="video-demo__benefit">
+                                <span class="video-demo__benefit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20V7"></path></svg></span>
+                                <span>Información para<br>decidir mejor</span>
+                            </div>
+                            <div class="video-demo__benefit">
+                                <span class="video-demo__benefit-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg></span>
+                                <span>Control y seguridad<br>integrados</span>
+                            </div>
+                        </div>
+                        <a href="soluciones.html" class="btn btn--primary video-demo__cta">Ver soluciones disponibles</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPLEMENTATION PROCESS -->
+        <section class="section implementation-roadmap" id="implementacion">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__label">Proceso comercial</span>
+                    <h2 class="section__title">Así iniciamos una implementación profesional</h2>
+                    <p class="section__subtitle">La primera conversación no debe ser una venta genérica. Debe servir para entender tu operación y definir una propuesta alineada a tus procesos.</p>
+                </div>
+                <div class="roadmap">
+                    <article class="roadmap__step">
+                        <span class="roadmap__number">01</span>
+                        <span class="roadmap__tag">Entender</span>
+                        <h3>Reunión de diagnóstico</h3>
+                        <p>Identificamos áreas, dolores operativos, volumen de trabajo y prioridades de la empresa.</p>
+                    </article>
+                    <article class="roadmap__step">
+                        <span class="roadmap__number">02</span>
+                        <span class="roadmap__tag">Definir</span>
+                        <h3>Propuesta por módulos</h3>
+                        <p>Definimos qué soluciones NAVASOFT necesita la empresa y qué alcance conviene implementar primero.</p>
+                    </article>
+                    <article class="roadmap__step">
+                        <span class="roadmap__number">03</span>
+                        <span class="roadmap__tag">Activar</span>
+                        <h3>Implementación y capacitación</h3>
+                        <p>Configuramos el sistema, capacitamos usuarios y acompañamos la puesta en marcha.</p>
+                    </article>
+                    <article class="roadmap__step">
+                        <span class="roadmap__number">04</span>
+                        <span class="roadmap__tag">Acompañar</span>
+                        <h3>Soporte y mejora continua</h3>
+                        <p>Damos continuidad para resolver consultas, ajustar procesos y sostener el uso correcto del ERP.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTORS -->
+        <section class="section" id="sectores">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__label">Sectores</span>
+                    <h2 class="section__title">Implementaciones según tu sector</h2>
+                    <p class="section__subtitle">Adaptamos la implementación de NAVASOFT a los procesos y necesidades de diferentes sectores empresariales.</p>
+                </div>
+                <div class="sectors__grid">
+                    <a class="sector-card" href="sectores.html?sector=comercio" aria-label="Conocer soluciones para empresas comerciales">
+                        <div class="sector-card__icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        </div>
+                        <h3 class="sector-card__title">Empresas comerciales</h3>
+                        <p class="sector-card__text">Gestión integral de ventas, inventarios, compras y facturación para empresas del sector comercial.</p>
+                    </a>
+                    <a class="sector-card" href="sectores.html?sector=industria" aria-label="Conocer soluciones para industria">
+                        <div class="sector-card__icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 20h20"></path><path d="M5 20V8l7-5 7 5v12"></path><rect x="9" y="12" width="6" height="8"></rect></svg>
+                        </div>
+                        <h3 class="sector-card__title">Industria</h3>
+                        <p class="sector-card__text">Control de producción, almacenes, costos y gestión administrativa para el sector industrial.</p>
+                    </a>
+                    <a class="sector-card" href="sectores.html?sector=hoteles-restaurantes" aria-label="Conocer soluciones para hoteles y restaurantes">
+                        <div class="sector-card__icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        </div>
+                        <h3 class="sector-card__title">Hoteles y restaurantes</h3>
+                        <p class="sector-card__text">Gestión integrada de ventas, inventarios, compras, caja y facturación para negocios de hotelería y restauración.</p>
+                    </a>
+                </div>
+                <div class="section__cta">
+                    <a href="sectores.html" class="btn btn--outline btn--lg">Explorar todos los sectores</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLIENTS -->
+        <section class="section section--alt" id="clientes">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__label">Clientes</span>
+                    <h2 class="section__title">Empresas que confían en EKAM Perú</h2>
+                </div>
+                <div class="clients-carousel" data-carousel>
+                    <div class="clients-carousel__viewport">
+                        <div class="clients-carousel__track" id="clientsTrack">
+                            <div class="clients-carousel__group" aria-label="Empresas que confían en nosotros">
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-contactiva">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/Contactiva.webp" alt="Contactiva" class="client-logo__img" width="1536" height="1024" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-delcor">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/Delcor.webp" alt="Grupo Delcor" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-molisam">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/Molisam.webp" alt="Molisam" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-san-roque">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/SanRoque.webp" alt="San Roque" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-vidavas">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/Vidavas.webp" alt="VIDAVA'S Clínica Oftalmológica" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-jockey">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/JockeyClubChiclayo.webp" alt="Jockey Club Chiclayo" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clients-carousel__group" aria-hidden="true">
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-contactiva">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/Contactiva.webp" alt="" class="client-logo__img" width="1536" height="1024" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-delcor">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/Delcor.webp" alt="" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-molisam">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/Molisam.webp" alt="" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-san-roque">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/SanRoque.webp" alt="" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-vidavas">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/Vidavas.webp" alt="" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                                <div class="clients-carousel__slide">
+                                    <div class="client-logo client-jockey">
+                                        <div class="logo-wrapper"><img src="assets/LogosClientes/JockeyClubChiclayo.webp" alt="" class="client-logo__img" width="1254" height="1254" loading="lazy"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EKAM + NAVASOFT (integrado en clientes) -->
+                <div class="empresa-block" id="empresa">
+                    <div class="empresa-block__relationship">
+                        <div class="empresa-block__brand">
+                            <span class="empresa-block__brand-logo-frame empresa-block__brand-logo-frame--ekam">
+                                <img class="empresa-block__brand-logo empresa-block__brand-logo--ekam" src="assets/icons/Logo-EKAM.png" alt="Logo EKAM Perú" loading="lazy">
+                            </span>
+                            <span class="empresa-block__brand-caption">Implementación y soporte</span>
+                        </div>
+                        <div class="empresa-block__relationship-action" aria-hidden="true">
+                            <span class="empresa-block__arrow-label">Implementa</span>
+                            <span class="empresa-block__arrow">&rarr;</span>
+                        </div>
+                        <div class="empresa-block__brand">
+                            <span class="empresa-block__brand-logo-frame empresa-block__brand-logo-frame--navasoft">
+                                <img class="empresa-block__brand-logo empresa-block__brand-logo--navasoft" src="assets/icons/Logo-Navasoft.png" alt="Logo NAVASOFT ERP" loading="lazy">
+                            </span>
+                            <span class="empresa-block__brand-caption">ERP empresarial</span>
+                        </div>
+                    </div>
+                    <div class="empresa-block__content">
+                        <h3 class="empresa-block__title"><span class="empresa-block__title-brand">EKAM Perú</span> te acompaña durante la implementación</h3>
+                        <p class="empresa-block__text">Analizamos tus procesos, configuramos el ERP, capacitamos a tu equipo y acompañamos su operación.</p>
+                        <div class="empresa-block__services">
+                            <span class="empresa-block__service">Análisis de procesos</span>
+                            <span class="empresa-block__service">Implementación</span>
+                            <span class="empresa-block__service">Capacitación</span>
+                            <span class="empresa-block__service">Soporte</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT FORM -->
+        <section class="section" id="contacto">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__label">Contacto</span>
+                    <h2 class="section__title">Agenda una evaluación comercial</h2>
+                    <p class="section__subtitle">Déjanos los datos principales y prepararemos una conversación enfocada en tus procesos, módulos necesarios y próximos pasos.</p>
+                </div>
+                <form class="contact-form" id="contactForm" novalidate>
+                    <div class="contact-form__grid">
+                        <div class="contact-form__field">
+                            <label for="formName" class="contact-form__label">Nombre <span aria-hidden="true">*</span></label>
+                            <input type="text" id="formName" name="name" class="contact-form__input" required autocomplete="name" placeholder="Tu nombre completo">
+                            <span class="contact-form__error" role="alert"></span>
+                        </div>
+                        <div class="contact-form__field">
+                            <label for="formCompany" class="contact-form__label">Empresa <span aria-hidden="true">*</span></label>
+                            <input type="text" id="formCompany" name="company" class="contact-form__input" required autocomplete="organization" placeholder="Nombre de tu empresa">
+                            <span class="contact-form__error" role="alert"></span>
+                        </div>
+                        <div class="contact-form__field">
+                            <label for="formPhone" class="contact-form__label">Teléfono / WhatsApp <span aria-hidden="true">*</span></label>
+                            <input type="tel" id="formPhone" name="phone" class="contact-form__input" required autocomplete="tel" placeholder="Ej. 999 999 999">
+                            <span class="contact-form__error" role="alert"></span>
+                        </div>
+                        <div class="contact-form__field">
+                            <label for="formEmail" class="contact-form__label">Correo corporativo</label>
+                            <input type="email" id="formEmail" name="email" class="contact-form__input" autocomplete="email" placeholder="nombre@empresa.com">
+                            <span class="contact-form__error" role="alert"></span>
+                        </div>
+                        <div class="contact-form__field contact-form__field--full">
+                            <label for="formSolution" class="contact-form__label">Solución de interés <span aria-hidden="true">*</span></label>
+                            <select id="formSolution" name="solution" class="contact-form__select" required>
+                                <option value="">Selecciona una opción</option>
+                                <option value="navasoft-erp">NAVASOFT ERP</option>
+                                <option value="gestion-admin">Gestión Administrativa</option>
+                                <option value="contabilidad">Contabilidad</option>
+                                <option value="ventas">Ventas</option>
+                                <option value="facturacion">Facturación Electrónica</option>
+                                <option value="inventarios">Inventarios</option>
+                                <option value="compras-logistica">Compras y logística</option>
+                                <option value="hoteles-restaurantes">Hoteles y restaurantes</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                            <span class="contact-form__error" role="alert"></span>
+                        </div>
+                        <div class="contact-form__field contact-form__field--full">
+                            <label for="formTiming" class="contact-form__label">¿Cuándo deseas evaluar la implementación?</label>
+                            <select id="formTiming" name="timing" class="contact-form__select">
+                                <option value="">Selecciona una opción</option>
+                                <option value="este-mes">Este mes</option>
+                                <option value="1-3-meses">En 1 a 3 meses</option>
+                                <option value="evaluacion">Estoy evaluando opciones</option>
+                                <option value="soporte">Necesito soporte o mejora de una implementación actual</option>
+                            </select>
+                        </div>
+                        <div class="contact-form__field contact-form__field--full">
+                            <label for="formMessage" class="contact-form__label">Principal necesidad</label>
+                            <textarea id="formMessage" name="message" class="contact-form__textarea" rows="3" placeholder="Ej. controlar inventarios, ordenar ventas, emitir comprobantes electrónicos, integrar contabilidad..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--lg contact-form__submit">Preparar solicitud comercial por WhatsApp</button>
+                    <p class="contact-form__helper">Se abrirá WhatsApp con tu solicitud ordenada para que puedas revisarla y enviarla.</p>
+                    <p class="contact-form__privacy">Usaremos tus datos únicamente para responder tu consulta comercial. Revisa nuestra <a href="privacidad.html">política de privacidad</a>.</p>
+                    <div class="contact-form__notification" id="formNotification" role="status" aria-live="polite" hidden>
+                        <div class="contact-form__notification-inner">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            <div>
+                                <strong>Solicitud preparada</strong>
+                                <p>WhatsApp se abrió con tu solicitud. Revisa el mensaje y envíalo para completar la consulta.</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="#inicio" class="footer__logo" aria-label="EKAM Perú - Inicio">
+                        <span class="footer__logo-icon-wrap">
+                            <img src="assets/icons/Logo-EKAM.png" alt="Logo EKAM" class="footer__logo-icon" width="249" height="203">
+                        </span>
+                        <span class="footer__logo-text">EKAM PERÚ</span>
+                    </a>
+                    <p class="footer__desc">EKAM Perú impulsa la transformación digital de las empresas mediante la implementación y el acompañamiento del ERP NAVASOFT.</p>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Soluciones</h3>
+                    <ul class="footer__list">
+                        <li><a href="soluciones.html?solucion=erp">NAVASOFT ERP</a></li>
+                        <li><a href="soluciones.html?solucion=facturacion">Facturación electrónica</a></li>
+                        <li><a href="soluciones.html?solucion=contabilidad">Contabilidad</a></li>
+                        <li><a href="soluciones.html?solucion=activos">Activos fijos</a></li>
+                        <li><a href="soluciones.html?solucion=navamovil">NavaMóvil</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Empresa</h3>
+                    <ul class="footer__list">
+                        <li><a href="#empresa">Nosotros</a></li>
+                        <li><a href="sectores.html">Sectores</a></li>
+                        <li><a href="#clientes">Clientes</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Recursos</h3>
+                    <ul class="footer__list">
+                        <li><a href="#contacto">Hablar con un asesor</a></li>
+                        <li><a href="#contacto">Solicitar brochure</a></li>
+                        <li><a href="privacidad.html">Política de privacidad</a></li>
+                        <li><a href="https://wa.me/51940455332?text=Hola%2C%20deseo%20recibir%20informaci%C3%B3n%20sobre%20NAVASOFT%20y%20la%20implementaci%C3%B3n%20de%20EKAM%20Per%C3%BA." target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Ubicación</h3>
+                    <p class="footer__location">Chiclayo, Lambayeque<br>Perú</p>
+                    <p class="footer__location"><a href="https://wa.me/51940455332" target="_blank" rel="noopener noreferrer">WhatsApp: +51 940 455 332</a></p>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 EKAM PERÚ S.A.C. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- NAVASOFT IMAGE VIEWER -->
+    <dialog class="image-viewer" id="imageViewer" aria-labelledby="imageViewerTitle">
+        <div class="image-viewer__header">
+            <h2 class="image-viewer__title" id="imageViewerTitle">Vista ampliada de NAVASOFT</h2>
+            <button class="image-viewer__close" id="imageViewerClose" type="button" aria-label="Cerrar imagen ampliada">&times;</button>
+        </div>
+        <img class="image-viewer__image" id="imageViewerImage" src="" alt="">
+    </dialog>
+
+    <!-- WHATSAPP BUTTON -->
+    <a href="#" class="whatsapp-btn" id="whatsappBtn" aria-label="Contactar por WhatsApp" target="_blank" rel="noopener noreferrer">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <!-- EKAM ASISTENTE VIRTUAL -->
+    <div class="chatbot" id="ekamChatbot">
+        <button type="button" class="chatbot__launcher" id="chatbotLauncher" aria-expanded="false" aria-controls="ekamChatbotPanel" aria-label="Abrir asistente virtual de EKAM Perú">
+            <img src="assets/images/asistente-ekam-avatar.webp" alt="Robot asistente virtual de EKAM Perú" class="chatbot__launcher-img" width="240" height="240">
+        </button>
+        <p class="chatbot__launcher-label" id="chatbotLauncherLabel" aria-hidden="true">¿Necesitas ayuda?</p>
+
+        <section class="chatbot__panel" id="ekamChatbotPanel" role="dialog" aria-label="Asistente virtual de EKAM Perú" aria-hidden="true" tabindex="-1">
+            <header class="chatbot__header">
+                <img src="assets/images/asistente-ekam-avatar.webp" alt="" class="chatbot__header-avatar" width="240" height="240">
+                <div class="chatbot__header-info">
+                    <h2 class="chatbot__header-title">Asistente EKAM Perú</h2>
+                    <span class="chatbot__header-status"><span class="chatbot__status-dot" aria-hidden="true"></span>Respuestas rápidas</span>
+                </div>
+                <button type="button" class="chatbot__close" id="chatbotClose" aria-label="Cerrar asistente virtual de EKAM Perú">&times;</button>
+            </header>
+            <div class="chatbot__body">
+                <div class="chatbot__messages" id="chatbotMessages" aria-live="polite"></div>
+                <div class="chatbot__replies" id="chatbotReplies" aria-live="polite"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/main.js?v=20260908-3"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "EKAM Perú",
+        "url": "https://www.ekamperu.com/",
+        "logo": "https://www.ekamperu.com/assets/icons/Logo-EKAM.png",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Chiclayo",
+            "addressRegion": "Lambayeque",
+            "addressCountry": "PE"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+51 940 455 332",
+            "contactType": "sales",
+            "areaServed": "PE",
+            "availableLanguage": "es"
+        }
+    }
+    </script>
+</body>
+</html>
