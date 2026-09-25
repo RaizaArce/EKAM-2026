@@ -10,7 +10,7 @@
     const messages = document.getElementById('chatbotMessages');
     const replies = document.getElementById('chatbotReplies');
     const label = document.getElementById('chatbotLauncherLabel');
-    const whatsapp = 'https://wa.me/51940455332?text=';
+    const whatsapp = 'https://wa.me/51949882756?text=';
 
     if (!launcher || !close || !panel || !messages || !replies) return;
 

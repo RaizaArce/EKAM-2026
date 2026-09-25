@@ -103,7 +103,7 @@
     .implementation__steps li { grid-template-columns: 38px 1fr; }
     .solutions-cta .container { align-items: flex-start; flex-direction: column; }
     .solutions-cta .btn { width: 100%; }
-    .solutions-whatsapp { right: 1rem; bottom: 1rem; }
+    .solutions-whatsapp { right: 1rem; bottom: 0.75rem; width: 46px; height: 46px; }
 }
 
 /* Catálogo compacto: la página muestra primero las soluciones, no un hero largo. */

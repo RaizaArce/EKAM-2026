@@ -3,10 +3,13 @@
     background:
         radial-gradient(circle at 8% 18%, rgba(32, 164, 243, 0.08), transparent 28rem),
         var(--color-background);
+    overflow-x: hidden;
 }
 
 .sector-explorer {
     padding-top: var(--header-height);
+    max-width: 100%;
+    overflow-x: clip;
 }
 
 .sector-intro {
@@ -48,6 +51,8 @@
     align-items: center;
     gap: 0.65rem;
     margin-bottom: 1.25rem;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .sector-tabs {
@@ -57,6 +62,8 @@
     scroll-behavior: smooth;
     scrollbar-width: none;
     padding: 0.4rem 0.2rem;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .sector-tabs::-webkit-scrollbar {
@@ -923,14 +930,25 @@
         margin-bottom: 1.1rem;
     }
 
-.sector-editorial .sector-tabs-wrap {
+    .sector-editorial,
+    .sector-detail,
+    .sector-feature,
+    .sector-detail__content,
+    .sector-process {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .sector-editorial .sector-tabs-wrap {
         width: 100%;
-        overflow: visible;
+        overflow: hidden;
     }
 
     .sector-editorial .sector-tabs {
         width: 100%;
         padding: 0.15rem 0 0.55rem;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
     }
 
     .sector-feature {
@@ -956,6 +974,7 @@
         margin: 0.35rem 0 0.5rem;
         font-size: clamp(1.85rem, 8vw, 2.55rem);
         line-height: 1.08;
+        overflow-wrap: anywhere;
     }
 
     .sector-feature .sector-detail__description {
@@ -1010,7 +1029,19 @@
         padding-top: calc(var(--header-height) + 1rem);
     }
     .sector-editorial .sector-intro__heading h1 {
-        font-size: 2rem;
+        font-size: clamp(1.75rem, 8.5vw, 2rem);
+        line-height: 1.12;
+        letter-spacing: -0.025em;
+        overflow-wrap: anywhere;
+    }
+    .sector-editorial .sector-intro__heading p {
+        font-size: 0.96rem;
+        line-height: 1.55;
+    }
+    .sector-editorial .sector-tab {
+        min-height: 42px;
+        padding: 0.58rem 0.9rem;
+        font-size: 0.82rem;
     }
     .sector-feature__visual,
     .sector-feature::after {
@@ -1024,6 +1055,12 @@
         -webkit-line-clamp: 2;
         font-size: 0.9rem;
     }
+    .sector-whatsapp {
+        right: 1rem;
+        bottom: 0.75rem;
+        width: 46px;
+        height: 46px;
+    }
 }
 
 /* Ajuste final de altura: evita duplicar el espacio del encabezado fijo. */
@@ -1032,5 +1069,71 @@
 @media (min-width: 901px) {
     .sector-intro {
         padding: calc(var(--header-height) + 1.25rem) 0 2.25rem;
+    }
+}
+
+/* Mobile overflow guard for the sector explorer. */
+@media (max-width: 768px) {
+    .sectors-page,
+    .sector-explorer,
+    .sector-intro,
+    .sector-intro .container,
+    .sector-editorial,
+    .sector-editorial__aside,
+    .sector-detail,
+    .sector-feature,
+    .sector-detail__content,
+    .sector-process,
+    .sector-process__steps {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .sector-intro__heading,
+    .sector-editorial .sector-intro__heading {
+        max-width: min(100%, 18.5rem);
+        text-align: left;
+    }
+
+    .sector-editorial .sector-intro__heading h1,
+    .sector-feature .sector-detail__content h2,
+    .sector-process__intro h2 {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .sector-editorial .sector-intro__heading h1 {
+        font-size: clamp(1.5rem, 7.5vw, 1.8rem);
+        line-height: 1.12;
+    }
+
+    .sector-feature .sector-detail__content h2 {
+        font-size: clamp(1.65rem, 8vw, 2rem);
+    }
+
+    .sector-feature .sector-detail__kicker,
+    .sector-feature .sector-detail__description {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+
+    .sector-feature__cta {
+        white-space: normal;
+    }
+
+    .sector-feature,
+    .sector-process {
+        max-width: 18.5rem;
+        margin-inline: auto;
+    }
+
+    .sector-feature .sector-detail__content {
+        padding-inline: 1rem;
+    }
+
+    .sector-process__steps {
+        grid-template-columns: 1fr;
     }
 }

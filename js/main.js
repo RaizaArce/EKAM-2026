@@ -6,7 +6,7 @@
 (function () {
     'use strict';
 
-    const WHATSAPP_NUMBER = '51940455332';
+    const WHATSAPP_NUMBER = '51949882756';
     const WHATSAPP_MESSAGE = 'Hola, me interesa conocer más sobre la implementación de NAVASOFT por parte de EKAM Perú y solicitar una demostración.';
 
     function trackCommercialEvent(name, params) {

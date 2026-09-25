@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    const WHATSAPP_NUMBER = '51940455332';
+    const WHATSAPP_NUMBER = '51949882756';
     const solutions = {
         erp: {
             title: 'ERP NAVASOFT para empresas',
