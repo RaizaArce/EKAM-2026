@@ -30,21 +30,38 @@ http://localhost:5500
 ```
 EKAM-2026/
 ├── index.html
+├── soluciones.html
+├── sectores.html
 ├── README.md
+├── WEB-DOCUMENTACION.md       ← Guía técnica y de contenido del sitio
+├── AGENTE-SOPORTE-WHATSAPP-PRIMER-NIVEL.md
+├── PROPUESTA-AGENTE-SOPORTE-N8N.md
 ├── .gitignore
 ├── css/
-│   └── style.css
+│   ├── style.css               ← Estilos compartidos
+│   ├── soluciones.css
+│   └── sectores.css
 ├── js/
-│   └── main.js
+│   ├── main.js                 ← Interacciones de la portada
+│   ├── soluciones.js
+│   ├── sectores.js
+│   └── chatbot.js
 └── assets/
-    ├── images/
-    │   ├── logo/
-    │   ├── sistema/
-    │   ├── clientes/
-    │   └── sectores/
-    └── icons/
-        └── favicon.svg
+    ├── icons/                  ← Logotipos e íconos de marca
+    ├── LogosClientes/          ← Logos visibles en la sección Clientes
+    ├── screenshots/            ← Capturas de módulos NAVASOFT
+    ├── videos/                 ← Video y portada de la demostración
+    └── images/
+        ├── asistente-ekam.*    ← Recursos del asistente virtual
+        ├── navamovil-funcionalidades.png
+        ├── logo/               ← Reserva para futuros recursos
+        ├── sistema/            ← Reserva para futuras capturas
+        ├── clientes/           ← Reserva para futuras imágenes
+        └── sectores/           ← Reserva para futuras imágenes
 ```
+
+`tmp/` se excluye del repositorio: solo conserva respaldos de publicación y
+archivos temporales de revisión. No forma parte del sitio que se despliega.
 
 ## Secciones
 

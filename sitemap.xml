@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://www.ekamperu.com/</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.ekamperu.com/soluciones.html</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://www.ekamperu.com/sectores.html</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://www.ekamperu.com/privacidad.html</loc>
+        <priority>0.3</priority>
+    </url>
+</urlset>
