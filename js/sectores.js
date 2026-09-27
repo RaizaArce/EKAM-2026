@@ -4,9 +4,9 @@
     const WHATSAPP_NUMBER = '51949882756';
 
     const sectors = {
-        agroexportacion: {
-            title: 'Agroexportación',
-            kicker: 'Gestión integrada para operaciones agroexportadoras',
+        agroindustria: {
+            title: 'Agroindustria',
+            kicker: 'Gestión integrada para operaciones agroindustriales y agroexportadoras',
             description: 'EKAM Perú implementa NAVASOFT para conectar el control de insumos, compras, producción, costos y la información administrativa de tu operación.',
             needs: ['Control de insumos e inventarios', 'Requerimientos y compras', 'Seguimiento de producción', 'Control de costos', 'Información contable'],
             modules: ['Logística', 'Almacén', 'Producción', 'Tesorería', 'Contabilidad'],
@@ -30,6 +30,24 @@
             modules: ['Ventas', 'Almacén', 'Logística', 'Tesorería', 'Contabilidad'],
             metricOne: ['Ventas y facturación', 'Control integrado'],
             metricTwo: ['Stock disponible', 'Seguimiento diario']
+        },
+        grifos: {
+            title: 'Grifos',
+            kicker: 'Control de ventas, combustibles y caja por turnos',
+            description: 'EKAM Perú implementa NAVASOFT para ordenar las ventas, el control de combustibles y productos, la caja y la facturación electrónica de estaciones de servicio.',
+            needs: ['Ventas y facturación electrónica', 'Control de combustibles y productos', 'Caja y cierres por turno', 'Compras y proveedores', 'Información contable'],
+            modules: ['Ventas', 'Almacén', 'Tesorería', 'Logística', 'Contabilidad'],
+            metricOne: ['Ventas y caja', 'Control por turno'],
+            metricTwo: ['Inventario', 'Seguimiento diario']
+        },
+        construccion: {
+            title: 'Construcción',
+            kicker: 'Costos, compras y almacenes por obra',
+            description: 'EKAM Perú configura NAVASOFT para controlar requerimientos, compras, almacenes de obra, costos y la información contable de empresas constructoras.',
+            needs: ['Control de costos por obra', 'Requerimientos y compras', 'Almacén de materiales', 'Facturación y cobranzas', 'Información contable'],
+            modules: ['Logística', 'Almacén', 'Ventas', 'Tesorería', 'Contabilidad'],
+            metricOne: ['Costos por obra', 'Control integrado'],
+            metricTwo: ['Materiales', 'Seguimiento diario']
         },
         transporte: {
             title: 'Transporte',
@@ -79,7 +97,7 @@
         otros: {
             title: 'Otros sectores',
             kicker: 'Una implementación adaptada a los procesos de tu empresa',
-            description: 'EKAM Perú también atiende organizaciones de construcción, asociaciones, estaciones de servicio y otros rubros. Analizamos cada operación para definir la configuración adecuada de NAVASOFT.',
+            description: 'EKAM Perú también atiende asociaciones, organizaciones sin fines de lucro y otros rubros. Analizamos cada operación para definir la configuración adecuada de NAVASOFT.',
             needs: ['Diagnóstico de procesos', 'Integración de áreas', 'Control administrativo', 'Información centralizada', 'Acompañamiento especializado'],
             modules: ['Logística', 'Ventas', 'Almacén', 'Tesorería', 'Contabilidad'],
             metricOne: ['Procesos clave', 'Configuración adaptada'],
@@ -87,16 +105,19 @@
         }
     };
 
+    // Ilustracion propia por sector (sin fotos externas): icono lineal sobre degradado de marca.
     const sectorVisuals = {
-        agroexportacion: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=82',
-        industria: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1600&q=82',
-        comercio: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1600&q=82',
-        transporte: 'https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1600&q=82',
-        salud: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1600&q=82',
-        educacion: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=82',
-        'hoteles-restaurantes': 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=82',
-        servicios: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=82',
-        otros: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=82'
+        agroindustria: '<path d="M7 20h10"/><path d="M12 20v-9"/><path d="M12 11c0-4-3-6-7-6 0 4 3 6 7 6z"/><path d="M12 11c0-3.5 2.5-6 7-6 0 4-3 6-7 6z"/>',
+        industria: '<path d="M2 20h20"/><path d="M4 20V9l5 3V9l5 3V9l5 3v8"/><path d="M8 16h1M12 16h1M16 16h1"/>',
+        comercio: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+        grifos: '<path d="M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M2 22h14"/><path d="M15 9h2a2 2 0 0 1 2 2v6a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="M6 7h6"/>',
+        construccion: '<path d="M2 21h20"/><path d="M6 21V3h2l12 4H8"/><path d="M18 7v5"/><rect x="16" y="12" width="4" height="3"/><path d="M6 11h2M6 15h2"/>',
+        transporte: '<path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',
+        salud: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/><path d="M12 9v6M9 12h6"/>',
+        educacion: '<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+        "hoteles-restaurantes": '<path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-5h6v5"/><path d="M8 9h.01M12 9h.01M16 9h.01M8 13h.01M12 13h.01M16 13h.01"/>',
+        servicios: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+        otros: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>'
     };
 
     const elements = {
@@ -112,15 +133,6 @@
         whatsapp: document.getElementById('sectorWhatsapp'),
         floatingWhatsapp: document.getElementById('floatingWhatsapp')
     };
-
-    var VISUAL_FALLBACK = 'assets/screenshots/navasoft-general.jpeg';
-    var visualFallbackApplied = false;
-
-    elements.visual.addEventListener('error', function () {
-        if (visualFallbackApplied) return;
-        visualFallbackApplied = true;
-        elements.visual.src = VISUAL_FALLBACK;
-    });
 
     function listItems(items) {
         return items.map(function (item) {
@@ -143,9 +155,12 @@
         return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
     }
 
+    const sectorAliases = { agroexportacion: 'agroindustria' };
+
     function renderSector(key, shouldFocus, shouldUpdateUrl) {
-        const sector = sectors[key] || sectors.agroexportacion;
-        const selectedKey = sectors[key] ? key : 'agroexportacion';
+        key = sectorAliases[key] || key;
+        const sector = sectors[key] || sectors.agroindustria;
+        const selectedKey = sectors[key] ? key : 'agroindustria';
 
         elements.detail.classList.add('is-changing');
 
@@ -155,8 +170,7 @@
             elements.description.textContent = sector.description;
             elements.needs.replaceChildren.apply(elements.needs, listItems(sector.needs));
             elements.modules.replaceChildren.apply(elements.modules, listItems(sector.modules));
-            elements.visual.src = sectorVisuals[selectedKey];
-            elements.visual.alt = 'Pantalla de NAVASOFT para ' + sector.title;
+            elements.visual.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + sectorVisuals[selectedKey] + '</svg>';
             elements.chips.replaceChildren.apply(elements.chips, chips(sector.modules));
 
             const url = whatsappUrl(sector.title);
@@ -243,5 +257,5 @@
     });
 
     const initial = new URLSearchParams(window.location.search).get('sector');
-    renderSector(initial && sectors[initial] ? initial : 'agroexportacion', false, false);
+    renderSector(initial || 'agroindustria', false, false);
 }());

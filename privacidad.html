@@ -8,34 +8,47 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.ekamperu.com/privacidad.html">
     <meta name="theme-color" content="#0877C9">
-    <link rel="icon" type="image/png" href="assets/icons/Logo-EKAM.png">
+    <meta property="og:title" content="Política de privacidad | EKAM Perú">
+    <meta property="og:description" content="Política de privacidad de EKAM Perú para consultas comerciales sobre la implementación de NAVASOFT ERP.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ekamperu.com/privacidad.html">
+    <meta property="og:image" content="https://www.ekamperu.com/assets/images/og-ekam.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="EKAM Perú: ERP + IA + Transformación Digital">
+    <meta property="og:locale" content="es_PE">
+    <meta property="og:site_name" content="EKAM Perú">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=20260923-2">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"></noscript>
+    <link rel="stylesheet" href="css/style.css?v=20260926-lazy-1">
 </head>
 <body>
     <header class="header" id="header">
         <div class="container header__inner">
-            <a href="index.html#inicio" class="header__logo" aria-label="EKAM Perú - Inicio">
-                <span class="header__logo-text">EKAM</span>
-                <span class="header__logo-divider" aria-hidden="true"></span>
-                <span class="header__logo-img-wrap">
-                    <img src="assets/icons/Logo-Navasoft.png" alt="NAVASOFT" class="header__logo-img" loading="eager">
-                </span>
+            <a href="index.html#inicio" class="header__logo header__logo--brand" aria-label="EKAM Perú - Inicio">
+                <img src="assets/icons/Logo-EKAM-header.webp" alt="EKAM Perú - ERP + IA + Transformación Digital" class="header__brand-img" width="440" height="204" loading="eager" fetchpriority="high">
             </a>
-            <nav class="header__nav" aria-label="Navegación principal">
+            <nav class="header__nav" id="mainNav" aria-label="Navegación principal">
                 <ul class="header__menu">
-                    <li><a href="index.html#inicio" class="header__link">Inicio</a></li>
                     <li><a href="soluciones.html" class="header__link">Soluciones</a></li>
-                    <li><a href="index.html#navasoft" class="header__link">NAVASOFT</a></li>
+                    <li><a href="index.html#navasoft" class="header__link">NAVASOFT ERP</a></li>
+                    <li><a href="index.html#ia" class="header__link">IA</a></li>
                     <li><a href="sectores.html" class="header__link">Sectores</a></li>
-                    <li><a href="index.html#contacto" class="header__link">Contacto</a></li>
+                    <li><a href="index.html#empresa" class="header__link">Nosotros</a></li>
                 </ul>
             </nav>
             <a href="index.html#contacto" class="btn btn--primary header__cta">Solicitar demostración</a>
+            <button class="header__toggle" id="menuToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mainNav"><span class="header__toggle-bar"></span><span class="header__toggle-bar"></span><span class="header__toggle-bar"></span></button>
         </div>
     </header>
+    <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 
     <main>
         <section class="section legal-page">
@@ -51,7 +64,7 @@
                 <p>Usamos la información para contactar al solicitante, preparar una orientación comercial y dar seguimiento a la consulta. No vendemos ni compartimos estos datos con terceros para fines publicitarios.</p>
 
                 <h2>Canales de contacto</h2>
-                <p>El formulario de la web prepara un mensaje para WhatsApp. El usuario puede revisar el contenido antes de enviarlo.</p>
+                <p>El formulario de la web prepara un mensaje para WhatsApp. El usuario puede revisar el contenido antes de enviarlo. También puedes escribirnos a <a href="mailto:soporte@ekamperu.com">soporte@ekamperu.com</a>.</p>
 
                 <h2>Conservación y derechos</h2>
                 <p>El usuario puede solicitar la actualización o eliminación de sus datos comunicándose con EKAM Perú a través de sus canales oficiales.</p>
@@ -64,10 +77,67 @@
 
     <footer class="footer">
         <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="index.html#inicio" class="footer__logo" aria-label="EKAM Perú - Inicio">
+                        <span class="footer__logo-icon-wrap">
+                            <img loading="lazy" decoding="async" src="assets/icons/Logo-EKAM-small.webp" alt="Logo EKAM" class="footer__logo-icon" width="480" height="249">
+                        </span>
+                        <span class="footer__logo-text">EKAM PERÚ</span>
+                    </a>
+                    <p class="footer__tagline">ERP + IA + Transformación Digital</p>
+                    <p class="footer__desc">EKAM Perú impulsa la transformación digital de las empresas mediante la implementación y el acompañamiento del ERP NAVASOFT.</p>
+                    <div class="footer__social">
+                        <a href="https://www.facebook.com/p/EKAM-PERU-SAC-100067061044660/?locale=es_LA" target="_blank" rel="noopener noreferrer" aria-label="EKAM Perú en Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8.5a.5.5 0 0 1 .5-.5z"/></svg></a>
+                        <a href="https://www.youtube.com/channel/UC7jsIRopYgvz7tcBPh6aRkg/about" target="_blank" rel="noopener noreferrer" aria-label="EKAM Perú en YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.8 15.1V8.9l5.7 3.1z"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Soluciones</h3>
+                    <ul class="footer__list">
+                        <li><a href="soluciones/erp-navasoft/">NAVASOFT ERP</a></li>
+                        <li><a href="index.html#ia">Inteligencia Artificial</a></li>
+                        <li><a href="soluciones/erp-navasoft/">Business Intelligence</a></li>
+                        <li><a href="index.html#a-medida">Desarrollo a medida</a></li>
+                        <li><a href="soluciones/facturacion-electronica/">Facturación electrónica</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Sectores</h3>
+                    <ul class="footer__list">
+                        <li><a href="sectores/agroindustria/">Agroindustria</a></li>
+                        <li><a href="sectores/comercio/">Comercio</a></li>
+                        <li><a href="sectores/industria/">Industria</a></li>
+                        <li><a href="sectores/salud/">Salud</a></li>
+                        <li><a href="sectores/construccion/">Construcción</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Empresa</h3>
+                    <ul class="footer__list">
+                        <li><a href="index.html#empresa">Nosotros</a></li>
+                        <li><a href="index.html#clientes">Clientes</a></li>
+                        <li><a href="index.html#implementacion">Metodología</a></li>
+                        <li><a href="recursos/">Recursos y guías</a></li>
+                        <li><a href="https://wa.me/51949882756?text=Hola%2C%20deseo%20recibir%20el%20brochure%20de%20EKAM%20Per%C3%BA%20y%20NAVASOFT%20ERP." target="_blank" rel="noopener noreferrer">Solicitar brochure</a></li>
+                        <li><a href="privacidad.html">Política de privacidad</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h3 class="footer__heading">Contacto</h3>
+                    <ul class="footer__list footer__contact">
+                        <li><a href="https://wa.me/51949882756" target="_blank" rel="noopener noreferrer">WhatsApp: +51 949 882 756</a></li>
+                        <li><a href="tel:+51949882756">Teléfono: +51 949 882 756</a></li>
+                        <li><a href="mailto:soporte@ekamperu.com">soporte@ekamperu.com</a></li>
+                        <li><span>Chiclayo, Lambayeque, Perú</span></li>
+                    </ul>
+                </div>
+            </div>
             <div class="footer__bottom">
                 <p>&copy; 2026 EKAM PERÚ S.A.C. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
+    <script src="js/main.js?v=20260926-lazy-1"></script>
 </body>
 </html>

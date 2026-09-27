@@ -1,0 +1,10 @@
+<!doctype html><html><body style="margin:0"><iframe id="f" style="border:0;display:block"></iframe>
+<script>
+var q=new URLSearchParams(location.search), f=document.getElementById('f');
+f.style.width=q.get('w')+'px'; f.style.height=q.get('h')+'px'; f.src='../'+q.get('u');
+f.onload=function(){var d=f.contentDocument, st=d.createElement('style');
+st.textContent='*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}html{scroll-behavior:auto!important}';
+d.head.appendChild(st);
+d.querySelectorAll('.animate-on-scroll').forEach(function(e){e.classList.add('animate-on-scroll--visible')});
+d.querySelectorAll('[data-count]').forEach(function(e){e.textContent=(e.dataset.prefix||'')+e.dataset.count});};
+</script></body></html>

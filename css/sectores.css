@@ -97,7 +97,6 @@
 
 .sector-tab:focus-visible,
 .sector-tabs__arrow:focus-visible,
-.sector-process__cta:focus-visible,
 .sector-whatsapp:focus-visible {
     outline: 3px solid rgba(32, 164, 243, 0.35);
     outline-offset: 3px;
@@ -298,11 +297,6 @@
     line-height: 1.4;
 }
 
-.sector-process__cta:hover {
-    background: var(--color-primary-hover);
-    transform: translateY(-1px);
-}
-
 .sector-note {
     max-width: 860px;
     margin: 1.2rem auto 0;
@@ -310,10 +304,6 @@
     font-size: 0.8rem;
     line-height: 1.6;
     text-align: center;
-}
-
-.sectors-footer__grid {
-    grid-template-columns: 1.6fr repeat(3, 1fr);
 }
 
 .sector-whatsapp {
@@ -359,9 +349,7 @@
     .sector-process {
         grid-template-columns: 1fr;
     }
-    .sectors-footer__grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+
 }
 
 @media(max-width: 768px) {
@@ -392,9 +380,7 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1.35rem 1rem;
     }
-    .sectors-footer__grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+
 }
 
 @media(max-width: 480px) {
@@ -411,8 +397,7 @@
     .sector-detail {
         padding: 1.15rem;
     }
-    .sector-process__steps,
-    .sectors-footer__grid {
+    .sector-process__steps {
         grid-template-columns: 1fr;
     }
     .sector-whatsapp {
@@ -546,7 +531,7 @@
     height: 23.5rem;
     object-fit: cover;
     object-position: center;
-    filter: saturate(0.75) contrast(0.85);
+    filter: saturate(0.95) contrast(0.98);
 }
 
 .sector-feature::after {
@@ -554,7 +539,7 @@
     z-index: 1;
     inset: 0 0 auto;
     height: 23.5rem;
-    background: linear-gradient(90deg, rgba(3, 31, 55, 0.94) 0%, rgba(3, 31, 55, 0.78) 52%, rgba(3, 31, 55, 0.34) 100%);
+    background: linear-gradient(90deg, rgba(3, 31, 55, 0.88) 0%, rgba(3, 31, 55, 0.66) 50%, rgba(3, 31, 55, 0.18) 100%);
     content: "";
     pointer-events: none;
 }
@@ -582,7 +567,7 @@
 
 .sector-feature .sector-detail__description {
     max-width: 610px;
-    color: #e7f3fc;
+    color: #f0f8ff;
     font-size: clamp(1rem, 1.45vw, 1.17rem);
     line-height: 1.6;
 }
@@ -613,7 +598,7 @@
     margin-top: 1.45rem;
     padding: 0.7rem 1.1rem;
     border-radius: 0.55rem;
-    background: #0b8add;
+    background: linear-gradient(135deg, #0b8add, #11a2ef);
     color: #fff;
     font-size: 0.92rem;
     font-weight: 750;
@@ -854,7 +839,7 @@
         inset: 0;
         width: 100%;
         height: 18.5rem;
-        background: linear-gradient(90deg, rgba(3, 31, 55, 0.93) 0%, rgba(3, 31, 55, 0.76) 52%, rgba(3, 31, 55, 0.3) 100%);
+        background: linear-gradient(90deg, rgba(3, 31, 55, 0.9) 0%, rgba(3, 31, 55, 0.68) 50%, rgba(3, 31, 55, 0.2) 100%);
     }
 
     .sector-feature .sector-detail__content {
@@ -904,7 +889,7 @@
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
-        margin: 2.4rem 0 0;
+        margin: 2rem 0 0;
         padding: 0;
     }
 
@@ -912,6 +897,8 @@
         min-height: 0;
         padding: 1.1rem 1.25rem;
         background: #fff;
+        border-color: #cfe4f3;
+        box-shadow: 0 10px 24px rgba(14, 63, 100, 0.08);
     }
 
     .sector-feature .info-card__heading { margin-bottom: 0.55rem; }
@@ -1135,5 +1122,149 @@
 
     .sector-process__steps {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Premium visual alignment with the home landing. */
+.sector-intro {
+    background:
+        linear-gradient(132deg, rgba(255,255,255,0) 0 58%, rgba(193, 230, 255, 0.30) 58% 100%),
+        radial-gradient(circle at 86% 14%, rgba(32, 164, 243, 0.16), transparent 24rem),
+        linear-gradient(135deg, #fff 0%, #f5fbff 54%, #dcefff 100%);
+}
+
+.sector-editorial .sector-intro__heading h1 {
+    font-weight: 900;
+    font-size: clamp(2.35rem, 4.3vw, 4rem);
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+}
+
+/* Desktop correction: the title lives in a lateral editorial column. */
+@media (min-width: 901px) {
+    .sector-editorial {
+        grid-template-columns: minmax(320px, 0.34fr) minmax(0, 1fr);
+        gap: clamp(2.5rem, 4vw, 5rem);
+        align-items: start;
+    }
+
+    .sector-editorial__aside {
+        min-width: 0;
+    }
+
+    .sector-editorial .sector-intro__heading {
+        max-width: 320px;
+    }
+
+    .sector-editorial .sector-intro__heading h1 {
+        max-width: 320px;
+        font-size: clamp(2.15rem, 2.55vw, 2.95rem);
+        line-height: 1.06;
+        letter-spacing: -0.025em;
+        overflow-wrap: normal;
+    }
+
+    .sector-feature {
+        min-width: 0;
+    }
+}
+
+/* =====================================================================
+   Mismo lenguaje visual que la pagina de inicio
+   ===================================================================== */
+.sector-intro {
+    background:
+        linear-gradient(132deg, rgba(255,255,255,0) 0 51%, rgba(193, 230, 255, 0.42) 51% 100%),
+        radial-gradient(circle at 77% 16%, rgba(32, 164, 243, 0.24), transparent 29rem),
+        linear-gradient(135deg, #ffffff 0%, #f5fbff 52%, #dcefff 100%);
+}
+
+.sector-editorial__aside {
+    container-type: inline-size;
+}
+
+/* El tamano sigue al ancho de la columna para que "NAVASOFT" no la desborde. */
+.sector-editorial .sector-intro__heading h1 {
+    max-width: none;
+    font-size: min(2.5rem, 8.6cqi);
+    color: var(--color-primary-dark);
+    font-family: var(--font-heading);
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    line-height: 1.04;
+    text-transform: uppercase;
+    text-wrap: balance;
+    overflow-wrap: normal;
+}
+
+.sector-editorial .sector-intro__heading p {
+    color: #224466;
+}
+
+.sector-editorial .sector-tab:hover {
+    color: var(--color-primary);
+}
+
+.sector-editorial .sector-tab[aria-selected="true"] {
+    border-left-color: var(--color-accent);
+    color: var(--color-primary-dark);
+}
+
+.sector-feature .sector-feature__cta,
+.sector-feature__cta {
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, var(--color-accent), #ff8a00);
+    box-shadow: 0 10px 22px rgba(245, 158, 11, 0.22);
+    color: #fff;
+}
+
+.sector-feature .sector-feature__cta:hover,
+.sector-feature__cta:hover {
+    background: linear-gradient(135deg, #ffac24, var(--color-accent-dark));
+    box-shadow: 0 12px 28px rgba(245, 158, 11, 0.32);
+}
+
+@media (max-width: 1024px) {
+    .sector-editorial .sector-tab[aria-selected="true"] {
+        border-color: var(--color-accent);
+    }
+}
+
+.sector-detail__content h2 {
+    letter-spacing: -0.01em;
+}
+
+/* Ilustracion propia del sector (reemplaza las fotos de bancos externos). */
+.sector-feature__art {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 78% 42%, rgba(32, 164, 243, 0.35), transparent 55%),
+        linear-gradient(135deg, var(--color-primary) 0%, var(--color-deep) 100%);
+}
+
+.sector-feature__art svg {
+    width: min(46%, 300px);
+    height: auto;
+    margin-right: 6%;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+/* Metodologia de 6 pasos (igual que en el inicio). */
+.sector-process--editorial .sector-process__steps {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+@media (max-width: 1150px) {
+    .sector-process--editorial .sector-process__steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .sector-process--editorial .sector-process__steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }

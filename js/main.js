@@ -8,6 +8,10 @@
 
     const WHATSAPP_NUMBER = '51949882756';
     const WHATSAPP_MESSAGE = 'Hola, me interesa conocer más sobre la implementación de NAVASOFT por parte de EKAM Perú y solicitar una demostración.';
+    const CONTACT_EMAIL = 'soporte@ekamperu.com';
+    // URL que recibe cada solicitud (Formspree, webhook de n8n, script propio del hosting, etc.).
+    // Mientras este vacia, la solicitud solo se prepara por WhatsApp y correo.
+    const LEAD_ENDPOINT = '';
 
     function trackCommercialEvent(name, params) {
         if (typeof window.gtag === 'function') {
@@ -34,6 +38,21 @@
 
     window.addEventListener('scroll', handleHeaderScroll, { passive: true });
     handleHeaderScroll();
+
+    function handleMobileHeroFloating() {
+        const hero = document.querySelector('.hero');
+        if (!hero || window.innerWidth > 768) {
+            document.body.classList.remove('mobile-hero-floating-hidden');
+            return;
+        }
+
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        document.body.classList.toggle('mobile-hero-floating-hidden', heroBottom > window.innerHeight * 0.72);
+    }
+
+    window.addEventListener('scroll', handleMobileHeroFloating, { passive: true });
+    window.addEventListener('resize', handleMobileHeroFloating);
+    handleMobileHeroFloating();
 
     /* ---- Mobile menu ---- */
     const menuToggle = document.getElementById('menuToggle');
@@ -137,7 +156,7 @@
 
     if (!prefersReducedMotion) {
         const animateElements = document.querySelectorAll(
-            '.challenge-card, .module-card, .sector-card, .trust-strip__item'
+            '.module-card, .ia-type, .sector-tile, .problem-card, .method__step'
         );
 
         animateElements.forEach(function (el) {
@@ -145,7 +164,7 @@
         });
 
         // Add stagger to grids
-        document.querySelectorAll('.challenges__grid, .modules__grid, .sectors__grid, .trust-strip__grid').forEach(function (grid) {
+        document.querySelectorAll('.modules__grid, .ia-types__grid, .sector-tiles, .problem-grid, .method__steps').forEach(function (grid) {
             grid.classList.add('animate-stagger');
         });
 
@@ -165,6 +184,74 @@
             observer.observe(el);
         });
     }
+
+    /* ---- Contadores animados (+15 años, +300 empresas) ---- */
+    const counters = document.querySelectorAll('[data-count]');
+
+    if (counters.length && !prefersReducedMotion && 'IntersectionObserver' in window) {
+        const counterObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const target = parseInt(el.getAttribute('data-count'), 10);
+                const prefix = el.getAttribute('data-prefix') || '';
+                const duration = 1400;
+                const start = performance.now();
+
+                function tick(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = prefix + Math.round(target * eased);
+                    if (progress < 1) requestAnimationFrame(tick);
+                }
+
+                requestAnimationFrame(tick);
+                counterObserver.unobserve(el);
+            });
+        }, { threshold: 0.6 });
+
+        counters.forEach(function (el) {
+            counterObserver.observe(el);
+        });
+    }
+
+    /* ---- Indicadores de carruseles deslizables (solo visibles en celular) ---- */
+    document.querySelectorAll('[data-dots-for]').forEach(function (dots) {
+        const track = document.getElementById(dots.getAttribute('data-dots-for'));
+        if (!track) return;
+        const slides = Array.prototype.slice.call(track.children);
+
+        const buttons = slides.map(function (slide, index) {
+            const button = document.createElement('button');
+            const title = slide.querySelector('h3');
+            button.type = 'button';
+            button.className = 'carousel-dots__dot';
+            button.setAttribute('aria-label', 'Ver ' + (title ? title.textContent.trim() : 'tarjeta ' + (index + 1)));
+            button.addEventListener('click', function () {
+                track.scrollTo({ left: slide.offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft), behavior: 'smooth' });
+            });
+            dots.appendChild(button);
+            return button;
+        });
+
+        function updateDots() {
+            const center = track.scrollLeft + track.clientWidth / 2;
+            let active = 0;
+            slides.forEach(function (slide, index) {
+                const slideCenter = slide.offsetLeft - track.offsetLeft + slide.offsetWidth / 2;
+                const best = slides[active].offsetLeft - track.offsetLeft + slides[active].offsetWidth / 2;
+                if (Math.abs(slideCenter - center) < Math.abs(best - center)) active = index;
+            });
+            buttons.forEach(function (button, index) {
+                button.classList.toggle('carousel-dots__dot--active', index === active);
+                button.setAttribute('aria-current', index === active ? 'true' : 'false');
+            });
+        }
+
+        track.addEventListener('scroll', updateDots, { passive: true });
+        window.addEventListener('resize', updateDots);
+        updateDots();
+    });
 
     /* ---- Showcase tabs ---- */
     const tabs = document.querySelectorAll('.showcase__tab');
@@ -351,15 +438,41 @@
                 solution: solutionSelect.value || 'sin_especificar',
                 timing: timingSelect && timingSelect.value ? timingSelect.value : 'sin_especificar'
             });
+            // Copia de respaldo: la solicitud llega a EKAM aunque el visitante no envie el WhatsApp.
+            const honeypot = contactForm.querySelector('[name="website"]');
+            if (LEAD_ENDPOINT && !(honeypot && honeypot.value)) {
+                fetch(LEAD_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        nombre: name,
+                        empresa: company,
+                        telefono: phone,
+                        correo: email,
+                        solucion: solution,
+                        plazo: timing,
+                        necesidad: message,
+                        origen: window.location.href
+                    }),
+                    keepalive: true
+                }).catch(function () { /* WhatsApp y correo siguen disponibles */ });
+            }
+
             window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+            // Alternativas visibles por si WhatsApp no se abrio o la persona prefiere correo.
+            const mailSubject = 'Solicitud de evaluación comercial - ' + company;
+            const mailtoLink = document.getElementById('formMailto');
+            const whatsappAgain = document.getElementById('formWhatsappAgain');
+            if (mailtoLink) {
+                mailtoLink.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent(mailSubject) + '&body=' + encodeURIComponent(whatsappMessage.join('\n'));
+            }
+            if (whatsappAgain) {
+                whatsappAgain.href = whatsappUrl;
+            }
 
             formNotification.hidden = false;
             formNotification.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-            // Hide notification after 8 seconds
-            setTimeout(function () {
-                formNotification.hidden = true;
-            }, 8000);
         });
 
         // Clear error on input
@@ -795,6 +908,7 @@
         }, 5000);
     }
 
-    resetConversation();
+    // La bienvenida se arma al abrir el chat (openChatbot), asi sus imagenes no se descargan
+    // en la primera carga de la pagina.
 
 })();
