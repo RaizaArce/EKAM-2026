@@ -838,17 +838,32 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 
+/* Marco de ventana: presenta la captura como una aplicacion de escritorio. */
 .showcase__image-button {
     position: relative;
     display: block;
     width: 100%;
-    padding: 0;
+    padding: 1.75rem 0 0;
     overflow: hidden;
-    border: 1px solid var(--color-border);
+    border: 1px solid #0c2238;
     border-radius: var(--radius-xl);
-    background: var(--color-background);
-    box-shadow: var(--shadow-md);
+    background: #0c2238;
+    box-shadow: var(--shadow-xl);
     cursor: zoom-in;
+}
+
+.showcase__image-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1.75rem;
+    background:
+        radial-gradient(circle at 1rem 50%, #ff5f57 0 0.28rem, transparent 0.31rem),
+        radial-gradient(circle at 2rem 50%, #febc2e 0 0.28rem, transparent 0.31rem),
+        radial-gradient(circle at 3rem 50%, #28c840 0 0.28rem, transparent 0.31rem),
+        linear-gradient(180deg, #12314d, #0c2238);
 }
 
 .showcase__image {
