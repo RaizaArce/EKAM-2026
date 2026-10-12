@@ -244,7 +244,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn--primary {
     background: linear-gradient(135deg, var(--color-accent), #ff8a00);
-    color: #fff;
+    /* Texto oscuro: el blanco sobre este naranja no llega al contraste AA (2,2:1). */
+    color: var(--color-primary-dark);
     box-shadow: 0 10px 22px rgba(245, 158, 11, 0.22);
 }
 
