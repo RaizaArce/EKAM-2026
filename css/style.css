@@ -4021,6 +4021,10 @@ section[id],
 }
 
 .final-cta .problem-card__title {
+.about__more {
+    margin-top: 1.75rem;
+}
+
     color: #fff;
 }
 
