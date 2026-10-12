@@ -32,6 +32,9 @@ EKAM-2026/
 ├── index.html
 ├── soluciones.html
 ├── sectores.html
+├── nosotros.html              ← Historia, misión, visión y datos de la empresa
+├── privacidad.html
+├── sectores/ · soluciones/ · recursos/   ← Una página por sector, solución y guía
 ├── README.md
 ├── WEB-DOCUMENTACION.md       ← Guía técnica y de contenido del sitio
 ├── AGENTE-SOPORTE-WHATSAPP-PRIMER-NIVEL.md
@@ -39,8 +42,9 @@ EKAM-2026/
 ├── .gitignore
 ├── css/
 │   ├── style.css               ← Estilos compartidos
-│   ├── soluciones.css
-│   └── sectores.css
+│   ├── soluciones.css          ← Hero, CTA y tarjetas de las páginas internas
+│   ├── sectores.css
+│   └── nosotros.css
 ├── js/
 │   ├── main.js                 ← Interacciones de la portada
 │   ├── soluciones.js
@@ -48,16 +52,12 @@ EKAM-2026/
 │   └── chatbot.js
 └── assets/
     ├── icons/                  ← Logotipos e íconos de marca
-    ├── LogosClientes/          ← Logos visibles en la sección Clientes
+    ├── LogosClientes/          ← Logos visibles en la sección Clientes (.webp)
     ├── screenshots/            ← Capturas de módulos NAVASOFT
     ├── videos/                 ← Video y portada de la demostración
     └── images/
         ├── asistente-ekam.*    ← Recursos del asistente virtual
-        ├── navamovil-funcionalidades.png
-        ├── logo/               ← Reserva para futuros recursos
-        ├── sistema/            ← Reserva para futuras capturas
-        ├── clientes/           ← Reserva para futuras imágenes
-        └── sectores/           ← Reserva para futuras imágenes
+        └── navamovil-funcionalidades.png
 ```
 
 `tmp/` se excluye del repositorio: solo conserva respaldos de publicación y
