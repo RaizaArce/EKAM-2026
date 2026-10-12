@@ -12,6 +12,9 @@
     // URL que recibe cada solicitud (Formspree, webhook de n8n, script propio del hosting, etc.).
     // Mientras este vacia, la solicitud solo se prepara por WhatsApp y correo.
     const LEAD_ENDPOINT = '';
+    // URL del webhook que conecta el asistente con la IA (n8n + Gemini).
+    // Mientras este vacia, el asistente funciona solo con las respuestas rapidas.
+    const CHAT_AI_ENDPOINT = '';
 
     function trackCommercialEvent(name, params) {
         if (typeof window.gtag === 'function') {
@@ -634,6 +637,19 @@
     let chatTimers = [];
     let chatbotHasOpened = false;
 
+    // Limites de cortesia del asistente con IA; el limite real se aplica en n8n.
+    const CHAT_AI_MAX_LENGTH = 400;
+    const CHAT_AI_MAX_MESSAGES = 20;
+    const CHAT_AI_TIMEOUT = 20000;
+    const chatSession = (window.crypto && typeof window.crypto.randomUUID === 'function')
+        ? window.crypto.randomUUID()
+        : Date.now().toString(36) + Math.random().toString(36).slice(2);
+    let chatInput = null;
+    let chatHistory = [];
+    let chatSentCount = 0;
+    let chatGeneration = 0;
+    let chatRequest = null;
+
     function openChatbot() {
         chatbot.classList.add('chatbot--open');
         chatbotLauncher.setAttribute('aria-expanded', 'true');
@@ -803,6 +819,9 @@
         chatbotReplies.querySelectorAll('button').forEach(function (btn) {
             btn.disabled = busy;
         });
+        if (chatInput) {
+            chatInput.disabled = busy;
+        }
     }
 
     function selectQuestion(id) {
@@ -882,7 +901,13 @@
     function resetConversation(focusMenuAfterReset) {
         chatTimers.forEach(function (t) { clearTimeout(t); });
         chatTimers = [];
-        chatBusy = false;
+        chatGeneration++;
+        if (chatRequest) {
+            chatRequest.abort();
+            chatRequest = null;
+        }
+        chatHistory = [];
+        setBusy(false);
         chatbotMessages.innerHTML = '';
         chatbotReplies.innerHTML = '';
 
@@ -900,6 +925,111 @@
             }
         }, 500);
         chatTimers.push(timer);
+    }
+
+    /* ---- Asistente con IA (solo si CHAT_AI_ENDPOINT esta configurado) ---- */
+    function setupAiChat() {
+        const form = document.createElement('form');
+        form.className = 'chatbot__form';
+        form.noValidate = true;
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'chatbot__input';
+        input.maxLength = CHAT_AI_MAX_LENGTH;
+        input.placeholder = 'Escribe tu consulta';
+        input.autocomplete = 'off';
+        input.setAttribute('aria-label', 'Escribe tu consulta para el asistente');
+
+        const send = document.createElement('button');
+        send.type = 'submit';
+        send.className = 'chatbot__send';
+        send.setAttribute('aria-label', 'Enviar consulta');
+        send.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+
+        const note = document.createElement('p');
+        note.className = 'chatbot__note';
+        note.textContent = 'Respuestas generadas con IA; pueden contener errores. No compartas datos sensibles.';
+
+        form.append(input, send);
+        chatbotPanel.append(form, note);
+        chatInput = input;
+
+        const status = chatbot.querySelector('.chatbot__header-status');
+        if (status && status.lastChild) {
+            status.lastChild.textContent = 'Asistente con IA';
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            askAi(input.value);
+        });
+    }
+
+    function askAi(text) {
+        const question = text.trim();
+        if (!question || chatBusy) return;
+
+        if (chatSentCount >= CHAT_AI_MAX_MESSAGES) {
+            appendMessage('bot', 'Para continuar con más detalle, un asesor de EKAM Perú puede atenderte por WhatsApp.');
+            renderButtons([{ label: 'Continuar por WhatsApp', type: 'whatsapp', value: 'general', primary: true }, 'menu']);
+            scrollChatToBottom();
+            return;
+        }
+
+        chatSentCount++;
+        chatInput.value = '';
+        appendMessage('user', question);
+        chatbotReplies.innerHTML = '';
+        setBusy(true);
+        const typing = showTyping();
+        trackCommercialEvent('chatbot_ai_message');
+
+        const generation = chatGeneration;
+        const controller = new AbortController();
+        chatRequest = controller;
+        const timeout = setTimeout(function () { controller.abort(); }, CHAT_AI_TIMEOUT);
+
+        fetch(CHAT_AI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+                sesion: chatSession,
+                mensaje: question,
+                historial: chatHistory.slice(-10),
+                origen: window.location.pathname
+            }),
+            signal: controller.signal
+        }).then(function (response) {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.json();
+        }).then(function (data) {
+            const answer = data && typeof data.respuesta === 'string' ? data.respuesta.trim() : '';
+            if (!answer) throw new Error('Respuesta vacia');
+            return answer;
+        }).then(function (answer) {
+            if (generation !== chatGeneration) return;
+            chatHistory.push({ rol: 'usuario', texto: question }, { rol: 'asistente', texto: answer });
+            appendMessage('bot', answer);
+            renderButtons([{ label: 'Hablar con un asesor', type: 'whatsapp', value: 'general' }, 'menu']);
+        }, function () {
+            // Sin conexion con la IA: el visitante sigue con el menu y WhatsApp.
+            if (generation !== chatGeneration) return;
+            appendMessage('bot', 'En este momento no puedo responder esa consulta. Puedes revisar los temas del menú o escribirnos por WhatsApp.');
+            renderButtons([{ label: 'Continuar por WhatsApp', type: 'whatsapp', value: 'general', primary: true }, 'menu']);
+        }).then(function () {
+            clearTimeout(timeout);
+            if (generation !== chatGeneration) return;
+            typing.remove();
+            chatRequest = null;
+            setBusy(false);
+            scrollChatToBottom();
+            chatInput.focus({ preventScroll: true });
+        });
+    }
+
+    if (CHAT_AI_ENDPOINT) {
+        setupAiChat();
     }
 
     if (chatbotLauncherLabel) {
