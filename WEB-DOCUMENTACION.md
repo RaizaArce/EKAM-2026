@@ -1,434 +1,223 @@
-# EKAM 2026 · NAVASOFT ERP — DOCUMENTACIÓN DE LA WEB
+# EKAM Perú — Documentación técnica del sitio
 
-> Documentación técnica y funcional completa de la página web desarrollada como propuesta de rediseño para **EKAM PERÚ / NAVASOFT**.
+Guía para quien mantenga el sitio: cómo está organizado, qué hace cada archivo y cómo hacer los cambios más comunes. El resumen y la puesta en marcha están en `README.md`.
 
----
+## 1. Resumen
 
-## 1. RESUMEN DEL PROYECTO
+- Sitio corporativo estático de **EKAM PERU S.A.C.** (Chiclayo), partner de **NAVASOFT ERP**.
+- HTML, CSS y JavaScript sin frameworks, sin proceso de compilación y sin backend.
+- 25 páginas: portada, catálogo de soluciones, sectores, nosotros, recursos, privacidad y una página por solución, sector y guía.
+- Contacto por WhatsApp: el formulario, el botón flotante y el asistente virtual preparan un mensaje para `wa.me`.
+- Dominio previsto: `https://www.ekamperu.com` (canónicas, sitemap y datos estructurados ya lo usan).
 
-| Atributo | Valor |
-|---|---|
-| Nombre del proyecto | EKAM 2026 |
-| Tipo | Propuesta de rediseño web (prototipo independiente) |
-| Tecnología | HTML5 + CSS3 + JavaScript Vanilla (ES6+) |
-| Framework | Ninguno (sin React, Vue, Angular, Tailwind, Bootstrap, etc.) |
-| Dependencias | Ninguna (sin `node_modules`, sin npm) |
-| Backend | Ninguno (sin PHP, sin base de datos) |
-| Ruta local | `C:\EKAM-2026` |
-| Sitio de producción | NO tocado (`https://www.ekamperu.com/`) |
-
----
-
-## 2. CÓMO EJECUTAR LA WEB
-
-Sin build, sin instalaciones. Solo un servidor estático:
+## 2. Ejecutar y verificar
 
 ```bash
-cd C:\EKAM-2026
 python -m http.server 5500
 ```
 
-Abrir en el navegador:
+Abrir <http://localhost:5500>.
 
+Antes de subir cualquier cambio:
+
+```bash
+python tools/verificar_sitio.py
 ```
-http://localhost:5500
-```
 
-> **Importante:** no abrir el archivo `index.html` directamente con doble clic (`file://`). Aunque muchas cosas funcionan, es mejor servirlo por HTTP para evitar problemas con rutas y módulos.
+Revisa enlaces y recursos locales, anclas, `sitemap.xml`, JSON-LD y que cada `.css`/`.js` se enlace con la misma versión `?v=` en todas las páginas. La misma verificación corre en GitHub Actions en cada pull request (`.github/workflows/verificar-sitio.yml`).
 
----
+Para cambios de estilo, `tools/capturas.py` y `tools/comparar.py` generan capturas de todas las páginas (1366 px y 375 px) antes y después del cambio y señalan las diferencias. Requieren Google Chrome, Pillow y numpy; las instrucciones están al inicio de cada archivo.
 
-## 3. ESTRUCTURA DE CARPETAS
+## 3. Mapa del sitio
+
+| Ruta | Página | CSS propio | JS |
+|---|---|---|---|
+| `index.html` | Portada | — | `main.js` |
+| `soluciones.html` | Catálogo con detalle interactivo (`?solucion=erp`) | `soluciones.css` | `soluciones.js`, `chatbot.js` |
+| `soluciones/<slug>/` | 6 páginas: `erp-navasoft`, `facturacion-electronica`, `contabilidad`, `hoteles-restaurantes`, `activos-fijos`, `navamovil` | `soluciones.css` | `main.js` |
+| `sectores.html` | Sectores con pestañas | `sectores.css` | `sectores.js`, `chatbot.js` |
+| `sectores/<slug>/` | 10 páginas: `agroindustria`, `comercio`, `construccion`, `educacion`, `grifos`, `hoteles-restaurantes`, `industria`, `salud`, `servicios`, `transporte` | `soluciones.css` | `main.js` |
+| `nosotros.html` | Historia, misión, visión, servicios y datos formales | `soluciones.css`, `nosotros.css` | `main.js` |
+| `recursos/` y `recursos/<slug>/` | Índice y 3 guías: `como-elegir-un-erp`, `facturacion-electronica-peru`, `ple-libros-electronicos` | `soluciones.css` | `main.js` |
+| `privacidad.html` | Política de privacidad | — | `main.js` |
+
+Todas cargan `css/style.css`. Las páginas dentro de carpetas usan rutas relativas (`../../css/style.css`).
+
+### Secciones de la portada
+
+En orden de aparición; el `id` es el ancla que usan el menú y los enlaces internos.
+
+| `id` | Contenido |
+|---|---|
+| `inicio` | Hero: titular, llamados a la acción, cifras y escena ilustrada |
+| — | Propuesta de valor (`.commercial-summary`) |
+| `navasoft` | NAVASOFT como plataforma |
+| `soluciones` | Módulos y soluciones |
+| `pantallas` | Capturas de NAVASOFT con pestañas, visor ampliado y video de demostración |
+| `ia` | Inteligencia artificial aplicada a la gestión |
+| `sectores` | Sectores atendidos |
+| `a-medida` | Desarrollo a medida |
+| `implementacion` | Metodología de implementación |
+| `empresa` | Nosotros: socio tecnológico, cifras, relación EKAM → NAVASOFT y botón a `nosotros.html` |
+| `clientes` | Carrusel de logos (dentro de `empresa`) |
+| `problemas` | Problemas que se resuelven y cierre |
+| `contacto` | Formulario de contacto |
+
+Fuera del `<main>`: footer, visor de imágenes, botón flotante de WhatsApp y asistente virtual.
+
+## 4. Estructura de archivos
 
 ```
 EKAM-2026/
-│
-├── index.html                     ← Página principal completa (una sola página)
-├── README.md                      ← Documentación resumida del proyecto
-├── WEB-DOCUMENTACION.md           ← Este archivo (documentación detallada)
-├── .gitignore                     ← Exclusiones de Git
-│
+├── *.html                     ← portada y páginas de primer nivel
+├── soluciones/ · sectores/ · recursos/   ← una carpeta con index.html por página
+├── robots.txt · sitemap.xml
 ├── css/
-│   └── style.css                  ← Todo el sistema de estilos
-│
+│   ├── style.css              ← variables, base, componentes compartidos y portada
+│   ├── soluciones.css         ← hero, tarjetas, detalle y CTA de las páginas internas
+│   ├── sectores.css           ← solo sectores.html
+│   └── nosotros.css           ← solo nosotros.html
 ├── js/
-│   └── main.js                    ← Todo el comportamiento (Vanilla JS)
-│
-└── assets/
-    ├── icons/
-    │   ├── favicon.svg            ← Favicon provisional
-    │   ├── Logo-EKAM.png          ← Logo oficial EKAM
-    │   └── Logo-Navasoft.png      ← Logo oficial NAVASOFT
-    │
-    └── LogosClientes/             ← Logos de clientes (carrusel)
-        ├── Contactiva.webp
-        ├── Delcor.webp
-        ├── JockeyClubChiclayo.webp
-        ├── Molisam.webp
-        ├── SanRoque.webp
-        └── Vidavas.webp
+│   ├── main.js                ← comportamiento de la portada y páginas internas
+│   ├── soluciones.js          ← datos y detalle de soluciones.html
+│   ├── sectores.js            ← datos y pestañas de sectores.html
+│   └── chatbot.js             ← asistente para las páginas que no cargan main.js
+├── assets/
+│   ├── icons/                 ← logos de EKAM y NAVASOFT, favicons
+│   ├── LogosClientes/         ← logos del carrusel (.webp)
+│   ├── images/                ← asistente virtual, NavaMóvil, og-ekam.jpg
+│   ├── screenshots/           ← capturas de NAVASOFT (.jpeg)
+│   └── videos/                ← demostracion-navasoft-web.mp4 y su póster
+├── tools/                     ← verificación y capturas (no se publica)
+└── .github/workflows/         ← verificación automática en pull requests
 ```
 
-> **Nota sobre carpetas planificadas:** la estructura original previó `assets/images/logo/`, `assets/images/sistema/`, `assets/images/clientes/` y `assets/images/sectores/` para futuras capturas reales. Se eliminaron por estar vacías; créalas de nuevo si llegan a usarse. Los logos de clientes se almacenan en `assets/LogosClientes/` solo en formato `.webp` (los `.png` originales se retiraron del repositorio).
+No hay plantillas: el header y el footer están copiados en cada página. Un cambio en el menú o en el pie debe aplicarse en las 25.
 
----
+## 5. Sistema de diseño
 
-## 4. IDENTIDAD VISUAL (PALETA DE COLORES)
+Definido como variables en `:root`, al inicio de `css/style.css`. Usar siempre las variables.
 
-Todos los colores están centralizados en variables CSS (fácil de cambiar cuando EKAM confirme su manual de marca).
-
-```css
-:root {
-    --color-primary-dark:      #071A2B;   /* Azul petróleo / oscuro */
-    --color-primary:           #0877C9;   /* Azul principal EKAM */
-    --color-primary-hover:     #0668b0;   /* Azul al pasar el mouse */
-    --color-primary-light:     #20A4F3;   /* Azul claro / acentos */
-    --color-primary-subtle:    #e8f4fd;   /* Fondo azul muy suave */
-
-    --color-background:        #F6F9FC;   /* Fondo de secciones alternas */
-    --color-surface:           #FFFFFF;   /* Tarjetas / superficies */
-
-    --color-text:              #152536;   /* Texto principal */
-    --color-text-secondary:    #64748B;   /* Texto secundario */
-    --color-text-muted:        #94A3B8;   /* Texto atenuado */
-
-    --color-border:            #E5EAF0;   /* Bordes */
-    --color-border-light:      #F0F3F7;   /* Bordes tenues */
-
-    --color-success:           #10B981;   /* Éxito / validación */
-    --color-error:             #EF4444;   /* Errores de formulario */
-    --color-warning:           #F59E0B;   /* Alertas */
-}
-```
-
-**Convención de marca:** siempre se mantiene la identidad azul. No se usan degradados excesivos ni neones.
-
----
-
-## 5. TIPOGRAFÍA
-
-Pila de fuentes (con fallback offline — la fuente se carga de Google Fonts pero la web funciona sin internet):
-
-```css
---font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-```
-
-### Jerarquía tipográfica (adaptable con `clamp()`)
-
-| Uso | Variable | Tamaño aproximado |
+| Uso | Variable | Valor |
 |---|---|---|
-| H1 (Hero) | `--text-6xl` | 44–64px |
-| H2 (secciones) | `--text-4xl` | 32–44px |
-| H3 (tarjetas) | `--text-lg` a `--text-xl` | 17–21px |
-| Body | `--text-base` | 15–17px |
-| Subtítulos | `--text-secondary` | 13–14px |
-| Texto pequeño / etiquetas | `--text-xs` | 12–13px |
+| Azul oscuro (fondos, títulos, texto de botones naranjas) | `--color-primary-dark` | `#071A2B` |
+| Azul de marca (enlaces, etiquetas) | `--color-primary` | `#1677B8` |
+| Azul claro | `--color-primary-light` | `#20A4F3` |
+| Naranja de acento (botón principal, detalles) | `--color-accent` | `#F59E0B` |
+| Naranja oscuro (hover) | `--color-accent-dark` | `#D67A00` |
+| Fondo de página / superficies | `--color-background` / `--color-surface` | `#F6F9FC` / `#FFFFFF` |
+| Texto / texto secundario | `--color-text` / `--color-text-secondary` | `#152536` / `#64748B` |
+| Bordes | `--color-border` | `#E5EAF0` |
 
----
+- **Tipografía:** Montserrat (títulos, `--font-heading`) e Inter (texto, `--font-family`), desde Google Fonts. Tamaños fluidos con `clamp()`: `--text-xs` a `--text-6xl`.
+- **Espaciado:** `--space-xs` (0,25 rem) a `--space-5xl` (7 rem). **Radios:** `--radius-sm` a `--radius-2xl`. **Sombras:** `--shadow-sm` a `--shadow-xl`.
+- **Ancho máximo:** `--container-max` 1200 px. **Altura del header:** `--header-height` 92 px.
 
-## 6. SECCIONES DE LA PÁGINA
+### Componentes compartidos
 
-La web es de una sola página (`index.html`) con desplazamiento suave. Las secciones, en orden:
+- **Botones:** `.btn` con `.btn--primary` (naranja con texto azul oscuro), `.btn--outline`, `.btn--ghost-light` (sobre fondos oscuros) y `.btn--lg`.
+- **Encabezado de sección:** `.section__header` con `.section__label`, `.section__title` y `.section__subtitle`; variantes `--light` para fondos oscuros.
+- **Hero y cierre de páginas internas:** `.solutions-hero` y `.solutions-cta` (en `soluciones.css`). Las páginas internas llevan `<body class="solutions-page">`.
 
-### 6.1 Header / Barra de navegación
-- **Sticky**: fija al hacer scroll, cambia de apariencia (sombra + borde) al desplazarse.
-- **Logo**: imagen `Logo-EKAM.png` + texto "EKAM NAVASOFT".
-- **Menú**: Inicio · Soluciones · NAVASOFT · Sectores · Clientes · Nosotros · Contacto.
-- **CTA**: botón "Solicitar demo".
-- **Responsive**: menú hamburguesa con overlay, cierre con `Escape`, accesible por teclado.
-- **Marker HTML**: `<header class="header" id="header">`
+### Organización de `style.css`
 
-### 6.2 Hero principal
-- Etiqueta "NAVASOFT ERP" + logo NAVASOFT.
-- Título: **"Controla toda tu empresa desde un solo sistema"**.
-- Subtítulo y 2 botones (Solicitar demostración / Conocer NAVASOFT).
-- Línea de confianza: "Software peruano · Implementación · Soporte especializado".
-- **Mockup** decorativo del sistema en la derecha (placeholder elegante, no una captura real).
-- Tarjetas flotantes animadas (Ventas, Inventarios, Facturación).
-- **Marker HTML**: `<section class="hero" id="inicio">`
+El archivo tiene un índice al inicio. Además de los bloques por componente, conserva varias capas de ajuste añadidas al final ("Design polish pass", "Final responsive polish", etc.) que sobrescriben reglas anteriores. Antes de modificar un componente, buscar su selector en todo el archivo: puede estar definido en más de un lugar y gana la última regla.
 
-### 6.3 Franja de confianza
-- 4 características con iconos: Software peruano, Solución modular, Soporte especializado, Experiencia empresarial.
-- **Marker HTML**: `<section class="trust-strip">`
+## 6. JavaScript
 
-### 6.4 Desafíos que resolvemos (`#problemas`)
-- Título: "Información conectada para tomar mejores decisiones".
-- 6 tarjetas de problemática: Información dispersa, Procesos separados, Control de inventario, Gestión financiera, Facturación electrónica, Seguimiento de ventas.
-- **Marker HTML**: `<section class="section section--alt" id="problemas">`
+Sin dependencias. Cada archivo es una función autoejecutable en modo estricto.
 
-### 6.5 Pilares (`#pilares`)
-- 3 tarjetas: **Movilidad**, **Integración**, **Adaptabilidad** (conceptos heredados de la web actual).
-- **Marker HTML**: `<section class="section" id="pilares">`
+### `js/main.js`
 
-### 6.6 Soluciones / Módulos (`#soluciones`)
-- Título: "Una solución para cada proceso de tu empresa".
-- 6 tarjetas de módulos: Gestión Administrativa, Contabilidad, Ventas, Facturación Electrónica, Hoteles, Restaurantes.
-- Cada tarjeta: icono, nombre, descripción, 2–3 características y enlace "Conocer más".
-- **Marker HTML**: `<section class="section section--alt" id="soluciones">`
-
-### 6.7 NAVASOFT en acción (`#navasoft`)
-- Visor grande con **tabs** (JavaScript): General, Ventas, Inventarios, Contabilidad, Facturación.
-- Actualmente muestra **placeholders** claramente identificados ("Se reemplazará con imagen real").
-- **Sustitución de imágenes futura:** colocar capturas en `assets/images/sistema/` (dashboard.webp, ventas.webp, inventarios.webp, contabilidad.webp, facturacion.webp) y sustituir los placeholders en el HTML.
-- **Marker HTML**: `<section class="section" id="navasoft">`
-
-### 6.8 NavaMóvil (`#navamovil`)
-- Fondo azul oscuro (sección diferenciada).
-- Capacidades: consulta de stock/precios, clientes, cotizaciones/pedidos, cuentas por cobrar, datos para fuerza de ventas.
-- **Mockup** de smartphone (placeholder, no screenshot real).
-- **Marker HTML**: `<section class="section section--dark" id="navamovil">`
-
-### 6.9 Sectores (`#sectores`)
-- 4 tarjetas: Empresas comerciales, Industria, Hoteles, Restaurantes.
-- **Marker HTML**: `<section class="section" id="sectores">`
-
-### 6.10 Nuestros clientes (`#clientes`)
-- **Carrusel horizontal infinito** (logo marquee).
-- 6 logos reales de clientes.
-- Detalles:
-  - Movimiento automático derecha → izquierda, loop infinito perfecto.
-  - Velocidad: `32s` por ciclo (ajustable).
-  - Pausa al pasar el mouse sobre el carrusel.
-  - Efecto fade lateral en ambos extremos.
-  - Normalización visual individual por cliente (escalas).
-  - `prefers-reduced-motion` → se detiene y muestra los logos en filas.
-- Clientes (orden): Contactiva, Grupo Delcor, Molisam, San Roque, VIDAVA'S, Jockey Club Chiclayo.
-- **Rutas de logos**: `assets/LogosClientes/<Nombre>.webp`
-- **Marker HTML**: `<section class="section section--alt" id="clientes">`
-
-### 6.11 Nuestra empresa (`#empresa`)
-- Diferencia **EKAM PERÚ** (empresa/acompañamiento/implementación/soporte) vs **NAVASOFT** (producto ERP).
-- Título: "Más que software, acompañamiento para tu empresa".
-- Visuales con ambos logos.
-- **Marker HTML**: `<section class="section" id="empresa">`
-- **Página propia**: `nosotros.html` (estilos en `css/nosotros.css`) amplía este bloque con historia, misión, visión, servicios y datos formales de la empresa. El bloque de la portada enlaza a ella con el botón "Conoce más sobre EKAM"; el menú y el footer del resto de páginas apuntan a `nosotros.html`.
-
-### 6.12 Llamada a la acción (`#cta`)
-- Fondo con degradado azul.
-- "Descubre cómo NAVASOFT puede adaptarse a tu empresa" + botón.
-- **Marker HTML**: `<section class="section section--cta" id="cta">`
-
-### 6.13 Formulario de contacto (`#contacto`)
-- Campos: Nombre, Empresa, Teléfono/WhatsApp, Correo, Solución de interés (select), Mensaje.
-- Validación client-side en JavaScript.
-- Muestra una **notificación visual** ("Mensaje enviado — Demostración") porque aún no hay backend.
-- **Marker HTML**: `<section class="section" id="contacto">`
-
-### 6.14 Footer
-- Marcas de soluciones, empresa, soporte y ubicación (Chiclayo, Lambayeque, Perú).
-- Copyright: © 2026 EKAM PERÚ S.A.C.
-- **Marker HTML**: `<footer class="footer">`
-
-### 6.15 Botón flotante de WhatsApp
-- Botón flotante abajo a la derecha.
-- Si `WHATSAPP_NUMBER` está vacío, redirige a `#contacto` en lugar de generar un enlace roto.
-- **Marker HTML**: `<a class="whatsapp-btn" id="whatsappBtn">`
-
----
-
-## 7. JAVASCRIPT (`js/main.js`)
-
-Todo el JS está envuelto en un IIFE (no contamina el scope global). Módulos por responsabilidad:
-
-| Módulo | Función |
+| Bloque | Qué hace |
 |---|---|
-| **Header scroll** | Añade/quita clase `header--scrolled` al hacer scroll |
-| **Menú móvil** | Abre/cierra con overlay, cierre con `Escape`, cierre al hacer clic en enlace, cierre al redimensionar |
-| **Smooth navigation** | Scroll suave a anclas, respeta altura del header |
-| **Active nav link** | Resalta la sección visible en el menú |
-| **IntersectionObserver** | Anima la aparición de tarjetas (fade/slide up) al entrar en viewport |
-| **Showcase tabs** | Cambia paneles NAVASOFT, con navegación por teclado (flechas/Home/End) |
-| **Formulario** | Valida campos (obligatorios + email), muestra notificación de demo, limpia errores al escribir |
-| **WhatsApp** | Configura el enlace con número o fallback a `#contacto` |
-| **Utilidades** | Manejo de resize, cierre de menú en desktop |
+| Header | Sombra al hacer scroll, menú móvil con overlay, cierre al redimensionar |
+| Navegación | Scroll suave a las anclas y resaltado del enlace de la sección visible |
+| Animaciones | Aparición de elementos con `IntersectionObserver`; contadores (`data-count`, `data-prefix`) |
+| Carruseles | Indicadores de los carruseles deslizables en celular |
+| Capturas | Pestañas, visor de imagen ampliada y video de demostración |
+| Formulario | Validación y armado del mensaje de WhatsApp; opción de correo; envío opcional a `LEAD_ENDPOINT` |
+| WhatsApp | Enlace del botón flotante |
+| Asistente virtual | Menú de temas con respuestas predefinidas y derivación a WhatsApp; modo con IA opcional |
 
-### WhatsApp: configurar número oficial
+Configuración, al inicio del archivo:
 
-En `js/main.js`, línea 10:
-
-```js
-// TODO: colocar número oficial de WhatsApp de EKAM.
-const WHATSAPP_NUMBER = '';
-```
-
-Rellena con el número en formato internacional (solo dígitos):
-
-```js
-const WHATSAPP_NUMBER = '51999000000';
-```
-
----
-
-## 8. CÓMO AGREGAR UN NUEVO CLIENTE AL CARRUSEL
-
-1. **Coloca el logo** en `assets/LogosClientes/` (formato `.webp`, con `object-fit: contain` no se deformará).
-2. **Edita `index.html`** en la sección `#clientes` y añade un slide **dentro de los DOS grupos** (el primer grupo es visible, el segundo es la copia para el loop infinito). Estructura:
-
-```html
-<div class="clients-carousel__slide">
-    <div class="client-logo client-miempresa">
-        <div class="logo-wrapper"><img src="assets/LogosClientes/MiEmpresa.webp" alt="Mi Empresa" class="client-logo__img" loading="lazy"></div>
-    </div>
-</div>
-```
-
-3. **Opcional:** añade escala de normalización en `css/style.css`:
-
-```css
-.client-miempresa .client-logo__img {
-    transform: scale(1.0);
-}
-```
-
-> **Importante:** si se agrega un slide a un grupo, debe agregarse **también en el segundo grupo** (el `aria-hidden=true`) para mantener el loop perfecto de `translateX(-50%)`.
-
----
-
-## 9. CÓMO SUSTITUIR LAS CAPTURAS DE NAVASOFT
-
-El visor `#navasoft` tiene tabs con placeholders. Para usar capturas reales:
-
-1. Coloca las imágenes en `assets/images/sistema/` en formato **WebP**:
-   - `dashboard.webp` (tab General)
-   - `ventas.webp`
-   - `inventarios.webp`
-   - `contabilidad.webp`
-   - `facturacion.webp`
-2. En `index.html`, dentro de cada panel, reemplaza el contenido del `.showcase__placeholder` por una `<img>`:
-
-```html
-<img src="assets/images/sistema/ventas.webp" alt="Módulo de ventas NAVASOFT" loading="lazy">
-```
-
-Cada panel queda funcionando: al hacer clic en el tab cambia la imagen.
-
----
-
-## 10. AJUSTES FRECUENTES
-
-### Cambiar la velocidad del carrusel de clientes
-En `css/style.css`:
-
-```css
-.clients-carousel__track {
-    animation: clientsScroll 32s linear infinite;  /* ← cambia 32s */
-}
-```
-Menor número = más rápido; mayor = más lento.
-
-### Cambiar el tamaño de los logos/tarjetas
-En `css/style.css`, bloque `.client-logo` (desktop) y los media queries:
-
-```css
-.client-logo {
-    width: clamp(260px, 20vw, 300px);
-    height: clamp(160px, 12vw, 180px);
-}
-```
-
-La escala individual de cada logo está en los bloques `.client-* .client-logo__img`.
-
-### Cambiar colores de marca
-En `css/style.css`, dentro de `:root` (ver sección 4). Al cambiar una variable se actualiza en toda la web.
-
----
-
-## 11. RESPONSIVE
-
-La web se adapta a los breakpoints:
-
-| Breakpoint | Ajustes clave |
+| Constante | Uso |
 |---|---|
-| **> 1024px** | Layout desktop completo, menú horizontal |
-| **≤ 1024px** | Menú hamburguesa, grids a 2 columnas, tarjetas de logos más pequeñas |
-| **≤ 768px** | Grids a 1 columna, contacto a 1 columna, carrusel compacto |
-| **≤ 480px** | Botones apilados, botón WhatsApp reducido, carrusel aún más compacto |
+| `WHATSAPP_NUMBER` | Número de destino, con código de país y sin signos |
+| `WHATSAPP_MESSAGE` | Mensaje inicial del botón flotante |
+| `CONTACT_EMAIL` | Correo alternativo del formulario |
+| `LEAD_ENDPOINT` | Opcional. URL que recibe cada solicitud por POST en JSON. Vacío: desactivado |
+| `CHAT_AI_ENDPOINT` | Opcional. Webhook del asistente con IA. Vacío: el asistente usa solo respuestas predefinidas |
 
-Sin overflow horizontal del `body`: el carrusel está contenido en su sección.
+**Asistente con IA.** Con `CHAT_AI_ENDPOINT` configurado, el panel añade un campo de texto. Cada consulta se envía por POST con `{ sesion, mensaje, historial, origen }` y se espera `{ "respuesta": "..." }`. Tiene límite de 400 caracteres por mensaje, 20 mensajes por sesión y 20 s de espera; si la petición falla, ofrece continuar por WhatsApp. El límite real de uso debe aplicarse en el servidor que recibe el webhook. Al activarlo hay que actualizar la política de privacidad.
 
----
+**Analítica.** `trackCommercialEvent()` envía eventos a `gtag` o `dataLayer` si existen: `lead_whatsapp_prepared`, `whatsapp_floating_click`, `chatbot_whatsapp_click` y `chatbot_ai_message`. El sitio aún no incluye el código de Google Analytics o Tag Manager; al añadirlo en el `<head>`, los eventos empiezan a registrarse.
 
-## 12. ACCESIBILIDAD
+### Otros archivos
 
-- HTML semántico: `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`.
-- `alt` descriptivos en todas las imágenes.
-- `aria-label` en acciones sin texto visible.
-- `aria-hidden="true"` en el segundo grupo de logos del carrusel (evita duplicar lectores de pantalla).
-- Menú móvil usable por teclado (`Escape` para cerrar, anclas accesibles).
-- `:focus-visible` visible en todos los elementos interactivos.
-- Contraste adecuado entre texto y fondo.
-- `prefers-reduced-motion` respetado (se desactivan animaciones y el carrusel automático).
-- Tabs del showcase operables por teclado (flechas + Home/End).
+- **`soluciones.js`:** contiene los textos e imágenes de cada solución en el objeto `solutions` y pinta el detalle según `?solucion=`. Para editar una solución del catálogo se cambia aquí, no en el HTML.
+- **`sectores.js`:** igual para los sectores (objeto `sectors`), con sus ilustraciones.
+- **`chatbot.js`:** versión reducida del asistente para `soluciones.html` y `sectores.html`.
 
----
+El número de WhatsApp está repetido en `main.js`, `soluciones.js`, `sectores.js` y en los enlaces `wa.me` del HTML. Para cambiarlo, buscar el número en todo el proyecto.
 
-## 13. SEO
+## 7. Tareas frecuentes
 
-- `lang="es"`.
-- `<title>`: "Software ERP en Perú | NAVASOFT - EKAM Perú".
-- `meta description` y `meta keywords`.
-- Open Graph básico (og:title, og:description, og:type, og:url, og:locale, og:site_name).
-- Twitter Cards.
-- Favicon configurado.
-- Un solo `<h1>` principal en el hero.
-- Estructura de encabezados jerárquica.
+### Cambiar un estilo o un script
 
----
+1. Editar el archivo.
+2. Actualizar su versión `?v=` en **todas** las páginas que lo enlazan (formato `AAAAMMDD-n`). Sin esto, los visitantes siguen viendo la versión en caché.
+3. Ejecutar `python tools/verificar_sitio.py`.
 
-## 14. RENDIMIENTO
+### Añadir una página
 
-- Sin librerías externas pesadas.
-- Fonts con `preconnect` + `display=swap` (y fallback local).
-- `loading="lazy"` en imágenes que están fuera del viewport inicial.
-- `loading="eager"` implícito en logos del carrusel (área visible).
-- Animaciones por CSS `transform` (GPU) — `will-change: transform` en el carrusel.
-- Sin JS innecesario cuando CSS basta.
+1. Copiar una página del mismo tipo (por ejemplo, otro sector) y ajustar rutas relativas, `<title>`, descripción, canónica y Open Graph.
+2. Añadirla a `sitemap.xml` y enlazarla desde el menú, el footer o la página índice.
+3. Si corresponde, añadir el JSON-LD de migas de pan al final del `<body>`, como en las páginas de sector.
 
----
+### Añadir un cliente al carrusel
 
-## 15. ESTADO DE GIT
+1. Guardar el logo en `assets/LogosClientes/` en formato `.webp`.
+2. En `index.html`, sección `#clientes`, añadir el slide en los **dos** grupos `.clients-carousel__group` (el segundo es la copia que hace continuo el desplazamiento).
 
-- Repositorio inicializado en rama **`main`**.
-- Working tree limpio tras cada commit.
-- **No hay remote configurado** (falta que el usuario proporcione la URL del repositorio remoto).
+### Cambiar una captura o el video
 
-Para agregar el remoto cuando la URL esté disponible:
+- Capturas: reemplazar el archivo en `assets/screenshots/` conservando el nombre, o actualizar la ruta en `index.html` y en `soluciones.js`.
+- Video: exportar una versión comprimida para web y reemplazar `assets/videos/demostracion-navasoft-web.mp4` y su póster. No subir el original al repositorio.
 
-```bash
-git remote add origin URL_DEL_REPOSITORIO
-git push -u origin main
-```
+### Cambiar el menú o el footer
 
-> Nunca usar `--force`.
+Aplicar el cambio en las 25 páginas respetando las rutas relativas de cada nivel. En la portada, el enlace "Nosotros" del header apunta a `#empresa` para que funcione el resaltado al hacer scroll; en el resto apunta a `nosotros.html`.
 
----
+## 8. Responsive y accesibilidad
 
-## 16. PENDIENTES (información real de EKAM)
+- Puntos de quiebre principales: 1150, 1024 (el menú pasa a hamburguesa), 768, 640 y 480 px.
+- HTML semántico con un solo `<h1>` por página y `aria-labelledby` en las secciones.
+- Menú móvil y asistente con `aria-expanded`, `aria-controls` y foco gestionado.
+- `prefers-reduced-motion` detiene carruseles y animaciones.
+- Contraste: el botón principal usa texto azul oscuro sobre naranja (7,5:1). No usar texto blanco sobre `--color-accent`: queda en 2,2:1, por debajo del mínimo AA de 4,5:1.
+- Todas las imágenes llevan `alt`; las decorativas, `alt=""` o `aria-hidden`.
 
-- [ ] Confirmar colores corporativos oficiales (ajustar `:root`).
-- [ ] Sustituir mockups por **capturas reales** de NAVASOFT.
-- [ ] Sustituir placeholders del visor `#navasoft` por imágenes reales.
-- [ ] Confirmar métricas empresariales (usuarios, instalaciones, % de ahorro).
-- [ ] Confirmar teléfono, correo y redes sociales.
-- [ ] Configurar número oficial de WhatsApp (`WHATSAPP_NUMBER`).
-- [ ] Integrar el formulario con un backend real.
-- [ ] Agregar logos de clientes faltantes (validar con EKAM).
-- [ ] Validar contenido y textos con la empresa.
-- [ ] Definir futura integración con la tecnología del sitio de producción.
+## 9. SEO y rendimiento
 
----
+- Cada página tiene `<title>`, descripción, canónica, Open Graph y tarjeta de Twitter. La imagen para compartir es `assets/images/og-ekam.jpg` (plantilla en `tools/og.html`).
+- Datos estructurados JSON-LD: `Organization` en la portada, `AboutPage` en Nosotros y `BreadcrumbList` en las páginas de sector, solución y recursos.
+- `robots.txt` permite todo y apunta a `sitemap.xml`.
+- Imágenes en `.webp` con `width`/`height` y `loading="lazy"` fuera del primer pantallazo; fuentes cargadas sin bloquear el render; del video solo se precargan los metadatos (`preload="metadata"`).
 
-## 17. LOG DE COMMITS
+## 10. Publicación
 
-| Commit | Descripción |
-|---|---|
-| `016bf38` | chore: initialize EKAM 2026 website |
-| `1c61aa8` | feat: build EKAM 2026 homepage redesign |
-| `7b2be45` | feat: integrate EKAM and NAVASOFT official logos |
-| `1381a1d` | feat: add client logos carousel |
-| `eac72b5` | feat: enhance clients carousel with color logos and infinite loop |
-| `a420e21` | feat: enlarge client logos and adjust card proportions |
+Subir al directorio público: los `.html`, `robots.txt`, `sitemap.xml` y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/` y `recursos/`.
 
----
+No subir: `.git/`, `.github/`, `tools/` ni los `.md`.
 
-*Documento generado como parte de la propuesta de rediseño 2026 · EKAM PERÚ / NAVASOFT.*
+GitHub no publica el sitio automáticamente; fusionar en `main` no cambia lo que se ve en el dominio.
+
+## 11. Pendientes
+
+- Validar con EKAM Perú las cifras de la portada, los textos de `nosotros.html` y la dirección de la oficina.
+- Añadir el código de Google Analytics 4 o Tag Manager.
+- Definir si se activan `LEAD_ENDPOINT` y `CHAT_AI_ENDPOINT`.
+- Añadir `favicon.ico` en la raíz (hoy solo hay SVG y PNG; algunos navegadores lo piden igualmente).
+- Deuda técnica: header y footer duplicados en 25 páginas, y capas de ajuste acumuladas en `style.css`.
