@@ -9,4 +9,9 @@ node_modules/
 *.tmp
 *.bak
 tmp/
+
+# Documentos internos: se quedan fuera del repositorio publico.
+# Solo se versionan los dos que describen el sitio.
 *.md
+!README.md
+!WEB-DOCUMENTACION.md
