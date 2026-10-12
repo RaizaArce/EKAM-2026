@@ -4181,6 +4181,26 @@ section[id],
     overflow: hidden;
 }
 
+/* Legibilidad: descripciones de tarjetas un punto mas grandes desde 641px.
+   En celular se conservan los tamanos compactos definidos en cada bloque. */
+@media (min-width: 641px) {
+    .commercial-summary__card span,
+    .module-card__desc,
+    .ia-type__list li,
+    .method__step p,
+    .problem-card__text {
+        font-size: 0.9375rem;
+    }
+
+    .commercial-summary__card small {
+        font-size: 0.8125rem;
+    }
+
+    .about .experience__stat span {
+        font-size: 0.75rem;
+    }
+}
+
 /* ---- Paginas de contenido (sectores/, soluciones/, recursos/) ---- */
 .content-detail {
     padding-top: clamp(2rem, 1.5rem + 2vw, 3rem);
