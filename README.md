@@ -56,7 +56,7 @@ EKAM-2026/
 │   ├── images/           ← asistente virtual, NavaMóvil e imagen para redes (og-ekam.jpg)
 │   ├── screenshots/      ← capturas de NAVASOFT
 │   └── videos/           ← video de demostración y su portada
-├── tools/                ← capturas antes/después para revisar cambios de CSS (no se publica)
+├── tools/                ← verificación del sitio y capturas antes/después (no se publica)
 ├── README.md
 └── WEB-DOCUMENTACION.md  ← guía técnica y de contenido
 ```
@@ -79,13 +79,14 @@ El número de WhatsApp también aparece escrito en los enlaces `wa.me` del HTML;
 - **Caché:** los `.css` y `.js` se enlazan con `?v=<fecha>`. Al modificar uno, actualizar ese valor en las páginas que lo cargan para que los visitantes reciban la versión nueva.
 - **Página nueva:** copiar el header y el footer de una página existente, añadirla a `sitemap.xml` y enlazarla desde el menú o el footer.
 - **Imágenes:** usar `.webp` (o `.mp4` comprimido para video) y no subir los originales pesados al repositorio.
+- **Verificación:** `python tools/verificar_sitio.py` revisa enlaces, anclas, sitemap, versiones de caché y datos estructurados. Se ejecuta también en cada pull request (GitHub Actions); conviene correrlo antes de subir cambios.
 - **Revisión visual:** `tools/capturas.py` y `tools/comparar.py` generan y comparan capturas de todas las páginas antes y después de un cambio; las instrucciones están al inicio de cada archivo.
 
 ## Publicación
 
 Subir al directorio público del servidor los `.html`, `robots.txt`, `sitemap.xml` y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/` y `recursos/`.
 
-No subir `.git/`, `tools/` ni los archivos `.md`.
+No subir `.git/`, `.github/`, `tools/` ni los archivos `.md`.
 
 ## Pendientes
 
