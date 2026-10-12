@@ -516,7 +516,7 @@
     window.addEventListener('resize', function () {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () {
-            if (window.innerWidth > 1024) {
+            if (window.getComputedStyle(menuToggle).display === 'none') {
                 closeMenu();
             }
         }, 150);

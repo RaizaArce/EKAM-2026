@@ -1659,8 +1659,8 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
-/* <= 1024px */
-@media (max-width: 1024px) {
+/* <= 900px: menu hamburguesa. Si cambia este valor, revisar el bloque 901-1024 de mas abajo. */
+@media (max-width: 900px) {
     .header__nav {
         position: fixed;
         top: 0;
@@ -1697,7 +1697,10 @@ h1, h2, h3, h4, h5, h6 {
     .header__toggle {
         display: flex;
     }
+}
 
+/* <= 1024px */
+@media (max-width: 1024px) {
     .commercial-summary__panel {
         grid-template-columns: 1fr;
     }
@@ -2473,6 +2476,26 @@ section[id],
     .header__logo--brand {
         width: clamp(286px, 35vw, 356px);
         height: 80px;
+    }
+}
+
+/* 901-1024px: el menu completo sigue visible; logo y enlaces mas compactos para que quepa. */
+@media (min-width: 901px) and (max-width: 1024px) {
+    .header__logo--brand {
+        width: 236px;
+        height: 72px;
+    }
+
+    .header__menu {
+        gap: 0;
+    }
+
+    .header__link {
+        padding: 0.5rem 0.55rem;
+    }
+
+    .header__cta {
+        padding: 0.5rem 0.9rem;
     }
 }
 
