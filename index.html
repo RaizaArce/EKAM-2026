@@ -35,7 +35,7 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"></noscript>
-    <link rel="stylesheet" href="css/style.css?v=20261012-1">
+    <link rel="stylesheet" href="css/style.css?v=20261012-2">
 </head>
 <body>
 
@@ -224,42 +224,9 @@
             <div class="hero__bg-shape" aria-hidden="true"></div>
         </section>
 
-        <!-- COMMERCIAL SUMMARY -->
-        <section class="commercial-summary" aria-labelledby="commercialTitle">
+        <!-- PROPUESTA DE VALOR (version corta: solo la frase de marca) -->
+        <section class="commercial-summary commercial-summary--quote" aria-label="Nuestra propuesta">
             <div class="container">
-                <div class="commercial-summary__panel">
-                    <div class="commercial-summary__content">
-                        <span class="section__label">Nuestra propuesta</span>
-                        <h2 class="commercial-summary__title" id="commercialTitle">Tecnología para transformar empresas</h2>
-                        <p>Integramos tecnología, procesos y datos para construir empresas más eficientes, productivas e inteligentes. EKAM Perú combina NAVASOFT ERP, acompañamiento consultivo, BI e inteligencia artificial aplicada al negocio.</p>
-                    </div>
-                    <div class="commercial-summary__cards commercial-summary__cards--four" aria-label="Valor comercial">
-                        <article class="commercial-summary__card">
-                            <span class="commercial-summary__number"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></span>
-                            <strong>ERP</strong>
-                            <span>Ventas, compras, inventario, contabilidad y gestión administrativa conectadas en un mismo flujo.</span>
-                            <small>Menos reprocesos y más control operativo.</small>
-                        </article>
-                        <article class="commercial-summary__card">
-                            <span class="commercial-summary__number"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/></svg></span>
-                            <strong>IA</strong>
-                            <span>Datos empresariales preparados para análisis, alertas y automatización de tareas repetitivas.</span>
-                            <small>Productividad sin perder trazabilidad.</small>
-                        </article>
-                        <article class="commercial-summary__card">
-                            <span class="commercial-summary__number"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 16v-4"/><path d="M12 16V8"/><path d="M17 16v-7"/></svg></span>
-                            <strong>Business Intelligence</strong>
-                            <span>Reportes gerenciales, indicadores y lectura clara de la operación para decidir mejor.</span>
-                            <small>Información accionable para gerencia.</small>
-                        </article>
-                        <article class="commercial-summary__card">
-                            <span class="commercial-summary__number"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span>
-                            <strong>Transformación Digital</strong>
-                            <span>Implementación, capacitación y soporte para que el cambio se sostenga en el trabajo diario.</span>
-                            <small>Adopción real, no solo instalación.</small>
-                        </article>
-                    </div>
-                </div>
                 <blockquote class="brand-quote">
                     <p>No adaptes tu empresa al software. <strong>Adapta la tecnología a tu empresa.</strong></p>
                 </blockquote>
@@ -309,7 +276,7 @@
                     <h2 class="section__title">Todo tu negocio conectado</h2>
                     <p class="section__subtitle">Configuramos cada módulo de NAVASOFT de acuerdo con la operación y los procesos de tu organización.</p>
                 </div>
-                <div class="modules__grid">
+                <div class="modules__grid modules__grid--compact">
                         <a class="module-card module-card--link" href="soluciones/erp-navasoft/">
                             <span class="module-card__icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
                             <h3 class="module-card__title">Ventas</h3>

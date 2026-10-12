@@ -3219,6 +3219,38 @@ section[id],
     }
 }
 
+/* Variante compacta (portada corta): icono a la izquierda y texto a la derecha.
+   Solo desde 641px; en celular los modulos ya son accesos de icono + nombre. */
+@media (min-width: 641px) {
+    .modules__grid--compact .module-card--link {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        column-gap: 0.9rem;
+        align-items: start;
+        padding: 1rem 1.1rem;
+    }
+
+    .modules__grid--compact .module-card__icon {
+        grid-row: 1 / span 2;
+        width: 44px;
+        height: 44px;
+        margin-bottom: 0;
+    }
+
+    .modules__grid--compact .module-card__title {
+        margin: 0.1rem 0 0.15rem;
+    }
+
+    .modules__grid--compact .module-card__desc {
+        min-height: 0;
+        margin-bottom: 0;
+    }
+
+    .modules__grid--compact .module-card__more {
+        display: none;
+    }
+}
+
 /* ---- Tarjetas simples (diferenciadores, cumplimiento, problemas) ---- */
 .problem-grid {
     display: grid;
@@ -3292,6 +3324,15 @@ section[id],
     display: block;
     color: #fff;
     font-weight: 900;
+}
+
+/* Portada corta: la propuesta de valor se reduce a la frase de marca. */
+.commercial-summary--quote {
+    padding: clamp(2rem, 1.5rem + 2vw, 3.25rem) 0;
+}
+
+.commercial-summary--quote .brand-quote {
+    margin-top: 0;
 }
 
 /* ---- 06 ERP + IA: cierre del flujo ---- */
