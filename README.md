@@ -1,103 +1,100 @@
-# EKAM 2026
+# EKAM Perú — Sitio web corporativo
 
-Propuesta de modernización web para **EKAM Perú / NAVASOFT**.
+Sitio web de **EKAM PERU S.A.C.**, empresa de Chiclayo que implementa el ERP **NAVASOFT** y desarrolla software a medida para empresas del norte del Perú.
 
-Este proyecto es un prototipo independiente desarrollado como propuesta de rediseño para la página web corporativa. No corresponde actualmente al sitio web de producción.
+Es un sitio estático: HTML, CSS y JavaScript sin frameworks, sin dependencias npm y sin backend. El dominio previsto es `https://www.ekamperu.com`.
 
-## Tecnologías
-
-- HTML5 semántico
-- CSS3 moderno (variables, Grid, Flexbox, clamp())
-- JavaScript Vanilla ES6+
-
-Sin frameworks, sin dependencias npm, sin backend.
+> **Estado:** rediseño en desarrollo. Antes de publicar, EKAM Perú debe validar cifras, textos y datos de contacto (ver [Pendientes](#pendientes)).
 
 ## Ejecutar en local
 
+Solo se necesita Python 3 para servir los archivos:
+
 ```bash
-cd C:\EKAM-2026
 python -m http.server 5500
 ```
 
-Abrir en el navegador:
+Luego abrir <http://localhost:5500>.
 
-```
-http://localhost:5500
-```
+Abrir los `.html` con doble clic también funciona, pero las rutas con carpeta (`sectores/grifos/`) solo resuelven bien desde un servidor.
+
+## Páginas
+
+| Ruta | Contenido |
+|---|---|
+| `index.html` | Portada: propuesta de valor, NAVASOFT, soluciones, IA, sectores, metodología, clientes y contacto |
+| `soluciones.html` | Catálogo de soluciones NAVASOFT con detalle interactivo |
+| `soluciones/<solución>/` | Una página por solución (6): ERP, facturación electrónica, contabilidad, hoteles y restaurantes, activos fijos, NavaMóvil |
+| `sectores.html` | Soluciones por sector |
+| `sectores/<sector>/` | Una página por sector (10): agroindustria, comercio, construcción, educación, grifos, hoteles y restaurantes, industria, salud, servicios, transporte |
+| `nosotros.html` | Historia, misión, visión, servicios y datos formales de la empresa |
+| `recursos/` | Guías: cómo elegir un ERP, facturación electrónica en Perú, PLE y libros electrónicos |
+| `privacidad.html` | Política de privacidad |
+
+Todas las páginas están registradas en `sitemap.xml`.
 
 ## Estructura
 
 ```
 EKAM-2026/
-├── index.html
-├── soluciones.html
-├── sectores.html
-├── nosotros.html              ← Historia, misión, visión y datos de la empresa
-├── privacidad.html
-├── sectores/ · soluciones/ · recursos/   ← Una página por sector, solución y guía
-├── README.md
-├── WEB-DOCUMENTACION.md       ← Guía técnica y de contenido del sitio
-├── AGENTE-SOPORTE-WHATSAPP-PRIMER-NIVEL.md
-├── PROPUESTA-AGENTE-SOPORTE-N8N.md
-├── .gitignore
+├── index.html, soluciones.html, sectores.html, nosotros.html, privacidad.html
+├── soluciones/ · sectores/ · recursos/    ← una carpeta con index.html por página
+├── robots.txt, sitemap.xml
 ├── css/
-│   ├── style.css               ← Estilos compartidos
-│   ├── soluciones.css          ← Hero, CTA y tarjetas de las páginas internas
+│   ├── style.css         ← sistema de diseño y estilos compartidos (variables en :root)
+│   ├── soluciones.css    ← hero, tarjetas y CTA de las páginas internas
 │   ├── sectores.css
 │   └── nosotros.css
 ├── js/
-│   ├── main.js                 ← Interacciones de la portada
-│   ├── soluciones.js
+│   ├── main.js           ← menú, formulario, WhatsApp y asistente (portada y páginas internas)
+│   ├── soluciones.js     ← detalle interactivo de soluciones.html
 │   ├── sectores.js
-│   └── chatbot.js
-└── assets/
-    ├── icons/                  ← Logotipos e íconos de marca
-    ├── LogosClientes/          ← Logos visibles en la sección Clientes (.webp)
-    ├── screenshots/            ← Capturas de módulos NAVASOFT
-    ├── videos/                 ← Video y portada de la demostración
-    └── images/
-        ├── asistente-ekam.*    ← Recursos del asistente virtual
-        └── navamovil-funcionalidades.png
+│   └── chatbot.js        ← asistente en las páginas que no cargan main.js
+├── assets/
+│   ├── icons/            ← logotipos y favicons
+│   ├── LogosClientes/    ← logos del carrusel de clientes (.webp)
+│   ├── images/           ← asistente virtual, NavaMóvil e imagen para redes (og-ekam.jpg)
+│   ├── screenshots/      ← capturas de NAVASOFT
+│   └── videos/           ← video de demostración y su portada
+├── tools/                ← capturas antes/después para revisar cambios de CSS (no se publica)
+├── README.md
+└── WEB-DOCUMENTACION.md  ← guía técnica y de contenido
 ```
 
-`tmp/` se excluye del repositorio: solo conserva respaldos de publicación y
-archivos temporales de revisión. No forma parte del sitio que se despliega.
+## Configuración
 
-## Secciones
+Los datos de contacto y las integraciones se definen al inicio de `js/main.js`:
 
-1. **Header** - Navegación sticky con menú hamburguesa móvil
-2. **Hero** - Presentación principal de NAVASOFT ERP
-3. **Confianza** - Software peruano, modular, soporte, experiencia
-4. **Desafíos** - Problemas que resuelve NAVASOFT
-5. **Pilares** - Movilidad, Integración, Adaptabilidad
-6. **Módulos** - Soluciones: Admin, Contabilidad, Ventas, FE, Hoteles, Restaurantes
-7. **Showcase** - NAVASOFT en acción con tabs interactivos
-8. **NavaMóvil** - App móvil para gestión empresarial
-9. **Sectores** - Comercial, Industria, Hoteles, Restaurantes
-10. **Clientes** - Grilla de logos (placeholders)
-11. **Empresa** - EKAM PERÚ como empresa de acompañamiento
-12. **CTA** - Llamado a acción para demostración
-13. **Contacto** - Formulario con validación
-14. **Footer** - Información corporativa
-15. **WhatsApp** - Botón flotante con fallback
+| Constante | Uso |
+|---|---|
+| `WHATSAPP_NUMBER` | Número que reciben el formulario, el botón flotante y el asistente |
+| `CONTACT_EMAIL` | Correo alternativo del formulario |
+| `LEAD_ENDPOINT` | Opcional. URL que recibe una copia de cada solicitud por POST (Formspree, webhook de n8n, etc.). Vacío: el formulario solo abre WhatsApp |
 
-## Estado
+El número de WhatsApp también aparece escrito en los enlaces `wa.me` del HTML; al cambiarlo hay que reemplazarlo en todas las páginas.
 
-Este proyecto es una **propuesta de rediseño en desarrollo** y no corresponde actualmente al sitio web de producción de EKAM Perú.
+## Cómo hacer cambios
+
+- **Estilos:** reutilizar las variables de `css/style.css` (colores, tipografía, espaciados) en lugar de valores sueltos. Las páginas internas comparten el hero y el CTA de `soluciones.css`.
+- **Caché:** los `.css` y `.js` se enlazan con `?v=<fecha>`. Al modificar uno, actualizar ese valor en las páginas que lo cargan para que los visitantes reciban la versión nueva.
+- **Página nueva:** copiar el header y el footer de una página existente, añadirla a `sitemap.xml` y enlazarla desde el menú o el footer.
+- **Imágenes:** usar `.webp` (o `.mp4` comprimido para video) y no subir los originales pesados al repositorio.
+- **Revisión visual:** `tools/capturas.py` y `tools/comparar.py` generan y comparan capturas de todas las páginas antes y después de un cambio; las instrucciones están al inicio de cada archivo.
+
+## Publicación
+
+Subir al directorio público del servidor los `.html`, `robots.txt`, `sitemap.xml` y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/` y `recursos/`.
+
+No subir `.git/`, `tools/` ni los archivos `.md`.
 
 ## Pendientes
 
-- [ ] Confirmar colores corporativos oficiales
-- [ ] Incorporar logos oficiales de EKAM
-- [ ] Incorporar capturas reales de NAVASOFT
-- [ ] Confirmar métricas empresariales
-- [ ] Confirmar información de contacto (teléfono, email, WhatsApp)
-- [ ] Integrar formulario con backend
-- [ ] Integrar WhatsApp oficial
-- [ ] Validar contenido con EKAM
-- [ ] Incorporar fotografías de sectores
-- [ ] Integrar con la tecnología del sitio en producción
+- [ ] Validar con EKAM Perú las cifras de la portada (años de experiencia, empresas implementadas)
+- [ ] Validar los textos de `nosotros.html` y la dirección de la oficina
+- [ ] Añadir el código de Google Analytics 4 o Tag Manager (los eventos ya se envían)
+- [ ] Definir si el formulario guardará las solicitudes (`LEAD_ENDPOINT`)
+- [ ] Añadir el equipo a la página Nosotros
 
 ## Licencia
 
-Propuesta interna - EKAM Perú S.A.C.
+Uso interno — EKAM PERU S.A.C. Todos los derechos reservados.
