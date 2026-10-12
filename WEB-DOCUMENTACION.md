@@ -61,15 +61,15 @@ EKAM-2026/
     │   └── Logo-Navasoft.png      ← Logo oficial NAVASOFT
     │
     └── LogosClientes/             ← Logos de clientes (carrusel)
-        ├── Contactiva.png
-        ├── Delcor.png
-        ├── JockeyClubChiclayo.png
-        ├── Molisam.png
-        ├── SanRoque.png
-        └── Vidavas.png
+        ├── Contactiva.webp
+        ├── Delcor.webp
+        ├── JockeyClubChiclayo.webp
+        ├── Molisam.webp
+        ├── SanRoque.webp
+        └── Vidavas.webp
 ```
 
-> **Nota sobre carpetas vacías planificadas:** la estructura original previó `assets/images/logo/`, `assets/images/sistema/`, `assets/images/clientes/` y `assets/images/sectores/` para futuras capturas reales. Los logos de clientes se almacenan actualmente en `assets/LogosClientes/`.
+> **Nota sobre carpetas planificadas:** la estructura original previó `assets/images/logo/`, `assets/images/sistema/`, `assets/images/clientes/` y `assets/images/sectores/` para futuras capturas reales. Se eliminaron por estar vacías; créalas de nuevo si llegan a usarse. Los logos de clientes se almacenan en `assets/LogosClientes/` solo en formato `.webp` (los `.png` originales se retiraron del repositorio).
 
 ---
 
@@ -193,7 +193,7 @@ La web es de una sola página (`index.html`) con desplazamiento suave. Las secci
   - Normalización visual individual por cliente (escalas).
   - `prefers-reduced-motion` → se detiene y muestra los logos en filas.
 - Clientes (orden): Contactiva, Grupo Delcor, Molisam, San Roque, VIDAVA'S, Jockey Club Chiclayo.
-- **Rutas de logos**: `assets/LogosClientes/<Nombre>.png`
+- **Rutas de logos**: `assets/LogosClientes/<Nombre>.webp`
 - **Marker HTML**: `<section class="section section--alt" id="clientes">`
 
 ### 6.11 Nuestra empresa (`#empresa`)
@@ -201,6 +201,7 @@ La web es de una sola página (`index.html`) con desplazamiento suave. Las secci
 - Título: "Más que software, acompañamiento para tu empresa".
 - Visuales con ambos logos.
 - **Marker HTML**: `<section class="section" id="empresa">`
+- **Página propia**: `nosotros.html` (estilos en `css/nosotros.css`) amplía este bloque con historia, misión, visión, servicios y datos formales de la empresa. El bloque de la portada enlaza a ella con el botón "Conoce más sobre EKAM"; el menú y el footer del resto de páginas apuntan a `nosotros.html`.
 
 ### 6.12 Llamada a la acción (`#cta`)
 - Fondo con degradado azul.
@@ -260,13 +261,13 @@ const WHATSAPP_NUMBER = '51999000000';
 
 ## 8. CÓMO AGREGAR UN NUEVO CLIENTE AL CARRUSEL
 
-1. **Coloca el logo** en `assets/LogosClientes/` (formato `.png`, con `object-fit: contain` no se deformará).
+1. **Coloca el logo** en `assets/LogosClientes/` (formato `.webp`, con `object-fit: contain` no se deformará).
 2. **Edita `index.html`** en la sección `#clientes` y añade un slide **dentro de los DOS grupos** (el primer grupo es visible, el segundo es la copia para el loop infinito). Estructura:
 
 ```html
 <div class="clients-carousel__slide">
     <div class="client-logo client-miempresa">
-        <div class="logo-wrapper"><img src="assets/LogosClientes/MiEmpresa.png" alt="Mi Empresa" class="client-logo__img" loading="lazy"></div>
+        <div class="logo-wrapper"><img src="assets/LogosClientes/MiEmpresa.webp" alt="Mi Empresa" class="client-logo__img" loading="lazy"></div>
     </div>
 </div>
 ```
