@@ -135,7 +135,7 @@ Sin dependencias. Cada archivo es una función autoejecutable en modo estricto.
 | Navegación | Scroll suave a las anclas y resaltado del enlace de la sección visible |
 | Animaciones | Aparición de elementos con `IntersectionObserver`; contadores (`data-count`, `data-prefix`) |
 | Carruseles | Indicadores de los carruseles deslizables en celular |
-| Capturas | Pestañas, visor de imagen ampliada y video de demostración |
+| Capturas | Pestañas, visor de imagen ampliada y video de demostración. El marco de ventana de las capturas es solo CSS (`.showcase__image-button::before`) |
 | Formulario | Validación y armado del mensaje de WhatsApp; opción de correo; envío opcional a `LEAD_ENDPOINT` |
 | WhatsApp | Enlace del botón flotante |
 | Asistente virtual | Menú de temas con respuestas predefinidas y derivación a WhatsApp; modo con IA opcional |
@@ -192,7 +192,7 @@ Aplicar el cambio en las 25 páginas respetando las rutas relativas de cada nive
 
 ## 8. Responsive y accesibilidad
 
-- Puntos de quiebre principales: 1150, 1024 (el menú pasa a hamburguesa), 768, 640 y 480 px.
+- Puntos de quiebre principales: 1150, 1024, 900 (el menú pasa a hamburguesa), 768, 640 y 480 px. Entre 901 y 1024 px el menú completo sigue visible con el logo y los enlaces más compactos.
 - HTML semántico con un solo `<h1>` por página y `aria-labelledby` en las secciones.
 - Menú móvil y asistente con `aria-expanded`, `aria-controls` y foco gestionado.
 - `prefers-reduced-motion` detiene carruseles y animaciones.
