@@ -303,15 +303,13 @@ h1, h2, h3, h4, h5, h6 {
     right: 0;
     z-index: 1000;
     height: var(--header-height);
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    /* Blanco sólido: el logo tiene fondo blanco y no debe notarse sobre secciones oscuras. */
+    background: #fff;
     border-bottom: 1px solid transparent;
     transition: all var(--transition-base);
 }
 
 .header--scrolled {
-    background: rgba(255, 255, 255, 0.95);
     border-bottom-color: var(--color-border);
     box-shadow: var(--shadow-sm);
 }
