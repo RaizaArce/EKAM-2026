@@ -3,7 +3,7 @@
 
 .solutions-hero { padding: calc(var(--header-height) + clamp(3rem, 5vw, 5.5rem)) 0 clamp(3.5rem, 6vw, 6rem); overflow: hidden; background: radial-gradient(circle at 85% 15%, rgba(32, 164, 243, .18), transparent 25rem), linear-gradient(145deg, #f1f8ff 0%, #fff 55%, #eef7ff 100%); }
 
-.solutions-hero__eyebrow, .solution-detail__eyebrow, .implementation__intro > span, .solutions-cta span { display: inline-block; color: var(--color-primary); font-size: .8125rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.solutions-hero__eyebrow, .solution-detail__eyebrow, .solutions-cta span { display: inline-block; color: var(--color-primary); font-size: .8125rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 
 .solutions-hero h1 { max-width: 640px; margin: .75rem 0 1rem; font-size: clamp(2.55rem, 4.3vw, 4.15rem); font-weight: 800; letter-spacing: -.05em; line-height: 1.04; }
 
@@ -50,27 +50,10 @@
 .solution-detail__visual img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
 .solution-detail__visual img.solution-detail__image--contain { object-fit: contain; background: #fff; }
 
+/* Capturas horizontales de NAVASOFT: se muestran completas, con su proporcion real. */
+.solution-detail__visual img.solution-detail__image--wide { aspect-ratio: auto; height: auto; object-fit: fill; background: #fff; }
+
 .solution-detail__visual figcaption { padding: .75rem 1rem; color: #fff; background: var(--color-primary-dark); font-size: .8rem; font-weight: 600; }
-
-.implementation { padding: clamp(3.5rem, 6vw, 6rem) 0; background: var(--color-primary-dark); color: #fff; }
-
-.implementation__grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(2rem, 7vw, 7rem); align-items: start; }
-
-.implementation__intro > span { color: var(--color-primary-light); }
-
-.implementation__intro h2 { margin: .8rem 0 1rem; color: #fff; font-size: clamp(2rem, 3.2vw, 3.15rem); letter-spacing: -.04em; }
-
-.implementation__intro p { max-width: 500px; color: rgba(255,255,255,.72); line-height: 1.7; }
-
-.implementation__steps { display: grid; gap: .9rem; }
-
-.implementation__steps li { display: grid; grid-template-columns: 52px 1fr; gap: 1rem; padding: 1rem; border: 1px solid rgba(255,255,255,.12); border-radius: .85rem; background: rgba(255,255,255,.05); }
-
-.implementation__steps span { color: var(--color-primary-light); font-size: .9rem; font-weight: 800; }
-
-.implementation__steps strong { display: block; color: #fff; }
-
-.implementation__steps p { margin-top: .15rem; color: rgba(255,255,255,.68); font-size: .9rem; }
 
 .solutions-cta { padding: 2.5rem 0; background: var(--color-primary); color: #fff; }
 
@@ -87,10 +70,8 @@
 .solutions-whatsapp:focus-visible { outline: 3px solid rgba(32,164,243,.45); outline-offset: 3px; }
 
 @media(max-width: 900px) {
-    .solution-detail__panel,
-    .implementation__grid { grid-template-columns: 1fr; }
+    .solution-detail__panel { grid-template-columns: 1fr; }
     .solution-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .implementation__grid { gap: 2rem; }
 }
 
 @media(max-width: 620px) {
@@ -101,7 +82,6 @@
     .solution-detail__panel { padding: 1.4rem; border-radius: 1rem; }
     .solution-detail__lists { grid-template-columns: 1fr; }
     .solution-detail__visual { order: -1; }
-    .implementation__steps li { grid-template-columns: 38px 1fr; }
     .solutions-cta .container { align-items: flex-start; flex-direction: column; }
     .solutions-cta .btn { width: 100%; }
     .solutions-whatsapp { right: 1rem; bottom: 0.75rem; width: 46px; height: 46px; }
@@ -167,10 +147,8 @@
 
 .solution-card p { font-size: 0.84rem; }
 
-.solution-card:hover,
-.solution-card[aria-current] { border-color: var(--color-primary); background: linear-gradient(135deg, #fff, #f1f9ff); box-shadow: 0 12px 28px rgba(8,119,201,.12); }
+.solution-card:hover { border-color: var(--color-primary); background: linear-gradient(135deg, #fff, #f1f9ff); box-shadow: 0 12px 28px rgba(8,119,201,.12); }
 
-.solution-card[aria-current] { border-width: 2px; }
 
 .solution-detail { padding-bottom: 3.5rem; }
 
@@ -219,12 +197,6 @@
     flex-wrap: wrap;
     gap: 0.75rem;
     margin-top: 1.5rem;
-}
-
-.implementation {
-    background:
-        radial-gradient(circle at 85% 20%, rgba(32, 164, 243, 0.2), transparent 26rem),
-        linear-gradient(135deg, #0b2a47 0%, var(--color-deep) 100%);
 }
 
 .solutions-cta {
