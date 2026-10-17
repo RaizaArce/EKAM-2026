@@ -7,6 +7,7 @@
 #   - paginas que faltan en sitemap.xml, o entradas del sitemap sin pagina
 #   - un mismo .css/.js enlazado con versiones ?v= distintas segun la pagina
 #   - JSON-LD invalido
+#   - mas de un numero de WhatsApp o telefono en el sitio (ver tools/cambiar_whatsapp.py)
 # Solo avisa (no falla) de los archivos de assets/ que ninguna pagina usa.
 import json
 import os
@@ -53,7 +54,10 @@ def main():
                 continue
             ruta, _, ancla = ref.partition('#')
             ruta, _, consulta = ruta.partition('?')
-            destino = os.path.normpath(os.path.join(os.path.dirname(pagina), unquote(ruta))) if ruta else pagina
+            if ruta.startswith('/'):
+                destino = os.path.normpath(unquote(ruta).lstrip('/') or 'index.html')
+            else:
+                destino = os.path.normpath(os.path.join(os.path.dirname(pagina), unquote(ruta))) if ruta else pagina
             if os.path.isdir(destino):
                 destino = os.path.join(destino, 'index.html')
             if not os.path.exists(destino):
@@ -82,10 +86,24 @@ def main():
         if ruta.endswith('/'):
             ruta += 'index.html'
         en_sitemap.add(os.path.normpath(ruta))
-    for pagina in sorted(set(paginas) - en_sitemap):
+    sin_indexar = {p for p, html in contenido.items() if re.search(r'<meta name="robots" content="[^"]*noindex', html)}
+    for pagina in sorted(set(paginas) - en_sitemap - sin_indexar):
         errores.append(f'{pagina}: falta en sitemap.xml')
     for ruta in sorted(en_sitemap - set(paginas)):
         errores.append(f'sitemap.xml: "{ruta}" no existe')
+
+    textos = list(contenido.items()) + [
+        (os.path.join('js', nombre), leer(os.path.join('js', nombre))) for nombre in sorted(os.listdir('js'))
+    ]
+    numeros = {}
+    for origen, texto in textos:
+        encontrados = re.findall(r"wa\.me/(\d+)|tel:\+?(\d+)|WHATSAPP_NUMBER = '(\d+)'", texto)
+        encontrados += [(re.sub(r'\D', '', visible), '', '') for visible in re.findall(r'\+\d{2}(?: \d{3}){3}', texto)]
+        for grupo in encontrados:
+            numeros.setdefault(next(g for g in grupo if g), set()).add(origen)
+    if len(numeros) > 1:
+        detalle = ', '.join('%s en %d archivo(s)' % (n, len(o)) for n, o in sorted(numeros.items()))
+        errores.append('hay mas de un numero de WhatsApp/telefono: ' + detalle)
 
     estilos_y_scripts = ''.join(
         leer(os.path.join(carpeta, nombre))
