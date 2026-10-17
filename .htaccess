@@ -1,0 +1,73 @@
+# ============================================
+# EKAM 2026 - Configuración del hosting (cPanel / Apache o LiteSpeed)
+# Subir a public_html SOLO después de activar el certificado SSL
+# (cPanel > SSL/TLS Status > Run AutoSSL). Sin SSL activo, la
+# redirección a HTTPS deja la web sin acceso.
+# ============================================
+
+Options -Indexes
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # ekamperu.com -> https://www.ekamperu.com (dominio canónico de la web).
+    # Se compara el host exacto para no afectar al subdominio del CRM.
+    RewriteCond %{REQUEST_URI} !^/\.well-known/
+    RewriteCond %{HTTP_HOST} ^ekamperu\.com$ [NC]
+    RewriteRule ^ https://www.ekamperu.com%{REQUEST_URI} [L,R=301]
+
+    # Toda conexión http pasa a https (RNF01). .well-known queda libre para
+    # que AutoSSL pueda renovar el certificado.
+    RewriteCond %{REQUEST_URI} !^/\.well-known/
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Enlaces antiguos del catálogo (soluciones.html?solucion=...) -> página de cada solución.
+    RewriteCond %{QUERY_STRING} (^|&)solucion=erp(&|$)
+    RewriteRule ^soluciones\.html$ /soluciones/erp-navasoft/? [L,R=301]
+    RewriteCond %{QUERY_STRING} (^|&)solucion=facturacion(&|$)
+    RewriteRule ^soluciones\.html$ /soluciones/facturacion-electronica/? [L,R=301]
+    RewriteCond %{QUERY_STRING} (^|&)solucion=contabilidad(&|$)
+    RewriteRule ^soluciones\.html$ /soluciones/contabilidad/? [L,R=301]
+    RewriteCond %{QUERY_STRING} (^|&)solucion=hoteles(&|$)
+    RewriteRule ^soluciones\.html$ /soluciones/hoteles-restaurantes/? [L,R=301]
+    RewriteCond %{QUERY_STRING} (^|&)solucion=activos(&|$)
+    RewriteRule ^soluciones\.html$ /soluciones/activos-fijos/? [L,R=301]
+    RewriteCond %{QUERY_STRING} (^|&)solucion=navamovil(&|$)
+    RewriteRule ^soluciones\.html$ /soluciones/navamovil/? [L,R=301]
+</IfModule>
+
+# Documentos internos que no deben quedar públicos si se suben por error.
+# (.txt no se bloquea: AutoSSL valida el dominio con archivos .txt.)
+<FilesMatch "\.(md|sql|py|zip)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Activar cuando HTTPS funcione bien en www y sin www durante unos días:
+    # Header always set Strict-Transport-Security "max-age=31536000"
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml application/xml text/xml
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 hour"
+    ExpiresByType text/html "access plus 0 seconds"
+    # CSS y JS llevan ?v= en cada página, así que pueden guardarse mucho tiempo.
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType image/x-icon "access plus 30 days"
+    ExpiresByType video/mp4 "access plus 30 days"
+</IfModule>
