@@ -192,6 +192,21 @@
         });
     }
 
+    /* ---- EKAM Academy: temas plegados en celular, siempre abiertos desde 641px ---- */
+    const academyDetails = document.querySelectorAll('.academy-card__details');
+    if (academyDetails.length && window.matchMedia) {
+        const academyWide = window.matchMedia('(min-width: 641px)');
+        const syncAcademyDetails = function () {
+            academyDetails.forEach(function (item) {
+                item.open = academyWide.matches;
+            });
+        };
+        syncAcademyDetails();
+        if (academyWide.addEventListener) {
+            academyWide.addEventListener('change', syncAcademyDetails);
+        }
+    }
+
     /* ---- Contadores animados (+15 años, +300 empresas) ---- */
     const counters = document.querySelectorAll('[data-count]');
 
