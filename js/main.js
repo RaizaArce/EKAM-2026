@@ -110,7 +110,7 @@
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+            if (targetId === '#' || this.classList.contains('skip-link')) return;
 
             const target = document.querySelector(targetId);
             if (!target) return;

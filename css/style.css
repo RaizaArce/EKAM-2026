@@ -221,6 +221,29 @@ h1, h2, h3, h4, h5, h6 {
     margin-right: auto;
 }
 
+/* Enlace para saltar al contenido: visible solo al recibir foco con el teclado. */
+.skip-link {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 2000;
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius-md);
+    background: var(--color-primary-dark);
+    color: #fff;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    transform: translateY(-200%);
+}
+
+.skip-link:focus {
+    transform: none;
+}
+
+#contenido:focus {
+    outline: none;
+}
+
 .section__cta {
     text-align: center;
     margin-top: var(--space-md);
