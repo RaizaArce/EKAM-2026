@@ -9,9 +9,13 @@
     const WHATSAPP_NUMBER = '51949882756';
     const WHATSAPP_MESSAGE = 'Hola, me interesa conocer más sobre la implementación de NAVASOFT por parte de EKAM Perú y solicitar una demostración.';
     const CONTACT_EMAIL = 'soporte@ekamperu.com';
-    // URL que recibe cada solicitud (Formspree, webhook de n8n, script propio del hosting, etc.).
-    // Mientras este vacia, la solicitud solo se prepara por WhatsApp y correo.
-    const LEAD_ENDPOINT = '';
+    // Proyecto Supabase del CRM (Settings > API). La clave publica solo puede ejecutar
+    // registrar_interesado_web (crm/supabase/002_registro_web.sql); no lee ni modifica tablas.
+    // Si se dejan vacias, la solicitud solo se prepara por WhatsApp y correo.
+    const SUPABASE_URL = 'https://hxuqyzvxwikiwdjbetlf.supabase.co';
+    const SUPABASE_PUBLIC_KEY = 'sb_publishable_91nDh1raKjcFKvKCO7Ak_A_5Ratxufw';
+    // Debe coincidir con la fecha de "Ultima actualizacion" de privacidad.html.
+    const PRIVACY_POLICY_VERSION = '2026-10-16';
     // URL del webhook que conecta el asistente con la IA (n8n + Gemini).
     // Mientras este vacia, el asistente funciona solo con las respuestas rapidas.
     const CHAT_AI_ENDPOINT = '';
@@ -409,7 +413,18 @@
                 }
             });
 
-            if (!isValid) return;
+            const consentInput = document.getElementById('formConsent');
+            if (consentInput && !consentInput.checked) {
+                consentInput.closest('.contact-form__consent').querySelector('.contact-form__error').textContent = 'Necesitamos tu autorización para atender la solicitud';
+                consentInput.classList.add('contact-form__input--error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                const firstError = contactForm.querySelector('.contact-form__input--error');
+                if (firstError) firstError.focus();
+                return;
+            }
 
             const name = document.getElementById('formName').value.trim();
             const company = document.getElementById('formCompany').value.trim();
@@ -443,22 +458,28 @@
             });
             // Copia de respaldo: la solicitud llega a EKAM aunque el visitante no envie el WhatsApp.
             const honeypot = contactForm.querySelector('[name="website"]');
-            if (LEAD_ENDPOINT && !(honeypot && honeypot.value)) {
-                fetch(LEAD_ENDPOINT, {
+            if (SUPABASE_URL && SUPABASE_PUBLIC_KEY && !(honeypot && honeypot.value)) {
+                fetch(SUPABASE_URL.replace(/\/+$/, '') + '/rest/v1/rpc/registrar_interesado_web', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_PUBLIC_KEY },
                     body: JSON.stringify({
-                        nombre: name,
-                        empresa: company,
-                        telefono: phone,
-                        correo: email,
-                        solucion: solution,
-                        plazo: timing,
-                        necesidad: message,
-                        origen: window.location.href
-                    }),
-                    keepalive: true
-                }).catch(function () { /* WhatsApp y correo siguen disponibles */ });
+                        p_nombre: name,
+                        p_empresa: company,
+                        p_telefono: phone,
+                        p_correo: email,
+                        p_solucion: solutionSelect.value,
+                        p_plazo: timingSelect && timingSelect.value ? timingSelect.value : '',
+                        p_necesidad: message,
+                        p_origen_url: window.location.href,
+                        p_consentimiento: consentInput ? consentInput.checked : false,
+                        p_version_politica: PRIVACY_POLICY_VERSION
+                    })
+                }).then(function (res) {
+                    trackCommercialEvent(res.ok ? 'lead_saved' : 'lead_save_failed', { status: res.status });
+                }).catch(function () {
+                    // WhatsApp y correo siguen disponibles
+                    trackCommercialEvent('lead_save_failed', { status: 0 });
+                });
             }
 
             window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
@@ -486,6 +507,14 @@
                 if (errorEl) errorEl.textContent = '';
             });
         });
+
+        const consentCheckbox = document.getElementById('formConsent');
+        if (consentCheckbox) {
+            consentCheckbox.addEventListener('change', function () {
+                this.classList.remove('contact-form__input--error');
+                this.closest('.contact-form__consent').querySelector('.contact-form__error').textContent = '';
+            });
+        }
     }
 
     /* ---- WhatsApp button ---- */

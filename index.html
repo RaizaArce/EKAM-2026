@@ -794,9 +794,15 @@
                             <textarea id="formMessage" name="message" class="contact-form__textarea" rows="3" placeholder="Ej. controlar inventarios, ordenar ventas, emitir comprobantes electrónicos, integrar contabilidad..."></textarea>
                         </div>
                     </div>
+                    <div class="contact-form__consent">
+                        <label class="contact-form__check" for="formConsent">
+                            <input type="checkbox" id="formConsent" name="consent" required>
+                            <span>Autorizo a EKAM PERU S.A.C. a registrar y usar mis datos para atender mi consulta comercial, según su <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>. <span aria-hidden="true">*</span></span>
+                        </label>
+                        <span class="contact-form__error" role="alert"></span>
+                    </div>
                     <button type="submit" class="btn btn--primary btn--lg contact-form__submit">Preparar solicitud comercial por WhatsApp</button>
                     <p class="contact-form__helper">Se abrirá WhatsApp con tu solicitud ordenada para que puedas revisarla y enviarla. También podrás enviarla por correo.</p>
-                    <p class="contact-form__privacy">Usaremos tus datos únicamente para responder tu consulta comercial. Revisa nuestra <a href="privacidad.html">política de privacidad</a>.</p>
                     <div class="contact-form__notification" id="formNotification" role="status" aria-live="polite" hidden>
                         <div class="contact-form__notification-inner">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
