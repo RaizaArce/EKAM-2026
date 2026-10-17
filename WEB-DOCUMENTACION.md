@@ -4,7 +4,8 @@ Guía para quien mantenga el sitio: cómo está organizado, qué hace cada archi
 
 ## 1. Resumen
 
-- Sitio corporativo estático de **EKAM PERU S.A.C.** (Chiclayo), partner de **NAVASOFT ERP**.
+- Sitio corporativo estático de **EKAM PERU S.A.C.** (sede en Chiclayo), partner de **NAVASOFT ERP**.
+- Al mencionar la sede, acompañarla siempre de la cobertura ("Sede en Chiclayo · Atención en todo el norte del Perú"), para que no parezca que EKAM solo trabaja en Chiclayo.
 - HTML, CSS y JavaScript sin frameworks, sin proceso de compilación y sin backend.
 - 25 páginas: portada, catálogo de soluciones, sectores, nosotros, recursos, privacidad y una página por solución, sector y guía.
 - Contacto por WhatsApp: el formulario, el botón flotante y el asistente virtual preparan un mensaje para `wa.me`.
@@ -32,16 +33,16 @@ Para cambios de estilo, `tools/capturas.py` y `tools/comparar.py` generan captur
 
 | Ruta | Página | CSS propio | JS |
 |---|---|---|---|
-| `index.html` | Portada | — | `main.js` |
-| `soluciones.html` | Catálogo con detalle interactivo (`?solucion=erp`) | `soluciones.css` | `soluciones.js`, `chatbot.js` |
+| `index.html` | Portada | `home.css` | `main.js` |
+| `soluciones.html` | Catálogo: cada tarjeta enlaza a la página de su solución | `soluciones.css` | `chatbot.js` |
 | `soluciones/<slug>/` | 6 páginas: `erp-navasoft`, `facturacion-electronica`, `contabilidad`, `hoteles-restaurantes`, `activos-fijos`, `navamovil` | `soluciones.css` | `main.js` |
 | `sectores.html` | Sectores con pestañas | `sectores.css` | `sectores.js`, `chatbot.js` |
 | `sectores/<slug>/` | 10 páginas: `agroindustria`, `comercio`, `construccion`, `educacion`, `grifos`, `hoteles-restaurantes`, `industria`, `salud`, `servicios`, `transporte` | `soluciones.css` | `main.js` |
-| `nosotros.html` | Historia, misión, visión, servicios y datos formales | `soluciones.css`, `nosotros.css` | `main.js` |
+| `nosotros.html` | Historia, misión, visión y servicios | `soluciones.css`, `nosotros.css` | `main.js` |
 | `recursos/` y `recursos/<slug>/` | Índice y 3 guías: `como-elegir-un-erp`, `facturacion-electronica-peru`, `ple-libros-electronicos` | `soluciones.css` | `main.js` |
 | `privacidad.html` | Política de privacidad | — | `main.js` |
 
-Todas cargan `css/style.css`. Las páginas dentro de carpetas usan rutas relativas (`../../css/style.css`).
+Todas cargan `css/style.css`; la portada carga además `css/home.css`. Las páginas dentro de carpetas usan rutas relativas (`../../css/style.css`). `404.html` usa rutas absolutas (`/css/style.css`) porque el servidor puede mostrarla en cualquier dirección.
 
 ### Secciones de la portada
 
@@ -51,16 +52,16 @@ En orden de aparición; el `id` es el ancla que usan el menú y los enlaces inte
 |---|---|
 | `inicio` | Hero: titular, llamados a la acción, cifras y escena ilustrada |
 | — | Propuesta de valor (`.commercial-summary`) |
-| `navasoft` | NAVASOFT como plataforma |
-| `soluciones` | Módulos y soluciones |
+| `navasoft` | NAVASOFT como plataforma: diagrama de módulos y franja de normativa peruana (SUNAT, PLE, SIRE) |
 | `pantallas` | Capturas de NAVASOFT con pestañas, visor ampliado y video de demostración |
 | `ia` | Inteligencia artificial aplicada a la gestión |
 | `sectores` | Sectores atendidos |
 | `a-medida` | Desarrollo a medida |
-| `implementacion` | Metodología de implementación |
-| `empresa` | Nosotros: socio tecnológico, cifras, relación EKAM → NAVASOFT y botón a `nosotros.html` |
+| `implementacion` | Metodología de implementación (única página donde se muestra completa) |
+| `empresa` | Nosotros: socio tecnológico, relación EKAM → NAVASOFT y botón a `nosotros.html` (las cifras están en el hero) |
 | `clientes` | Carrusel de logos (dentro de `empresa`) |
-| `problemas` | Problemas que se resuelven y cierre |
+| `academy` | EKAM Academy: cuatro líneas de capacitación y botón de WhatsApp. En celular cada línea se despliega al tocarla |
+| `problemas` | Problemas que se resuelven; enlaza directo con el formulario de contacto |
 | `contacto` | Formulario de contacto |
 
 Fuera del `<main>`: footer, visor de imágenes, botón flotante de WhatsApp y asistente virtual.
@@ -73,22 +74,23 @@ EKAM-2026/
 ├── soluciones/ · sectores/ · recursos/   ← una carpeta con index.html por página
 ├── robots.txt · sitemap.xml
 ├── css/
-│   ├── style.css              ← variables, base, componentes compartidos y portada
+│   ├── style.css              ← variables, base y componentes compartidos por todas las páginas
+│   ├── home.css               ← secciones que solo existen en la portada
 │   ├── soluciones.css         ← hero, tarjetas, detalle y CTA de las páginas internas
 │   ├── sectores.css           ← solo sectores.html
 │   └── nosotros.css           ← solo nosotros.html
 ├── js/
 │   ├── main.js                ← comportamiento de la portada y páginas internas
-│   ├── soluciones.js          ← datos y detalle de soluciones.html
 │   ├── sectores.js            ← datos y pestañas de sectores.html
 │   └── chatbot.js             ← asistente para las páginas que no cargan main.js
 ├── assets/
 │   ├── icons/                 ← logos de EKAM y NAVASOFT, favicons
 │   ├── LogosClientes/         ← logos del carrusel (.webp)
 │   ├── images/                ← asistente virtual, NavaMóvil, og-ekam.jpg
-│   ├── screenshots/           ← capturas de NAVASOFT (.jpeg)
+│   ├── screenshots/           ← capturas de NAVASOFT (.webp y variante -640.webp)
 │   └── videos/                ← demostracion-navasoft-web.mp4 y su póster
-├── tools/                     ← verificación y capturas (no se publica)
+├── 404.html · favicon.ico     ← página de error y favicon para navegadores antiguos
+├── tools/                     ← verificación, cambio de WhatsApp y capturas (no se publica)
 └── .github/workflows/         ← verificación automática en pull requests
 ```
 
@@ -119,13 +121,19 @@ Definido como variables en `:root`, al inicio de `css/style.css`. Usar siempre l
 - **Encabezado de sección:** `.section__header` con `.section__label`, `.section__title` y `.section__subtitle`; variantes `--light` para fondos oscuros.
 - **Hero y cierre de páginas internas:** `.solutions-hero` y `.solutions-cta` (en `soluciones.css`). Las páginas internas llevan `<body class="solutions-page">`.
 
-### Organización de `style.css`
+### Organización del CSS
+
+- `style.css` lo cargan las 26 páginas: variables, base, header, footer, botones, formulario, asistente y componentes de las páginas internas.
+- `home.css` solo lo carga `index.html`, después de `style.css`: hero, módulos, capturas, IA, sectores, metodología, Nosotros, EKAM Academy y cierre.
+- Regla práctica: si una clase aparece solo en `index.html`, su regla va en `home.css`; si la usa alguna otra página o un script, va en `style.css`.
+- Algunas reglas de la portada siguen en `style.css` a propósito: moverlas habría cambiado qué regla gana cuando dos empatan en especificidad.
+
 
 El archivo tiene un índice al inicio. Además de los bloques por componente, conserva varias capas de ajuste añadidas al final ("Design polish pass", "Final responsive polish", etc.) que sobrescriben reglas anteriores. Antes de modificar un componente, buscar su selector en todo el archivo: puede estar definido en más de un lugar y gana la última regla.
 
 ## 6. JavaScript
 
-Sin dependencias. Cada archivo es una función autoejecutable en modo estricto.
+Sin dependencias. Cada archivo es una función autoejecutable en modo estricto. Se cargan desde el `<head>` con `defer`, así no bloquean el render y se ejecutan en orden cuando el HTML ya está leído.
 
 ### `js/main.js`
 
@@ -136,7 +144,7 @@ Sin dependencias. Cada archivo es una función autoejecutable en modo estricto.
 | Animaciones | Aparición de elementos con `IntersectionObserver`; contadores (`data-count`, `data-prefix`) |
 | Carruseles | Indicadores de los carruseles deslizables en celular |
 | Capturas | Pestañas, visor de imagen ampliada y video de demostración. El marco de ventana de las capturas es solo CSS (`.showcase__image-button::before`) |
-| Formulario | Validación y armado del mensaje de WhatsApp; opción de correo; envío opcional a `LEAD_ENDPOINT` |
+| Formulario | Validación, casilla de consentimiento obligatoria, armado del mensaje de WhatsApp y opción de correo; registro en el CRM (Supabase) si está configurado |
 | WhatsApp | Enlace del botón flotante |
 | Asistente virtual | Menú de temas con respuestas predefinidas y derivación a WhatsApp; modo con IA opcional |
 
@@ -147,20 +155,22 @@ Configuración, al inicio del archivo:
 | `WHATSAPP_NUMBER` | Número de destino, con código de país y sin signos |
 | `WHATSAPP_MESSAGE` | Mensaje inicial del botón flotante |
 | `CONTACT_EMAIL` | Correo alternativo del formulario |
-| `LEAD_ENDPOINT` | Opcional. URL que recibe cada solicitud por POST en JSON. Vacío: desactivado |
+| `SUPABASE_URL`, `SUPABASE_PUBLIC_KEY` | Opcional. Proyecto Supabase del CRM. Cada solicitud llama a la función `registrar_interesado_web` (`crm/supabase/002_registro_web.sql`). Vacías: desactivado |
+| `PRIVACY_POLICY_VERSION` | Fecha de la política de privacidad que se guarda con cada consentimiento |
 | `CHAT_AI_ENDPOINT` | Opcional. Webhook del asistente con IA. Vacío: el asistente usa solo respuestas predefinidas |
 
 **Asistente con IA.** Con `CHAT_AI_ENDPOINT` configurado, el panel añade un campo de texto. Cada consulta se envía por POST con `{ sesion, mensaje, historial, origen }` y se espera `{ "respuesta": "..." }`. Tiene límite de 400 caracteres por mensaje, 20 mensajes por sesión y 20 s de espera; si la petición falla, ofrece continuar por WhatsApp. El límite real de uso debe aplicarse en el servidor que recibe el webhook. Al activarlo hay que actualizar la política de privacidad.
+
+El flujo listo para importar en n8n está en `crm/n8n/asistente-web.workflow.json` (Webhook → modelo de IA → respuesta). Usa las mismas instrucciones que `crm/n8n/instrucciones-asistente.txt`; si se cambia una, cambiar la otra. Hoy el nodo de IA llama a Gemini; el proveedor definido es GPT (OpenAI), así que al montar n8n hay que cambiar ese nodo. Para activarlo: importar el flujo, crear la credencial del proveedor en n8n (nunca escribir la clave en el flujo), activar el flujo y copiar su *Production URL* en `CHAT_AI_ENDPOINT`.
 
 **Analítica.** `trackCommercialEvent()` envía eventos a `gtag` o `dataLayer` si existen: `lead_whatsapp_prepared`, `whatsapp_floating_click`, `chatbot_whatsapp_click` y `chatbot_ai_message`. El sitio aún no incluye el código de Google Analytics o Tag Manager; al añadirlo en el `<head>`, los eventos empiezan a registrarse.
 
 ### Otros archivos
 
-- **`soluciones.js`:** contiene los textos e imágenes de cada solución en el objeto `solutions` y pinta el detalle según `?solucion=`. Para editar una solución del catálogo se cambia aquí, no en el HTML.
-- **`sectores.js`:** igual para los sectores (objeto `sectors`), con sus ilustraciones.
+- **`sectores.js`:** contiene los textos e ilustraciones de cada sector en el objeto `sectors` y pinta el detalle de `sectores.html`.
 - **`chatbot.js`:** versión reducida del asistente para `soluciones.html` y `sectores.html`.
 
-El número de WhatsApp está repetido en `main.js`, `soluciones.js`, `sectores.js` y en los enlaces `wa.me` del HTML. Para cambiarlo, buscar el número en todo el proyecto.
+El número de WhatsApp está repetido en `main.js`, `sectores.js` y en los enlaces `wa.me` y `tel:` del HTML. Para cambiarlo en todo el sitio: `python tools/cambiar_whatsapp.py 51XXXXXXXXX`. El verificador falla si queda más de un número.
 
 ## 7. Tareas frecuentes
 
@@ -176,14 +186,25 @@ El número de WhatsApp está repetido en `main.js`, `soluciones.js`, `sectores.j
 2. Añadirla a `sitemap.xml` y enlazarla desde el menú, el footer o la página índice.
 3. Si corresponde, añadir el JSON-LD de migas de pan al final del `<body>`, como en las páginas de sector.
 
+### Evitar contenido repetido
+
+- La metodología de 6 pasos vive solo en la portada (`#implementacion`). Las páginas de solución y sector la resumen en su frase de introducción.
+- Las cifras (+15 años, +300 empresas, norte del Perú) viven solo en el hero de la portada.
+- El detalle de cada solución vive en `soluciones/<slug>/`; `soluciones.html` solo enlaza. Los enlaces antiguos `soluciones.html?solucion=...` redirigen con 301 desde `.htaccess`.
+
 ### Añadir un cliente al carrusel
 
 1. Guardar el logo en `assets/LogosClientes/` en formato `.webp`.
-2. En `index.html`, sección `#clientes`, añadir el slide en los **dos** grupos `.clients-carousel__group` (el segundo es la copia que hace continuo el desplazamiento).
+2. En `index.html`, sección `#clientes`, hay dos carruseles: el primero (`.clients-carousel--reverse`) avanza hacia la derecha y el segundo hacia la izquierda. Elegir uno y añadir el slide en sus **dos** grupos `.clients-carousel__group` (el segundo es la copia que hace continuo el desplazamiento).
+3. En `css/home.css`, ajustar `--carousel-duration` de ese carrusel (unos 5,3 s por logo) para que ambas filas mantengan la misma velocidad.
+
+Los logos se muestran siempre a color. Deben ser los oficiales de cada empresa (de su web o su página oficial), sin redibujarlos.
 
 ### Cambiar una captura o el video
 
-- Capturas: reemplazar el archivo en `assets/screenshots/` conservando el nombre, o actualizar la ruta en `index.html` y en `soluciones.js`.
+- Capturas de la portada ("Mira NAVASOFT en funcionamiento"): son recortes horizontales (proporción cercana a 2,5:1) llamados `navasoft-<módulo>-panel.webp`, con una variante de 640 px (`-panel-640.webp`) declarada en `srcset`. Cada una tiene su `aspect-ratio` en `css/home.css`; si cambian las medidas de una imagen, actualizar esa regla y los atributos `width`/`height`.
+- Las capturas nunca deben mostrar datos reales de clientes: nombres, RUC y correos se reemplazan por datos de ejemplo antes de publicarlas.
+- `soluciones.html` y las páginas de solución usan esas mismas capturas horizontales (clase `solution-detail__image--wide`, que respeta su proporción); NavaMóvil conserva su imagen en 16:10.
 - Video: exportar una versión comprimida para web y reemplazar `assets/videos/demostracion-navasoft-web.mp4` y su póster. No subir el original al repositorio.
 
 ### Cambiar el menú o el footer
@@ -193,6 +214,7 @@ Aplicar el cambio en las 25 páginas respetando las rutas relativas de cada nive
 ## 8. Responsive y accesibilidad
 
 - Puntos de quiebre principales: 1150, 1024, 900 (el menú pasa a hamburguesa), 768, 640 y 480 px. Entre 901 y 1024 px el menú completo sigue visible con el logo y los enlaces más compactos.
+- Enlace "Saltar al contenido" al inicio de cada página, visible al recibir foco con el teclado; lleva a `<main id="contenido">`.
 - HTML semántico con un solo `<h1>` por página y `aria-labelledby` en las secciones.
 - Menú móvil y asistente con `aria-expanded`, `aria-controls` y foco gestionado.
 - `prefers-reduced-motion` detiene carruseles y animaciones.
@@ -208,16 +230,15 @@ Aplicar el cambio en las 25 páginas respetando las rutas relativas de cada nive
 
 ## 10. Publicación
 
-Subir al directorio público: los `.html`, `robots.txt`, `sitemap.xml` y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/` y `recursos/`.
+Subir al directorio público: los `.html` (incluido `404.html`), `favicon.ico`, `robots.txt`, `sitemap.xml`, `.htaccess` (solo con el SSL activo) y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/` y `recursos/`.
 
-No subir: `.git/`, `.github/`, `tools/` ni los `.md`.
+No subir: `.git/`, `.github/`, `.claude/`, `tools/`, `crm/` ni los `.md`.
 
 GitHub no publica el sitio automáticamente; fusionar en `main` no cambia lo que se ve en el dominio.
 
 ## 11. Pendientes
 
-- Validar con EKAM Perú las cifras de la portada, los textos de `nosotros.html` y la dirección de la oficina.
 - Añadir el código de Google Analytics 4 o Tag Manager.
-- Definir si se activan `LEAD_ENDPOINT` y `CHAT_AI_ENDPOINT`.
-- Añadir `favicon.ico` en la raíz (hoy solo hay SVG y PNG; algunos navegadores lo piden igualmente).
-- Deuda técnica: header y footer duplicados en 25 páginas, y capas de ajuste acumuladas en `style.css`.
+- Activar el asistente con IA cuando exista el servidor n8n (Hostinger): pasar el flujo `crm/n8n/asistente-web.workflow.json` a GPT, copiar su URL en `CHAT_AI_ENDPOINT` y actualizar la política de privacidad.
+- Subir `.htaccess` (HTTPS, `404.html`, compresión y caché) después de activar el SSL en cPanel.
+- Deuda técnica: header y footer duplicados en 26 páginas, y capas de ajuste acumuladas en el CSS.
