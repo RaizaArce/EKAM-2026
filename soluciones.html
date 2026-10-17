@@ -7,6 +7,7 @@
     <meta name="description" content="Conoce las soluciones NAVASOFT que EKAM Perú analiza, implementa, configura y acompaña para cada empresa.">
     <meta name="author" content="EKAM Perú">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0877C9">
     <link rel="canonical" href="https://www.ekamperu.com/soluciones.html">
     <meta property="og:title" content="Soluciones ERP | EKAM Perú y NAVASOFT">
     <meta property="og:description" content="Conoce las soluciones NAVASOFT que EKAM Perú analiza, implementa, configura y acompaña para cada empresa.">
@@ -19,18 +20,20 @@
     <meta property="og:locale" content="es_PE">
     <meta property="og:site_name" content="EKAM Perú">
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
-    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg?v=20261016">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png?v=20261016">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=20261016">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"></noscript>
-    <link rel="stylesheet" href="css/style.css?v=20261011-2">
-    <link rel="stylesheet" href="css/soluciones.css?v=20260926-lazy-1">
+    <link rel="stylesheet" href="css/style.css?v=20261016-3">
+    <link rel="stylesheet" href="css/soluciones.css?v=20261016-1">
+    <script src="js/chatbot.js?v=20260909-1" defer></script>
 </head>
 <body class="solutions-page">
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <header class="header header--scrolled" id="header">
         <div class="container header__inner">
             <a href="index.html#inicio" class="header__logo header__logo--brand" aria-label="EKAM Perú - Ir al inicio">
@@ -51,7 +54,7 @@
     </header>
     <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 
-    <main>
+    <main id="contenido" tabindex="-1">
         <section class="solutions-hero" aria-labelledby="solutionsTitle">
             <div class="container">
                 <div class="solutions-hero__heading">
@@ -73,51 +76,16 @@
                 <header class="section__header">
                     <span class="section__label">Elige una solución</span>
                     <h2 class="section__title" id="catalogTitle">Soluciones destacadas de NAVASOFT</h2>
-                    <p class="section__subtitle">Incluye módulos, procesos clave y soluciones especializadas. Selecciona una alternativa para conocer sus alcances.</p>
+                    <p class="section__subtitle">Incluye módulos, procesos clave y soluciones especializadas. Elige una para ver sus funciones, las áreas que conecta y cómo se ve en NAVASOFT.</p>
                 </header>
-                <div class="solution-cards" id="solutionCards">
-                    <a class="solution-card" href="soluciones.html?solucion=erp" data-solution="erp"><span class="solution-card__number">01</span><h3>ERP NAVASOFT</h3><p>Gestión conectada de las principales áreas de tu empresa.</p><span>Ver solución <b>→</b></span></a>
-                    <a class="solution-card" href="soluciones.html?solucion=facturacion" data-solution="facturacion"><span class="solution-card__number">02</span><h3>Facturación electrónica</h3><p>Emite comprobantes y centraliza el seguimiento de tu facturación.</p><span>Ver solución <b>→</b></span></a>
-                    <a class="solution-card" href="soluciones.html?solucion=contabilidad" data-solution="contabilidad"><span class="solution-card__number">03</span><h3>Contabilidad</h3><p>Información financiera, libros y reportes para una mejor gestión.</p><span>Ver solución <b>→</b></span></a>
-                    <a class="solution-card" href="soluciones.html?solucion=hoteles" data-solution="hoteles"><span class="solution-card__number">04</span><h3>Hoteles y restaurantes</h3><p>Reservas, habitaciones, ventas, caja e inventario integrados.</p><span>Ver solución <b>→</b></span></a>
-                    <a class="solution-card" href="soluciones.html?solucion=activos" data-solution="activos"><span class="solution-card__number">05</span><h3>Activos fijos</h3><p>Control de activos, depreciación, movimientos y reportes.</p><span>Ver solución <b>→</b></span></a>
-                    <a class="solution-card" href="soluciones.html?solucion=navamovil" data-solution="navamovil"><span class="solution-card__number">06</span><h3>NavaMóvil</h3><p>Consulta y registra información comercial desde dispositivos móviles.</p><span>Ver solución <b>→</b></span></a>
+                <div class="solution-cards">
+                    <a class="solution-card" href="soluciones/erp-navasoft/"><span class="solution-card__number">01</span><h3>ERP NAVASOFT</h3><p>Gestión conectada de las principales áreas de tu empresa.</p><span>Ver solución <b>→</b></span></a>
+                    <a class="solution-card" href="soluciones/facturacion-electronica/"><span class="solution-card__number">02</span><h3>Facturación electrónica</h3><p>Emite comprobantes y centraliza el seguimiento de tu facturación.</p><span>Ver solución <b>→</b></span></a>
+                    <a class="solution-card" href="soluciones/contabilidad/"><span class="solution-card__number">03</span><h3>Contabilidad</h3><p>Información financiera, libros y reportes para una mejor gestión.</p><span>Ver solución <b>→</b></span></a>
+                    <a class="solution-card" href="soluciones/hoteles-restaurantes/"><span class="solution-card__number">04</span><h3>Hoteles y restaurantes</h3><p>Reservas, habitaciones, ventas, caja e inventario integrados.</p><span>Ver solución <b>→</b></span></a>
+                    <a class="solution-card" href="soluciones/activos-fijos/"><span class="solution-card__number">05</span><h3>Activos fijos</h3><p>Control de activos, depreciación, movimientos y reportes.</p><span>Ver solución <b>→</b></span></a>
+                    <a class="solution-card" href="soluciones/navamovil/"><span class="solution-card__number">06</span><h3>NavaMóvil</h3><p>Consulta y registra información comercial desde dispositivos móviles.</p><span>Ver solución <b>→</b></span></a>
                 </div>
-            </div>
-        </section>
-
-        <section class="solution-detail" id="detalle" aria-labelledby="solutionDetailTitle" tabindex="-1">
-            <div class="container">
-                <article class="solution-detail__panel">
-                    <div class="solution-detail__content">
-                        <span class="solution-detail__eyebrow">Solución NAVASOFT implementada por EKAM Perú</span>
-                        <h2 id="solutionDetailTitle">ERP NAVASOFT para empresas</h2>
-                        <p class="solution-detail__summary" id="solutionSummary"></p>
-                        <div class="solution-detail__lists">
-                            <section><h3>¿Qué puedes gestionar?</h3><ul id="solutionCapabilities"></ul></section>
-                            <section><h3>Áreas que se conectan</h3><ul id="solutionAreas"></ul></section>
-                        </div>
-                        <a id="solutionWhatsApp" class="btn btn--primary" href="#" target="_blank" rel="noopener noreferrer">Solicitar información de esta solución</a>
-                    </div>
-                    <figure class="solution-detail__visual">
-                        <img id="solutionImage" src="assets/screenshots/navasoft-general.jpeg" alt="Pantalla principal de NAVASOFT ERP">
-                        <figcaption id="solutionImageCaption">Vista referencial de NAVASOFT ERP</figcaption>
-                    </figure>
-                </article>
-            </div>
-        </section>
-
-        <section class="implementation" id="proceso" aria-labelledby="processTitle">
-            <div class="container implementation__grid">
-                <div class="implementation__intro"><span>Implementación EKAM Perú</span><h2 id="processTitle">De la implementación a la transformación</h2><p>Definimos la solución con tu equipo, configuramos NAVASOFT de acuerdo con la operación y damos continuidad a la implementación.</p></div>
-                <ol class="implementation__steps">
-                    <li><span>01</span><div><strong>Diagnóstico</strong><p>Identificamos áreas, procesos y prioridades.</p></div></li>
-                    <li><span>02</span><div><strong>Diseño</strong><p>Definimos módulos, alcance y configuración.</p></div></li>
-                    <li><span>03</span><div><strong>Implementación</strong><p>Configuramos NAVASOFT y lo ponemos en marcha.</p></div></li>
-                    <li><span>04</span><div><strong>Capacitación</strong><p>Preparamos a tus usuarios.</p></div></li>
-                    <li><span>05</span><div><strong>Integración</strong><p>Conectamos áreas para que la información fluya.</p></div></li>
-                    <li><span>06</span><div><strong>Evolución</strong><p>Soporte y mejora continua hacia BI, IA y automatización.</p></div></li>
-                </ol>
             </div>
         </section>
 
@@ -167,6 +135,7 @@
                         <li><a href="nosotros.html">Nosotros</a></li>
                         <li><a href="index.html#clientes">Clientes</a></li>
                         <li><a href="index.html#implementacion">Metodología</a></li>
+                        <li><a href="index.html#academy">EKAM Academy</a></li>
                         <li><a href="recursos/">Recursos y guías</a></li>
                         <li><a href="https://wa.me/51949882756?text=Hola%2C%20deseo%20recibir%20el%20brochure%20de%20EKAM%20Per%C3%BA%20y%20NAVASOFT%20ERP." target="_blank" rel="noopener noreferrer">Solicitar brochure</a></li>
                         <li><a href="privacidad.html">Política de privacidad</a></li>
@@ -178,7 +147,7 @@
                         <li><a href="https://wa.me/51949882756" target="_blank" rel="noopener noreferrer">WhatsApp: +51 949 882 756</a></li>
                         <li><a href="tel:+51949882756">Teléfono: +51 949 882 756</a></li>
                         <li><a href="mailto:soporte@ekamperu.com">soporte@ekamperu.com</a></li>
-                        <li><span>Chiclayo, Lambayeque, Perú</span></li>
+                        <li><span>Sede en Chiclayo · Atención en todo el norte del Perú</span></li>
                     </ul>
                 </div>
             </div>
@@ -187,9 +156,17 @@
             </div>
         </div>
     </footer>
-    <a class="solutions-whatsapp" id="floatingWhatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="Contactar a EKAM Perú por WhatsApp"><svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884M20.463 3.488A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"></path></svg></a>
+    <a class="solutions-whatsapp" id="floatingWhatsapp" href="https://wa.me/51949882756?text=Hola%2C%20deseo%20hablar%20con%20un%20especialista%20de%20EKAM%20Per%C3%BA." target="_blank" rel="noopener noreferrer" aria-label="Contactar a EKAM Perú por WhatsApp"><svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884M20.463 3.488A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"></path></svg></a>
     <div class="chatbot" id="ekamChatbot"><button type="button" class="chatbot__launcher" id="chatbotLauncher" aria-expanded="false" aria-controls="ekamChatbotPanel" aria-label="Abrir asistente virtual de EKAM Perú"><img src="assets/images/asistente-ekam-avatar.webp" alt="Robot asistente virtual de EKAM Perú" class="chatbot__launcher-img" width="240" height="240"></button><p class="chatbot__launcher-label" id="chatbotLauncherLabel" aria-hidden="true">¿Necesitas ayuda?</p><section class="chatbot__panel" id="ekamChatbotPanel" role="dialog" aria-label="Asistente virtual de EKAM Perú" aria-hidden="true" tabindex="-1"><header class="chatbot__header"><img src="assets/images/asistente-ekam-avatar.webp" alt="" class="chatbot__header-avatar" loading="lazy" width="240" height="240"><div class="chatbot__header-info"><h2 class="chatbot__header-title">Asistente EKAM Perú</h2><span class="chatbot__header-status"><span class="chatbot__status-dot" aria-hidden="true"></span>Respuestas rápidas</span></div><button type="button" class="chatbot__close" id="chatbotClose" aria-label="Cerrar asistente virtual de EKAM Perú">&times;</button></header><div class="chatbot__body"><div class="chatbot__messages" id="chatbotMessages" aria-live="polite"></div><div class="chatbot__replies" id="chatbotReplies" aria-live="polite"></div></div></section></div>
-    <script src="js/soluciones.js?v=20260926-lazy-1"></script>
-    <script src="js/chatbot.js?v=20260909-1"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.ekamperu.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Soluciones", "item": "https://www.ekamperu.com/soluciones.html" }
+  ]
+}
+    </script>
 </body>
 </html>

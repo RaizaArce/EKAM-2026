@@ -23,8 +23,7 @@
 }
 
 .sector-intro__eyebrow,
-.sector-detail__brand,
-.sector-process__intro > span {
+.sector-detail__brand{
     display: inline-block;
     color: var(--color-primary);
     font-size: 0.8125rem;
@@ -238,65 +237,6 @@
     transform: perspective(1200px) rotateY(-2deg);
 }
 
-.sector-process {
-    display: grid;
-    grid-template-columns: 1.05fr 2fr auto;
-    gap: clamp(1.5rem, 3vw, 3rem);
-    align-items: center;
-    margin-top: 1.25rem;
-    padding: clamp(1.5rem, 3vw, 2.25rem);
-    border-radius: 1.2rem;
-    background: var(--color-primary-dark);
-    color: #fff;
-}
-
-.sector-process__intro > span {
-    color: var(--color-primary-light);
-    font-size: 0.7rem;
-}
-
-.sector-process__intro h2 {
-    margin-top: 0.45rem;
-    color: #fff;
-    font-size: clamp(1.35rem, 2vw, 1.85rem);
-}
-
-.sector-process__steps {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1rem;
-}
-
-.sector-process__steps li {
-    display: flex;
-    flex-direction: column;
-}
-
-.sector-process__steps li > span {
-    display: grid;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    margin-bottom: 0.6rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    color: var(--color-primary-light);
-    font-size: 0.7rem;
-    font-weight: 700;
-}
-
-.sector-process__steps strong {
-    color: #fff;
-    font-size: 0.85rem;
-}
-
-.sector-process__steps small {
-    margin-top: 0.2rem;
-    color: rgba(255, 255, 255, 0.58);
-    font-size: 0.7rem;
-    line-height: 1.4;
-}
-
 .sector-note {
     max-width: 860px;
     margin: 1.2rem auto 0;
@@ -346,9 +286,6 @@
         width: min(100%, 650px);
         transform: none;
     }
-    .sector-process {
-        grid-template-columns: 1fr;
-    }
 
 }
 
@@ -376,10 +313,6 @@
     .sector-dashboard {
         min-height: 360px;
     }
-    .sector-process__steps {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.35rem 1rem;
-    }
 
 }
 
@@ -396,9 +329,6 @@
     }
     .sector-detail {
         padding: 1.15rem;
-    }
-    .sector-process__steps {
-        grid-template-columns: 1fr;
     }
     .sector-whatsapp {
         right: 1rem;
@@ -640,33 +570,6 @@
 
 .sector-feature .sector-dashboard { display: none; }
 
-.sector-process--editorial {
-    display: grid;
-    grid-template-columns: 0.82fr 1.8fr;
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    align-items: center;
-    margin-top: 2rem;
-    padding: clamp(1.5rem, 3.5vw, 2.5rem);
-    border: 1px solid #d7e9f7;
-    border-radius: 1rem;
-    background: #fff;
-    color: #073253;
-}
-
-.sector-process--editorial .sector-process__intro span { color: #0787dd; }
-
-.sector-process--editorial .sector-process__intro h2 { color: #073253; font-size: clamp(1.4rem, 2.1vw, 2rem); }
-
-.sector-process--editorial .sector-process__steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; }
-
-.sector-process--editorial .sector-process__steps li { border-left-color: #a9d9f7; }
-
-.sector-process--editorial .sector-process__steps span { color: #0787dd; }
-
-.sector-process--editorial .sector-process__steps strong { color: #073253; }
-
-.sector-process--editorial .sector-process__steps small { color: #6b8195; }
-
 @media(max-width: 900px) {
     .sector-editorial { grid-template-columns: minmax(0, 1fr); }
     .sector-editorial__aside { position: static; }
@@ -686,7 +589,6 @@
         scroll-snap-align: start;
     }
     .sector-editorial .sector-tab[aria-selected="true"] { border-color: #0787dd; }
-    .sector-process--editorial { grid-template-columns: 1fr; }
 }
 
 @media(max-width: 620px) {
@@ -695,7 +597,6 @@
     .sector-feature::after { background: linear-gradient(180deg, rgba(3, 31, 55, 0.88), rgba(3, 31, 55, 0.56)); }
     .sector-feature .sector-detail__content { min-height: 29rem; padding: 1.5rem; }
     .sector-feature .sector-detail__cards { grid-template-columns: 1fr; margin-top: 3.2rem; }
-    .sector-process--editorial .sector-process__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* Ficha compacta: contenido esencial y selector visibles en la primera pantalla. */
@@ -1252,19 +1153,3 @@
     color: rgba(255, 255, 255, 0.2);
 }
 
-/* Metodologia de 6 pasos (igual que en el inicio). */
-.sector-process--editorial .sector-process__steps {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-}
-
-@media (max-width: 1150px) {
-    .sector-process--editorial .sector-process__steps {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 640px) {
-    .sector-process--editorial .sector-process__steps {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}

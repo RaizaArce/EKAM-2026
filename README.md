@@ -1,6 +1,6 @@
 # EKAM Perú — Sitio web corporativo
 
-Sitio web de **EKAM PERU S.A.C.**, empresa de Chiclayo que implementa el ERP **NAVASOFT** y desarrolla software a medida para empresas del norte del Perú.
+Sitio web de **EKAM PERU S.A.C.**, empresa con sede en Chiclayo que implementa el ERP **NAVASOFT** y desarrolla software a medida para empresas de todo el norte del Perú.
 
 Es un sitio estático: HTML, CSS y JavaScript sin frameworks, sin dependencias npm y sin backend. El dominio previsto es `https://www.ekamperu.com`.
 
@@ -27,7 +27,7 @@ Abrir los `.html` con doble clic también funciona, pero las rutas con carpeta (
 | `soluciones/<solución>/` | Una página por solución (6): ERP, facturación electrónica, contabilidad, hoteles y restaurantes, activos fijos, NavaMóvil |
 | `sectores.html` | Soluciones por sector |
 | `sectores/<sector>/` | Una página por sector (10): agroindustria, comercio, construcción, educación, grifos, hoteles y restaurantes, industria, salud, servicios, transporte |
-| `nosotros.html` | Historia, misión, visión, servicios y datos formales de la empresa |
+| `nosotros.html` | Historia, misión, visión y servicios de la empresa |
 | `recursos/` | Guías: cómo elegir un ERP, facturación electrónica en Perú, PLE y libros electrónicos |
 | `privacidad.html` | Política de privacidad |
 
@@ -39,24 +39,25 @@ Todas las páginas están registradas en `sitemap.xml`.
 EKAM-2026/
 ├── index.html, soluciones.html, sectores.html, nosotros.html, privacidad.html
 ├── soluciones/ · sectores/ · recursos/    ← una carpeta con index.html por página
+├── 404.html, favicon.ico
 ├── robots.txt, sitemap.xml
 ├── css/
-│   ├── style.css         ← sistema de diseño y estilos compartidos (variables en :root)
+│   ├── style.css         ← sistema de diseño y estilos compartidos por todas las páginas (variables en :root)
+│   ├── home.css          ← estilos que solo usa la portada
 │   ├── soluciones.css    ← hero, tarjetas y CTA de las páginas internas
 │   ├── sectores.css
 │   └── nosotros.css
 ├── js/
 │   ├── main.js           ← menú, formulario, WhatsApp y asistente (portada y páginas internas)
-│   ├── soluciones.js     ← detalle interactivo de soluciones.html
 │   ├── sectores.js
 │   └── chatbot.js        ← asistente en las páginas que no cargan main.js
 ├── assets/
 │   ├── icons/            ← logotipos y favicons
 │   ├── LogosClientes/    ← logos del carrusel de clientes (.webp)
 │   ├── images/           ← asistente virtual, NavaMóvil e imagen para redes (og-ekam.jpg)
-│   ├── screenshots/      ← capturas de NAVASOFT
+│   ├── screenshots/      ← capturas de NAVASOFT (.webp, con variante -640 para celular)
 │   └── videos/           ← video de demostración y su portada
-├── tools/                ← verificación del sitio y capturas antes/después (no se publica)
+├── tools/                ← verificación del sitio, cambio de número de WhatsApp y capturas antes/después (no se publica)
 ├── README.md
 └── WEB-DOCUMENTACION.md  ← guía técnica y de contenido
 ```
@@ -69,9 +70,15 @@ Los datos de contacto y las integraciones se definen al inicio de `js/main.js`:
 |---|---|
 | `WHATSAPP_NUMBER` | Número que reciben el formulario, el botón flotante y el asistente |
 | `CONTACT_EMAIL` | Correo alternativo del formulario |
-| `LEAD_ENDPOINT` | Opcional. URL que recibe una copia de cada solicitud por POST (Formspree, webhook de n8n, etc.). Vacío: el formulario solo abre WhatsApp |
+| `SUPABASE_URL`, `SUPABASE_PUBLIC_KEY` | Opcional. Proyecto Supabase del CRM donde se registra cada solicitud (ver `crm/supabase/`). Vacías: el formulario solo abre WhatsApp |
 
-El número de WhatsApp también aparece escrito en los enlaces `wa.me` del HTML; al cambiarlo hay que reemplazarlo en todas las páginas.
+El número de WhatsApp también está escrito en los enlaces `wa.me` y `tel:` de cada página. Para cambiarlo en todo el sitio de una vez:
+
+```bash
+python tools/cambiar_whatsapp.py 51XXXXXXXXX
+```
+
+El verificador falla si queda más de un número distinto.
 
 ## Cómo hacer cambios
 
@@ -91,7 +98,7 @@ No subir `.git/`, `.github/`, `tools/` ni los archivos `.md`.
 ## Pendientes
 
 - [ ] Validar con EKAM Perú las cifras de la portada (años de experiencia, empresas implementadas)
-- [ ] Validar los textos de `nosotros.html` y la dirección de la oficina
+- [ ] Validar los textos de `nosotros.html`
 - [ ] Añadir el código de Google Analytics 4 o Tag Manager (los eventos ya se envían)
 - [ ] Definir si el formulario guardará las solicitudes (`LEAD_ENDPOINT`)
 - [ ] Añadir el equipo a la página Nosotros
