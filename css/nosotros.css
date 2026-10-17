@@ -1,16 +1,15 @@
 /* Página Nosotros. Reutiliza hero, CTA y WhatsApp de soluciones.css. */
-.about-story, .about-services, .about-company { padding: clamp(3rem, 6vw, 5.5rem) 0; }
+.about-story, .about-services { padding: clamp(3rem, 6vw, 5.5rem) 0; }
 .about-story { background: #fff; }
-.about-story__grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
-.about-story__content .section__title, .about-company .section__title { margin: .6rem 0 1.1rem; text-align: left; }
-.about-story__content > p { margin-bottom: 1rem; color: var(--color-text-secondary); line-height: 1.75; }
-.about-story__content > .about-story__motto { margin: 1.5rem 0 0; color: var(--color-primary-dark); font-family: var(--font-heading); font-size: var(--text-lg); font-weight: 800; letter-spacing: -.01em; }
+/* Solo texto (las cifras de la empresa están en el hero de la portada):
+   título y lema a la izquierda, párrafos a la derecha. */
+.about-story__grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.about-story__intro .section__title { margin: .6rem 0 0; text-align: left; }
+.about-story__intro > .about-story__motto { margin: 1.5rem 0 0; color: var(--color-primary-dark); font-family: var(--font-heading); font-size: var(--text-lg); font-weight: 800; letter-spacing: -.01em; }
+.about-story__body { padding-left: clamp(1.25rem, 2.5vw, 2rem); border-left: 3px solid var(--color-accent); }
+.about-story__body > p { color: var(--color-text-secondary); line-height: 1.75; }
+.about-story__body > p + p { margin-top: 1rem; }
 .about-story__motto span { color: var(--color-accent); }
-
-.about-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; }
-.about-facts__item { display: flex; flex-direction: column; gap: .3rem; padding: 1.35rem 1.2rem; border: 1px solid var(--color-border); border-radius: var(--radius-xl); background: var(--color-background); }
-.about-facts__item strong { overflow-wrap: anywhere; color: var(--color-primary); font-family: var(--font-heading); font-size: clamp(1.25rem, 2vw, 1.65rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
-.about-facts__item span { color: var(--color-text-secondary); font-size: var(--text-sm); }
 
 .about-purpose { padding: clamp(3rem, 6vw, 5.5rem) 0; background: var(--color-primary-dark); color: #fff; }
 .about-purpose__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
@@ -29,30 +28,11 @@
 .about-service h3 { margin: .7rem 0 .4rem; color: var(--color-primary-dark); font-size: 1.15rem; letter-spacing: -.02em; }
 .about-service p { color: var(--color-text-secondary); font-size: .92rem; line-height: 1.65; }
 
-.about-sectors { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2rem; padding: 1.5rem; border: 1px solid rgba(8,119,201,.16); border-radius: var(--radius-xl); background: linear-gradient(120deg, #eff9ff, #fff); }
-.about-sectors h3 { color: var(--color-primary-dark); font-size: 1.05rem; }
-.about-sectors__list { display: flex; flex: 1 1 320px; flex-wrap: wrap; gap: .5rem; }
-.about-sectors__list li { padding: .4rem .85rem; border: 1px solid var(--color-border); border-radius: 999px; background: #fff; color: var(--color-text); font-size: var(--text-sm); font-weight: 600; }
-.about-sectors__link { color: var(--color-primary); font-size: .9rem; font-weight: 700; white-space: nowrap; }
-.about-sectors__link:hover { color: var(--color-primary-hover); }
-
-.about-company { background: #fff; }
-.about-company__grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
-.about-company__text { color: var(--color-text-secondary); line-height: 1.75; }
-.about-company__list { border: 1px solid var(--color-border); border-radius: var(--radius-xl); overflow: hidden; }
-.about-company__list > div { display: grid; grid-template-columns: 210px 1fr; gap: 1rem; padding: .95rem 1.25rem; }
-.about-company__list > div + div { border-top: 1px solid var(--color-border); }
-.about-company__list dt { color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: 600; }
-.about-company__list dd { color: var(--color-text); font-weight: 600; }
-
 @media (max-width: 900px) {
-    .about-story__grid, .about-company__grid, .about-purpose__grid { grid-template-columns: 1fr; }
+    .about-story__grid, .about-purpose__grid { grid-template-columns: 1fr; }
     .about-services__grid, .about-pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 620px) {
     .about-services__grid, .about-pillars { grid-template-columns: 1fr; }
-    .about-company__list > div { grid-template-columns: 1fr; gap: .2rem; }
-    .about-sectors { align-items: flex-start; flex-direction: column; }
-    .about-sectors__list { flex-basis: auto; }
 }
