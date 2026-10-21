@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "ekam", "runtimeExecutable": "python", "runtimeArgs": ["-m", "http.server", "5500"], "port": 5500 }
+    { "name": "ekam", "runtimeExecutable": "python", "runtimeArgs": ["-m", "http.server", "5500"], "port": 5500 },
+    { "name": "crm", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "C:/EKAM-CRM", "run", "dev", "--", "--port", "5173", "--strictPort"], "port": 5173 }
   ]
 }
