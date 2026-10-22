@@ -135,7 +135,7 @@ La administración muestra primero la casilla **Mostrar en la web**, seguida de 
 - Publicación y cierre de la oferta ficticia `0fbbe387` mediante el formulario del ingeniero; retirada automática en la web, conservando `8cea8485`.
 - Edición temporal de ayuda en Formulario web reflejada sin recargar la página y restaurada después.
 - 49 pruebas automatizadas correctas.
-- Queda una postulación identificada como PRUEBA CUENTA DEFINITIVA CODEX y su PDF ficticio como evidencia; la oferta de prueba quedó cerrada.
+- Limpieza posterior del 22/10/2026: retirada la postulación ficticia CODEX, la oferta de prueba cerrada y Ninfuno. Sus archivos y el correo ficticio se enviaron a la papelera. Se conservaron Raiza Arce, Practicante EKAM y las ofertas Contador e Ingeniero de sistemas por indicación del usuario.
 - Pendiente: publicar los archivos locales actualizados en cPanel y verificar el envío desde el dominio público. Estas pruebas no acreditan esa publicación.
 
 
