@@ -1,0 +1,71 @@
+/* Página de clientes - EKAM Perú */
+
+/* Escenario: índice de sectores a la izquierda, logos del sector elegido a la derecha */
+.clients-stage { padding: clamp(2.5rem, 5vw, 4.5rem) 0 clamp(3.5rem, 6vw, 5.5rem); background: radial-gradient(circle at 80% 0%, rgba(32, 164, 243, .22), transparent 32rem), linear-gradient(180deg, var(--color-deep) 0%, var(--color-deep-dark) 100%); color: #fff; }
+.clients-stage ::selection { background: var(--color-accent); color: var(--color-primary-dark); }
+.clients-stage__inner { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: clamp(2rem, 4vw, 3.5rem); align-items: start; }
+.clients-stage__inner > * { min-width: 0; }
+
+.clients-stage__index { position: sticky; top: calc(var(--header-height) + 1.5rem); }
+.clients-stage__index ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, .14); }
+.clients-stage__index li { border-bottom: 1px solid rgba(255, 255, 255, .14); }
+.clients-filter { display: flex; width: 100%; align-items: baseline; justify-content: space-between; gap: 1rem; padding: .95rem .25rem; border: 0; background: none; color: #a9c7e3; font: 700 1.05rem/1.25 var(--font-heading); text-align: left; cursor: pointer; transition: color 200ms ease, padding 320ms cubic-bezier(.16, 1, .3, 1), font-size 320ms cubic-bezier(.16, 1, .3, 1); }
+.clients-filter b { color: #8fb3d6; font-family: var(--font-family); font-size: .9rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.clients-filter:hover { color: #fff; }
+.clients-filter[aria-pressed="true"] { padding-left: .9rem; color: #fff; font-size: 1.25rem; }
+.clients-filter[aria-pressed="true"] b { color: var(--color-accent); }
+.clients-filter:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 6px; }
+
+.clients-stage__lema { min-height: 1.7em; margin: 0 0 1.25rem; color: #cfe1f2; font-size: 1.05rem; line-height: 1.6; }
+.clients-stage__lema a { color: #fff; font-weight: 700; text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 2px; text-underline-offset: .3em; }
+.clients-stage__lema a:hover { color: var(--color-accent); }
+.clients-stage__lema a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 3px; }
+
+.clients-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.clients-grid--all { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+
+/* Tarjeta que gira al pasar el mouse (o al tocarla en el celular) y muestra el nombre del cliente */
+.client-card { aspect-ratio: 3 / 2; perspective: 900px; }
+.client-card[hidden] { display: none; }
+.client-card__inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 560ms cubic-bezier(.16, 1, .3, 1); }
+.client-card:hover .client-card__inner { transform: rotateY(180deg); }
+.client-card__front, .client-card__back { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 14px; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.client-card__front { background: #fff; box-shadow: 0 18px 40px rgba(2, 12, 24, .28); }
+.client-card__front img { width: 72%; height: 58%; object-fit: contain; }
+.client-card--scale-sm .client-card__front img { transform: scale(1.08); }
+.client-card--scale-md .client-card__front img { transform: scale(1.22); }
+.client-card--scale-lg .client-card__front img { transform: scale(1.32); }
+.client-card__back { padding: .9rem 1rem; background: var(--color-accent); color: var(--color-primary-dark); font-family: var(--font-heading); font-size: var(--text-sm); font-weight: 700; line-height: 1.3; text-align: center; transform: rotateY(180deg); }
+.clients-grid--all .client-card__back { padding: .6rem; font-size: var(--text-xs); }
+
+/* Al cambiar de sector, los logos entran en cascada */
+.client-card--enter { animation: clientCardIn 520ms cubic-bezier(.16, 1, .3, 1) both; animation-delay: var(--enter-delay, 0ms); }
+@keyframes clientCardIn {
+    from { opacity: 0; transform: translateY(14px) scale(.96); filter: blur(3px); }
+    to { opacity: 1; transform: none; filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .client-card__inner, .clients-filter { transition: none; }
+    .client-card--enter { animation: none; }
+}
+
+@media (max-width: 1100px) {
+    .clients-grid--all { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+    .clients-stage__inner { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+    .clients-stage__index { position: static; margin: 0 calc(-1 * clamp(1rem, .5rem + 2vw, 2rem)); }
+    .clients-stage__index ul { display: flex; overflow-x: auto; padding: 0 clamp(1rem, .5rem + 2vw, 2rem); border-top: 0; border-bottom: 1px solid rgba(255, 255, 255, .14); scrollbar-width: none; }
+    .clients-stage__index ul::-webkit-scrollbar { display: none; }
+    .clients-stage__index li { flex: none; border-bottom: 0; }
+    .clients-filter { gap: .45rem; padding: .8rem .9rem; font-size: .95rem; white-space: nowrap; }
+    .clients-filter[aria-pressed="true"] { padding-left: .9rem; font-size: .95rem; box-shadow: inset 0 -3px 0 var(--color-accent); }
+    .clients-grid, .clients-grid--all { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 520px) {
+    .clients-grid, .clients-grid--all { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .client-card__back, .clients-grid--all .client-card__back { padding: .6rem; font-size: var(--text-xs); }
+}
