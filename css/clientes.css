@@ -62,11 +62,14 @@
     .client-card--enter { animation: none; }
 }
 
-@media (max-width: 1100px) {
-    .clients-grid--all { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 68.75em) {
+    .clients-stage__inner { grid-template-columns: 240px minmax(0, 1fr); }
+    .clients-filter { font-size: .95rem; }
+    .clients-filter[aria-pressed="true"] { font-size: 1.05rem; }
+    .clients-grid--all { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 56.25em) {
     .clients-stage__inner { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
     .clients-stage__index { position: static; margin: 0 calc(-1 * clamp(1rem, .5rem + 2vw, 2rem)); }
     .clients-stage__index ul { display: flex; overflow-x: auto; padding: 0 clamp(1rem, .5rem + 2vw, 2rem); border-top: 0; border-bottom: 1px solid rgba(255, 255, 255, .14); scrollbar-width: none; }
@@ -79,7 +82,7 @@
     .clients-grid, .clients-grid--all { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 32.5em) {
     .clients-grid, .clients-grid--all { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .client-card__back, .clients-grid--all .client-card__back { padding: .6rem; font-size: var(--text-xs); }
 }

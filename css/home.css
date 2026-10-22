@@ -63,7 +63,7 @@
 .showcase__image[src*="navasoft-facturacion-electronica."] { aspect-ratio: 1188 / 477; }
 
 /* Con capturas horizontales la etiqueta "Ampliar imagen" tapaba demasiado en celular: se reduce. */
-@media (max-width: 640px) {
+@media (max-width: 40em) {
     .showcase__image-button .showcase__zoom {
         right: 0.5rem;
         bottom: 0.5rem;
@@ -263,8 +263,35 @@
     will-change: transform;
 }
 
-.clients-carousel:hover .clients-carousel__track {
+.clients-carousel:hover .clients-carousel__track,
+.clients-carousel:focus-within .clients-carousel__track,
+.clients-carousel--paused .clients-carousel__track {
     animation-play-state: paused;
+}
+
+/* Botón para detener el carrusel (teclado y pantallas táctiles) */
+.clients-carousel__pause {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    margin: 0.75rem auto 0;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #cfe1f2;
+    font: 600 var(--text-xs)/1 var(--font-family);
+    cursor: pointer;
+}
+
+.clients-carousel__pause:hover {
+    color: #fff;
+}
+
+.clients-carousel__pause:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
 }
 
 .clients-carousel__group {
@@ -526,7 +553,7 @@
 /* 22. RESPONSIVE */
 
 /* <= 1150px (hero pasa a una sola columna antes de que las dos columnas queden demasiado estrechas) */
-@media (max-width: 1150px) {
+@media (max-width: 71.875em) {
     .hero__inner {
         grid-template-columns: 1fr;
         text-align: center;
@@ -556,7 +583,7 @@
 
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 64em) {
 
     .ai-section__grid {
         grid-template-columns: 1fr;
@@ -585,7 +612,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
 
     .hero__title,
     .hero__subtitle {
@@ -684,7 +711,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30em) {
 
     .hero__title {
         font-size: clamp(1.65rem, 8.3vw, 2.05rem);
@@ -725,7 +752,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
 
     .hero__title {
         max-width: min(100%, 18rem);
@@ -759,14 +786,14 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30em) {
     .hero__title {
         max-width: 18rem;
         font-size: clamp(1.5rem, 7.4vw, 1.75rem);
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
 
     .hero__visual {
         order: -1;
@@ -801,7 +828,7 @@
 
     .hero__proof {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        border-radius: 1rem;
+        border-radius: var(--radius-xl);
     }
 
     .hero__proof span {
@@ -817,7 +844,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30em) {
 
     .hero__title {
         max-width: 21rem;
@@ -825,13 +852,13 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30em) {
     .hero__proof strong {
         font-size: 1rem;
     }
 }
 
-@media (min-width: 641px) and (max-width: 900px) {
+@media (min-width: 40.0625em) and (max-width: 56.25em) {
 
     .hero__inner {
         gap: 1rem;
@@ -862,7 +889,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
 
     .hero__inner {
         gap: 0.8rem;
@@ -873,7 +900,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30em) {
     .hero__subtitle {
         line-height: 1.52;
     }
@@ -937,7 +964,7 @@
     text-transform: none;
 }
 
-@media (min-width: 1151px) {
+@media (min-width: 71.9375em) {
     .hero__inner {
         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
@@ -1043,7 +1070,7 @@
     }
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 71.875em) {
     .hero-scene {
         width: min(100%, 560px);
     }
@@ -1054,7 +1081,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .hero__title {
         max-width: 100%;
         font-size: min(2.6rem, 9.2cqi);
@@ -1246,7 +1273,7 @@
 
 /* Variante compacta (portada corta): icono a la izquierda y texto a la derecha.
    Solo desde 641px; en celular los modulos ya son accesos de icono + nombre. */
-@media (min-width: 641px) {
+@media (min-width: 40.0625em) {
     .modules__grid--compact .module-card--link {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr);
@@ -1341,7 +1368,7 @@
     width: 60px;
     height: 60px;
     margin-bottom: 1.1rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-xl);
     background: linear-gradient(135deg, var(--color-primary), var(--color-deep));
     color: #fff;
 }
@@ -1416,7 +1443,7 @@
     justify-content: center;
     width: 56px;
     height: 56px;
-    border-radius: 1rem;
+    border-radius: var(--radius-xl);
     background: rgba(255, 255, 255, 0.12);
     color: #7dccff;
 }
@@ -1546,14 +1573,14 @@
     line-height: 1.08;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 64em) {
     .navasoft-platform__grid,
     .custom-dev__grid {
         grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40em) {
 
     .method__num {
         grid-row: span 3;
@@ -1582,7 +1609,7 @@
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 22.5em) {
     .hero__proof span {
         padding: 0 0.45rem;
         font-size: 0.7rem;
@@ -1824,7 +1851,7 @@
     font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.5rem);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 64em) {
     .about__grid {
         grid-template-columns: 1fr;
     }
@@ -1834,7 +1861,7 @@
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40em) {
     .compliance-strip__list {
         grid-template-columns: 1fr;
     }
@@ -1952,13 +1979,13 @@
     flex-shrink: 0;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 64em) {
     .academy__grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .academy__cta {
         flex-direction: column;
         align-items: stretch;
@@ -1971,7 +1998,7 @@
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40em) {
     .academy__grid {
         grid-template-columns: 1fr;
         gap: 0.75rem;
@@ -2046,7 +2073,7 @@
     width: min(130px, 28vw);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40em) {
 
     /* Hero: titulo, frase principal, botones y cifras (como el wireframe movil) */
     .hero__subtitle:not(.hero__subtitle--lead) {
@@ -2164,7 +2191,7 @@
     .sector-tile__icon {
         width: 42px;
         height: 42px;
-        border-radius: 0.75rem;
+        border-radius: var(--radius-lg);
     }
 
     .sector-tile__name {
@@ -2296,8 +2323,34 @@
     }
 }
 
-@media (min-width: 641px) {
+@media (min-width: 40.0625em) {
     .carousel-dots {
         display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .clients-carousel__pause {
+        display: none;
+    }
+}
+
+/* Contraste mínimo 4.5:1 (auditoría 22/10/2026) */
+.contact-form__helper {
+    color: var(--color-text-secondary);
+}
+
+.academy-card__number {
+    color: var(--color-primary-hover);
+}
+
+/* Textos de apoyo con un mínimo de 12px (auditoría 22/10/2026) */
+@media (max-width: 40em) {
+    .about .empresa-block__arrow-label,
+    .about .empresa-block__brand-caption,
+    .compliance-strip__list span,
+    .nv-diagram__node,
+    .ai-flow div span {
+        font-size: 0.75rem;
     }
 }

@@ -28,11 +28,11 @@
 .about-service h3 { margin: .7rem 0 .4rem; color: var(--color-primary-dark); font-size: 1.15rem; letter-spacing: -.02em; }
 .about-service p { color: var(--color-text-secondary); font-size: .92rem; line-height: 1.65; }
 
-@media (max-width: 900px) {
+@media (max-width: 56.25em) {
     .about-story__grid, .about-purpose__grid { grid-template-columns: 1fr; }
     .about-services__grid, .about-pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 38.75em) {
     .about-services__grid, .about-pillars { grid-template-columns: 1fr; }
 }

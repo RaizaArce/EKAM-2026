@@ -69,12 +69,12 @@
 
 .solutions-whatsapp:focus-visible { outline: 3px solid rgba(32,164,243,.45); outline-offset: 3px; }
 
-@media(max-width: 900px) {
+@media(max-width: 56.25em) {
     .solution-detail__panel { grid-template-columns: 1fr; }
     .solution-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
 
-@media(max-width: 620px) {
+@media(max-width: 38.75em) {
     .solutions-hero { padding-top: calc(var(--header-height) + 2.4rem); }
     .solutions-hero h1 { font-size: clamp(2.25rem, 10vw, 3rem); }
     .solution-cards { grid-template-columns: 1fr; }
@@ -158,7 +158,7 @@
 
 .solution-detail__lists { margin: 1.1rem 0; }
 
-@media(max-width: 620px) {
+@media(max-width: 38.75em) {
     .solutions-hero { padding-top: calc(var(--header-height) + 1rem); }
     .solutions-hero__heading { display: block; }
 
@@ -211,7 +211,7 @@
     color: #7dccff;
 }
 
-@media (max-width: 620px) {
+@media (max-width: 38.75em) {
     .solutions-hero h1 {
         font-size: clamp(1.7rem, 8vw, 2.2rem);
     }
@@ -221,3 +221,21 @@
         white-space: normal;
     }
 }
+
+/* Ajustes de la auditoría (22/10/2026) */
+/* La captura respeta su proporción (NavaMóvil salía estirada a 1196 px de alto) */
+.solution-detail__visual img { height: auto; }
+/* El panel ya no queda pegado al encabezado */
+.solution-detail.content-detail { padding-top: clamp(2rem, 1.5rem + 2vw, 3rem); }
+/* Números de las tarjetas con contraste 4.5:1 */
+.solution-card__number { color: var(--color-primary-hover); }
+
+/* Ruta de navegación (Inicio › …) como lista: mismo aspecto, separadores decorativos */
+.breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: .1rem 0; margin: 0; padding: 0; list-style: none; }
+.breadcrumb li { white-space: nowrap; }
+.breadcrumb li + li::before { content: '›'; margin: 0 .55em; }
+.breadcrumb a { display: inline-block; padding-block: .3rem; }
+.breadcrumb a:hover { color: var(--color-primary-hover); text-decoration: underline; text-underline-offset: .2em; }
+@media (max-width: 40em) { .breadcrumb { color: var(--color-primary-hover); } }
+/* Catálogo: más aire antes del bloque azul de cierre */
+.solutions-catalog { padding-bottom: clamp(3rem, 2rem + 3vw, 5.5rem); }

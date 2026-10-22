@@ -167,7 +167,7 @@ input, select, textarea {
 }
 
 .section {
-    padding: clamp(1.25rem, 1.25rem + 1vw, 3rem) 0;
+    padding: clamp(2.25rem, 1.5rem + 2.5vw, 4.5rem) 0;
 }
 
 .section--alt {
@@ -824,7 +824,7 @@ h1, h2, h3, h4, h5, h6 {
     height: clamp(136px, 10vw, 154px);
     background: linear-gradient(180deg, #fff, #f8fbff);
     border: 1px solid rgba(8, 119, 201, 0.12);
-    border-radius: 0.75rem;
+    border-radius: var(--radius-lg);
     padding: clamp(1.125rem, 0.5rem + 1vw, 1.5rem);
     box-shadow: 0 14px 34px rgba(7, 26, 43, 0.055);
     transition: transform 280ms ease, box-shadow var(--transition-base), border-color var(--transition-fast);
@@ -844,7 +844,7 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     background: #fff;
     border: 1px solid rgba(8, 119, 201, 0.10);
-    border-radius: 0.75rem;
+    border-radius: var(--radius-lg);
     padding: 0.45rem 0.65rem;
 }
 
@@ -923,7 +923,7 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 820px;
     padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
     border: 1px solid rgba(8, 119, 201, 0.12);
-    border-radius: 1.25rem;
+    border-radius: var(--radius-2xl);
     background: rgba(255, 255, 255, 0.86);
     box-shadow: 0 18px 38px rgba(8, 119, 201, 0.09);
 }
@@ -1104,7 +1104,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* <= 900px: menu hamburguesa. Si cambia este valor, revisar el bloque 901-1024 de mas abajo. */
-@media (max-width: 900px) {
+@media (max-width: 56.25em) {
     .header__nav {
         position: fixed;
         top: 0;
@@ -1115,12 +1115,16 @@ h1, h2, h3, h4, h5, h6 {
         z-index: 1001;
         padding: calc(var(--header-height) + 1rem) 1.5rem 2rem;
         box-shadow: -4px 0 24px rgba(0,0,0,0.1);
-        transition: right var(--transition-base);
+        visibility: hidden;
+        transition: right var(--transition-base), visibility 0s linear 0.3s;
         overflow-y: auto;
     }
 
+    /* Cerrado queda fuera del orden de tabulación; abierto vuelve a ser visible al instante */
     .header__nav--open {
         right: 0;
+        visibility: visible;
+        transition-delay: 0s;
     }
 
     .header__menu {
@@ -1144,7 +1148,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* <= 1024px */
-@media (max-width: 1024px) {
+@media (max-width: 64em) {
 
     .modules__grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1156,7 +1160,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* <= 768px */
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .hero {
         padding-bottom: clamp(1.5rem, 1rem + 1vw, 2.5rem);
     }
@@ -1183,7 +1187,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* <= 480px */
-@media (max-width: 480px) {
+@media (max-width: 30em) {
     .header__logo {
         gap: 0.5rem;
     }
@@ -1437,7 +1441,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0.6rem 0.8rem;
     font-size: var(--text-sm);
     line-height: 1.45;
-    border-radius: 1rem;
+    border-radius: var(--radius-xl);
     overflow-wrap: break-word;
 }
 
@@ -1638,7 +1642,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-@media (max-height: 800px) and (min-width: 481px) {
+@media (max-height: 50em) and (min-width: 30.0625em) {
     .chatbot__welcome-robot {
         width: 62px;
     }
@@ -1649,7 +1653,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30em) {
     .chatbot__launcher {
         display: none;
     }
@@ -1680,7 +1684,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Mobile overflow guard: keep dense ERP visuals inside the viewport. */
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .hero,
     .hero .container,
     .hero__inner,
@@ -1702,7 +1706,7 @@ section[id],
     scroll-margin-top: calc(var(--header-height) + 1.4rem);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 64em) {
     .header__logo--brand {
         width: clamp(286px, 35vw, 356px);
         height: 80px;
@@ -1710,7 +1714,7 @@ section[id],
 }
 
 /* 1025-1279px: seis enlaces + boton; logo y enlaces un poco mas compactos para que quepan en una linea. */
-@media (min-width: 1025px) and (max-width: 1279px) {
+@media (min-width: 64.0625em) and (max-width: 79.9375em) {
     .header__logo--brand {
         width: clamp(280px, 24vw, 330px);
     }
@@ -1721,7 +1725,7 @@ section[id],
 }
 
 /* 901-1024px: el menu completo sigue visible; logo y enlaces mas compactos para que quepa. */
-@media (min-width: 901px) and (max-width: 1024px) {
+@media (min-width: 56.3125em) and (max-width: 64em) {
     .header__logo--brand {
         width: 210px;
         height: 72px;
@@ -1740,7 +1744,7 @@ section[id],
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .header__logo--brand {
         width: clamp(220px, 58vw, 285px);
         height: 72px;
@@ -1751,7 +1755,7 @@ section[id],
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30em) {
     .header__logo--brand {
         width: clamp(190px, 56vw, 230px);
         height: 66px;
@@ -1759,14 +1763,14 @@ section[id],
 }
 
 /* Final responsive polish: keep the first viewport lighter on tablets. */
-@media (min-width: 641px) and (max-width: 900px) {
+@media (min-width: 40.0625em) and (max-width: 56.25em) {
     .hero {
         padding-top: calc(var(--header-height) + 0.65rem);
         padding-bottom: 1.55rem;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .chatbot__launcher,
     .chatbot__launcher-label {
         display: none !important;
@@ -1789,13 +1793,13 @@ section[id],
 
 /* Premium pass: product-led hero, proof blocks and calmer floating UI. */
 
-@media (min-width: 769px) {
+@media (min-width: 48.0625em) {
     .chatbot__launcher-label {
         display: none !important;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
     .hero {
         padding-top: calc(var(--header-height) + 0.5rem);
         padding-bottom: 1.15rem;
@@ -2025,7 +2029,7 @@ section[id],
     width: min(100%, 300px);
     padding: 0.75rem 1rem;
     border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 0.75rem;
+    border-radius: var(--radius-lg);
     background: rgba(255, 255, 255, 0.1);
     font-weight: 800;
     letter-spacing: 0.06em;
@@ -2137,7 +2141,7 @@ section[id],
 }
 
 /* ---- Responsive de las pantallas nuevas ---- */
-@media (max-width: 1150px) {
+@media (max-width: 71.875em) {
 
     .method__steps {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2149,7 +2153,7 @@ section[id],
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 64em) {
 
     .problem-grid,
     .sector-tiles {
@@ -2163,7 +2167,7 @@ section[id],
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40em) {
     .problem-grid,
     .sector-tiles {
         grid-template-columns: 1fr;
@@ -2214,7 +2218,7 @@ section[id],
     display: none;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40em) {
 
     .academy-card__details summary {
         display: flex;
@@ -2254,7 +2258,7 @@ section[id],
 
 /* Legibilidad: descripciones de tarjetas un punto mas grandes desde 641px.
    En celular se conservan los tamanos compactos definidos en cada bloque. */
-@media (min-width: 641px) {
+@media (min-width: 40.0625em) {
     .module-card__desc,
     .ia-type__list li,
     .method__step p,
@@ -2448,7 +2452,7 @@ section[id],
     font-weight: 700;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 64em) {
 
     .resource-grid {
         grid-template-columns: 1fr;
@@ -2461,7 +2465,7 @@ section[id],
    El contenido es el mismo que en escritorio; en celular se muestra
    en grillas de 2 columnas, carruseles deslizables y textos esenciales.
    ===================================================================== */
-@media (max-width: 640px) {
+@media (max-width: 40em) {
     /* Ritmo vertical general */
     .section,
     .navasoft-platform,
@@ -2637,4 +2641,188 @@ section[id],
         width: 22px;
         background: var(--color-accent);
     }
+}
+
+/* =====================================================================
+   AJUSTES DE LA AUDITORÍA (22/10/2026): adaptación a tablet y celular
+   ===================================================================== */
+/* Copyright del pie legible (antes 3.8:1) */
+.footer__bottom p {
+    color: rgba(255, 255, 255, 0.62);
+}
+
+/* Enlaces dentro de textos legales: se distinguen del texto */
+.legal-page p a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+/* Botón del menú móvil: área de 44 px y queda encima del panel abierto para poder cerrarlo */
+.header__toggle {
+    position: relative;
+    z-index: 1002;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+}
+
+/* 641-1024px: sectores en 3 columnas y pie en 2 columnas */
+@media (min-width: 40.0625em) and (max-width: 64em) {
+    .sector-tiles {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .sector-tile {
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .sector-tile__name {
+        font-size: clamp(0.92rem, 0.6rem + 0.7vw, 1.05rem);
+    }
+
+    /* La tarjeta entera es el enlace; sin flecha caben los nombres largos */
+    .sector-tile__arrow {
+        display: none;
+    }
+
+    .footer__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer__brand {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Tipos de IA: 3 columnas en tablet grande, 2 + 1 en tablet */
+@media (min-width: 48.0625em) and (max-width: 64em) {
+    .ia-types__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        max-width: none;
+    }
+}
+
+@media (min-width: 40.0625em) and (max-width: 48em) {
+    .ia-types__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: none;
+    }
+
+    .ia-types__grid > :last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Privacidad y 404 en celular: el inicio de la tarjeta no queda bajo el encabezado */
+@media (max-width: 40em) {
+    .section.legal-page {
+        padding-top: calc(var(--header-height) + 1.25rem);
+    }
+}
+
+/* Contraste mínimo 4.5:1 en textos de apoyo (mismo tono, un poco más oscuro) */
+.contact-form__input::placeholder,
+.contact-form__textarea::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.error-page__links a:hover {
+    color: var(--color-primary-hover);
+}
+
+/* Lectura: líneas de unas 70 letras en guías y textos legales */
+.article {
+    max-width: 660px;
+}
+
+.legal-page__inner {
+    max-width: 720px;
+    width: calc(100% - 2 * clamp(1rem, 0.5rem + 2vw, 2rem));
+}
+
+/* Guías: el título del encabezado comparte el mismo borde izquierdo que el artículo */
+main:has(.article-body) .solutions-hero__heading {
+    max-width: 660px;
+    margin-inline: auto;
+}
+
+/* Recursos en tablet: la columna de guías queda centrada */
+@media (max-width: 64em) {
+    .resource-grid {
+        margin-inline: auto;
+    }
+}
+
+/* Páginas de sector en celular: el contenido va antes que la ilustración decorativa */
+@media (max-width: 56.25em) {
+    .page-art,
+    .solution-detail__visual.page-art {
+        min-height: 180px;
+    }
+}
+
+@media (max-width: 38.75em) {
+    .solution-detail__visual.page-art {
+        order: 0;
+    }
+}
+
+/* Títulos equilibrados: sin una palabra sola en la última línea */
+h1,
+h2,
+h3,
+.final-cta p {
+    text-wrap: balance;
+}
+
+/* Botones apilados con el mismo alto (el de borde tiene 2px de borde) */
+.btn--primary {
+    border: 2px solid transparent;
+}
+
+/* "Solicitar demostración" dentro del menú de celular */
+.header__menu-cta {
+    display: none;
+}
+
+@media (max-width: 56.25em) {
+    .header__nav .header__menu {
+        width: 100%;
+    }
+
+    .header__menu-cta {
+        display: block;
+        align-self: stretch;
+        margin-top: 1rem;
+    }
+
+    .header__menu-cta .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Pantallas bajas (zoom grande en laptop): encabezado más compacto */
+@media (max-height: 31.25em) and (min-width: 30.0625em) {
+    :root {
+        --header-height: 64px;
+    }
+
+    .header__logo--brand {
+        height: 56px;
+    }
+}
+
+/* Textos pequeños del diagrama de desarrollo a medida: mínimo 12px */
+@media (max-width: 40em) {
+    .custom-dev__flow li {
+        font-size: 0.75rem;
+    }
+}
+
+/* Título de Academy: no se parte en 3 líneas en pantallas muy anchas */
+.academy .section__title {
+    max-width: 18em;
 }
