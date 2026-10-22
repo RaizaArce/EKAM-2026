@@ -18,10 +18,12 @@ Postulante ──(formulario de la web)──POST──► doPost: CV en Drive +
 | Hoja de cálculo, pestaña **Postulantes** | Una fila por postulación, con la dirección del CV y las dos autorizaciones |
 | Drive › Bolsa de trabajo EKAM › **Afiches** | Imágenes de las convocatorias. Son públicas (cualquiera con el enlace) porque la web las muestra |
 | Drive › Bolsa de trabajo EKAM › **CV** | CV en PDF, privados. Nombre: `fecha_apellidos_nombres_convocatoria.pdf` |
-| Formulario **Publicar oferta EKAM** | Lo único que usa el ingeniero para publicar o cerrar ofertas |
+| Formulario **PUBLICAR O CERRAR OFERTAS** | Lo que usa el ingeniero para publicar o cerrar ofertas. Está junto al registro en Drive |
 | Propiedad del script `CORREO_AVISO` | Correo que recibe cada postulación (no está en el código) |
 
 ## Guía para el ingeniero
+
+**Punto de entrada:** abrir en Drive **Registro de postulantes - EKAM** y elegir la primera pestaña, **Inicio**. Allí están los dos accesos: **PUBLICAR O CERRAR UNA OFERTA** y **VER POSTULANTES Y CV**. El enlace del formulario mantiene la misma dirección de siempre. También se puede abrir directamente el formulario **PUBLICAR O CERRAR OFERTAS** desde la misma carpeta de Drive.
 
 **Administrar postulantes:** abrir en la carpeta de Drive el archivo **Registro de postulantes - EKAM**, pestaña **Registro de postulantes**. Cada fila reúne nombre completo, convocatoria, estado, enlace **Abrir CV**, contacto y formación. Los datos más recientes aparecen primero. Los filtros de los encabezados permiten buscar por convocatoria, área, nivel o estado.
 
@@ -31,11 +33,11 @@ Las columnas a la derecha contienen los demás datos solicitados; las dos primer
 
 **Publicar una oferta**
 
-1. Abrir el formulario "Publicar oferta EKAM".
+1. En la pestaña **Inicio**, pulsar **PUBLICAR O CERRAR UNA OFERTA**. También se puede abrir el formulario del mismo nombre desde Drive.
 2. Elegir *Publicar una oferta*, escribir el puesto, el área, la ciudad y la fecha de cierre, y subir el afiche (imagen JPG o PNG).
 3. Enviar. La oferta aparece al recargar `ekamperu.com/bolsa-de-trabajo/`.
 
-**Cerrar una oferta antes de tiempo:** en el mismo formulario elegir *Cerrar una oferta* y escribir el puesto igual que al publicarlo. Esto cierra todas las ofertas publicadas con ese puesto (sin distinguir ciudad; se ignoran mayúsculas y tildes). Si no se cierra, la oferta se oculta sola el día siguiente a su fecha de cierre. Sin fecha de cierre, permanece visible hasta cerrarla manualmente.
+**Cerrar una oferta antes de tiempo:** en el mismo formulario elegir *Cerrar una oferta*, escribir el puesto igual que al publicarlo y enviar. No pide otro afiche ni los datos de publicación. Esto cierra todas las ofertas publicadas con ese puesto (sin distinguir ciudad; se ignoran mayúsculas y tildes). Si no se cierra, la oferta se oculta sola el día siguiente a su fecha de cierre. Sin fecha de cierre, permanece visible hasta cerrarla manualmente.
 
 **Revisar postulantes:** cada postulación llega al correo con el botón *Descargar CV*, y aparece en el registro con el enlace *Abrir CV*. No cambiar el nombre de las pestañas ni el orden de las columnas de origen; usar los filtros de la vista de gestión.
 
@@ -61,12 +63,13 @@ Las imágenes se solicitan con `referrerpolicy="no-referrer"` para evitar el blo
 ## Instalación en una cuenta nueva
 
 1. Crear una hoja de cálculo de Google y abrir *Extensiones › Apps Script*.
-2. Pegar `Code.gs` y añadir `Registro.gs` al mismo proyecto (también se pueden concatenar ambos en un único archivo). En *Configuración del proyecto*, activar "Mostrar el archivo de manifiesto" y pegar `appsscript.json`.
+2. Pegar `Code.gs` y añadir `Registro.gs` y `Accesos.gs` al mismo proyecto (también se pueden concatenar los tres en un único archivo). En *Configuración del proyecto*, activar "Mostrar el archivo de manifiesto" y pegar `appsscript.json`.
 3. Ejecutar `configurar()` y autorizar los permisos. Crea las pestañas, las carpetas, el formulario y el activador `alEnviarFormulario`, y guarda el correo de la cuenta en `CORREO_AVISO`.
 4. Abrir el formulario creado y añadir la pregunta **Afiche** de tipo *Subir archivo* (solo imágenes, 1 archivo). Apps Script no puede crear esa pregunta.
 5. *Implementar › Nueva implementación › Aplicación web*: Ejecutar como **Yo**, Acceso **Cualquier persona**. Copiar la URL `/exec`.
 6. Pegar esa URL en `BOLSA_ENDPOINT` al inicio de `js/bolsa.js`, subir la versión `?v=` en `bolsa-de-trabajo/index.html` y publicar.
 7. Ejecutar `organizarPostulantes()` una vez: crea la vista administrativa, configura filtros, estados, enlaces y formato, y renombra el archivo para encontrarlo fácilmente en Drive. Conserva la hoja original, formulario y carpetas. Publicar una nueva versión con ambos archivos del script para que las nuevas postulaciones actualicen la vista.
+8. Ejecutar `prepararAccesos()` una vez: crea **Inicio** con los dos enlaces, renombra el formulario y lo ubica en la misma carpeta del registro. Es una preparación administrativa; los enlaces funcionan sin cambiar la implementación pública del servicio.
 
 Para cambiar el correo que recibe los avisos: *Configuración del proyecto › Propiedades del script › CORREO_AVISO*. No hace falta volver a implementar.
 
