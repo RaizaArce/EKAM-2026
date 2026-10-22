@@ -137,3 +137,8 @@ La administración muestra primero la casilla **Mostrar en la web**, seguida de 
 - 49 pruebas automatizadas correctas.
 - Queda una postulación identificada como PRUEBA CUENTA DEFINITIVA CODEX y su PDF ficticio como evidencia; la oferta de prueba quedó cerrada.
 - Pendiente: publicar los archivos locales actualizados en cPanel y verificar el envío desde el dominio público. Estas pruebas no acreditan esa publicación.
+
+
+### Colores del seguimiento
+
+En Registro de postulantes, cambiar Estado colorea automáticamente toda la fila (A:S): Nuevo azul, Revisado amarillo, Contactado verde y Descartado gris. Las reglas nativas de formato condicional evalúan la columna D; no requieren recargar, ejecutar scripts ni enviar correos. Para preparar una instalación existente, guardar Registro.gs actualizado y ejecutar organizarPostulantes() una vez. Los estados y observaciones se conservan.

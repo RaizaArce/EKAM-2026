@@ -31,7 +31,7 @@ function organizarPostulantes() {
     rangoEstado.setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(REGISTRO_ESTADOS, true).setAllowInvalid(false).build());
     const colores = ['#e8f0fe', '#fff3cd', '#e6f4ea', '#eeeeee'];
     registro.setConditionalFormatRules(REGISTRO_ESTADOS.map(function (estado, i) {
-      return SpreadsheetApp.newConditionalFormatRule().whenTextEqualTo(estado).setBackground(colores[i]).setRanges([rangoEstado]).build();
+      return SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied('=$D2="' + estado + '"').setBackground(colores[i]).setRanges([registro.getRange(2, 1, alto - 1, REGISTRO_COLUMNAS.length)]).build();
     }));
     registro.hideColumns(17, 2);
     ss.rename('Registro de postulantes - EKAM');
