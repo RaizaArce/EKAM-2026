@@ -250,7 +250,7 @@ GitHub no publica el sitio automáticamente; fusionar en `main` no cambia lo que
 - Añadir el código de Google Analytics 4 o Tag Manager.
 - Activar el asistente con IA cuando exista el servidor n8n (Hostinger): pasar el flujo `crm/n8n/asistente-web.workflow.json` a GPT, copiar su URL en `CHAT_AI_ENDPOINT` y actualizar la política de privacidad.
 - Subir `.htaccess` (HTTPS, `404.html`, compresión y caché) después de activar el SSL en cPanel.
-- Cuenta definitiva de la bolsa configurada el 22/10/2026: `bolsadetrabajoekam@gmail.com`. Se migraron la oferta vigente y las preguntas; registro y CV anteriores permanecen en la cuenta de pruebas. La conexión local está actualizada; falta publicar estos archivos en cPanel. Accesos en la guía `crm/google/bolsa-de-trabajo/README.md`.
+- Cuenta definitiva de la bolsa configurada el 22/10/2026: `bolsadetrabajoekam@gmail.com`. Se migraron la oferta vigente y las preguntas; registro y CV anteriores permanecen en la cuenta de pruebas. La conexión local y pública está actualizada. Publicado en cPanel el 22/10/2026: 112 archivos verificados, envío real de prueba correcto y datos ficticios retirados. Accesos en la guía `crm/google/bolsa-de-trabajo/README.md`.
 - Borrar cada mes las postulaciones con más de 12 meses desde su envío y sus CV (plazo de la política de privacidad). El borrado es manual: asignar un responsable y seguir `crm/google/bolsa-de-trabajo/README.md`.
 - Deuda técnica: header y footer duplicados en 27 páginas, y capas de ajuste acumuladas en el CSS.
 

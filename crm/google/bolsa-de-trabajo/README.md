@@ -2,7 +2,7 @@
 
 La página `bolsa-de-trabajo/` no tiene backend propio: las convocatorias y las postulaciones pasan por un script de Google Apps Script (`Code.gs`) que usa una hoja de cálculo, dos carpetas de Drive y un formulario de Google. No está conectado al CRM.
 
-La instalación definitiva pertenece a **bolsadetrabajoekam@gmail.com**. Desde el 22/10/2026 la web local utiliza el servicio de esta cuenta. La instalación anterior se conserva como respaldo; sus postulaciones y CV no se trasladaron.
+La instalación definitiva pertenece a **bolsadetrabajoekam@gmail.com**. Desde el 22/10/2026 la web local y la web pública utilizan el servicio de esta cuenta. La instalación anterior se conserva como respaldo; sus postulaciones y CV no se trasladaron.
 
 Acceso del ingeniero: [Inicio del registro](https://docs.google.com/spreadsheets/d/1l_onI8hnZFFd9kbstj68N3zJgY3pDUz7njwWsfBDyLk/edit#gid=802496405). Desde allí puede publicar o cerrar ofertas, revisar postulantes y editar las preguntas de la web.
 
@@ -136,7 +136,7 @@ La administración muestra primero la casilla **Mostrar en la web**, seguida de 
 - Edición temporal de ayuda en Formulario web reflejada sin recargar la página y restaurada después.
 - 49 pruebas automatizadas correctas.
 - Limpieza posterior del 22/10/2026: retirada la postulación ficticia CODEX, la oferta de prueba cerrada y Ninfuno. Sus archivos y el correo ficticio se enviaron a la papelera. Se conservaron Raiza Arce, Practicante EKAM y las ofertas Contador e Ingeniero de sistemas por indicación del usuario.
-- Pendiente: publicar los archivos locales actualizados en cPanel y verificar el envío desde el dominio público. Estas pruebas no acreditan esa publicación.
+- Publicado en cPanel el 22/10/2026: 112 archivos públicos verificados por SHA-256 desde el dominio. Postulación ficticia enviada desde la web pública, confirmada en registro, correo y CV privado; prueba retirada después. Se conservó el .htaccess existente y se creó respaldo fuera de public_html.
 
 
 ### Colores del seguimiento
