@@ -48,7 +48,7 @@
 
     function handleMobileHeroFloating() {
         const hero = document.querySelector('.hero');
-        if (!hero || window.innerWidth > 768) {
+        if (!hero || !window.matchMedia('(max-width: 48em)').matches) {
             document.body.classList.remove('mobile-hero-floating-hidden');
             return;
         }
@@ -60,6 +60,20 @@
     window.addEventListener('scroll', handleMobileHeroFloating, { passive: true });
     window.addEventListener('resize', handleMobileHeroFloating);
     handleMobileHeroFloating();
+
+    /* ---- Pausa del carrusel de clientes ---- */
+    const clientsCarousel = document.getElementById('clientsCarousel');
+    const clientsPause = document.getElementById('clientsCarouselPause');
+    if (clientsCarousel && clientsPause) {
+        clientsPause.addEventListener('click', function () {
+            const paused = clientsCarousel.classList.toggle('clients-carousel--paused');
+            clientsPause.setAttribute('aria-pressed', paused ? 'true' : 'false');
+            clientsPause.querySelector('span').textContent = paused ? 'Reanudar' : 'Pausar';
+            clientsPause.querySelector('svg').innerHTML = paused
+                ? '<path d="M8 5v14l11-7z"/>'
+                : '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>';
+        });
+    }
 
     /* ---- Mobile menu ---- */
     const menuToggle = document.getElementById('menuToggle');
@@ -95,9 +109,9 @@
 
     mobileOverlay.addEventListener('click', closeMenu);
 
-    document.querySelectorAll('.header__link').forEach(function (link) {
+    document.querySelectorAll('#mainNav a').forEach(function (link) {
         link.addEventListener('click', function () {
-            if (window.innerWidth <= 1024) {
+            if (window.matchMedia('(max-width: 64em)').matches) {
                 closeMenu();
             }
         });
@@ -195,7 +209,7 @@
     /* ---- EKAM Academy: temas plegados en celular, siempre abiertos desde 641px ---- */
     const academyDetails = document.querySelectorAll('.academy-card__details');
     if (academyDetails.length && window.matchMedia) {
-        const academyWide = window.matchMedia('(min-width: 641px)');
+        const academyWide = window.matchMedia('(min-width: 40.0625em)');
         const syncAcademyDetails = function () {
             academyDetails.forEach(function (item) {
                 item.open = academyWide.matches;

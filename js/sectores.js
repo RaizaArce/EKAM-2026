@@ -250,7 +250,7 @@
 
     overlay.addEventListener('click', closeMenu);
     mainNav.addEventListener('click', function (event) {
-        if (event.target.closest('a') && window.innerWidth <= 1024) closeMenu();
+        if (event.target.closest('a') && window.matchMedia('(max-width: 64em)').matches) closeMenu();
     });
     document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape' && mainNav.classList.contains('header__nav--open')) closeMenu();

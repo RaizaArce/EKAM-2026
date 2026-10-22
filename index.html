@@ -34,9 +34,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"></noscript>
-    <link rel="stylesheet" href="css/style.css?v=20261021-2">
-    <link rel="stylesheet" href="css/home.css?v=20261021-2">
-    <script src="js/main.js?v=20261016-2" defer></script>
+    <link rel="stylesheet" href="css/style.css?v=20261022-6">
+    <link rel="stylesheet" href="css/home.css?v=20261022-1">
+    <script src="js/main.js?v=20261022-1" defer></script>
 </head>
 <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -56,6 +56,7 @@
                     <li><a href="sectores.html" class="header__link">Sectores</a></li>
                     <li><a href="clientes/" class="header__link">Clientes</a></li>
                     <li><a href="#empresa" class="header__link">Nosotros</a></li>
+                    <li class="header__menu-cta"><a href="#contacto" class="btn btn--primary">Solicitar demostración</a></li>
                 </ul>
             </nav>
 
@@ -527,7 +528,7 @@
                 </div>
                 <div class="about__clients" id="clientes">
                     <h3 class="experience__clients-title">Empresas que confían en nosotros</h3>
-                <div class="clients-carousel clients-carousel--featured">
+                <div class="clients-carousel clients-carousel--featured" id="clientsCarousel">
                     <div class="clients-carousel__viewport">
                         <div class="clients-carousel__track">
                             <div class="clients-carousel__group" aria-label="Empresas que confían en nosotros">
@@ -607,6 +608,7 @@
                         </div>
                     </div>
                 </div>
+                <button type="button" class="clients-carousel__pause" id="clientsCarouselPause" aria-controls="clientsCarousel" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><span>Pausar</span></button>
                 <p class="about__clients-more"><a href="clientes/">Ver todos los clientes <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a></p>
 
                 </div>
@@ -786,7 +788,7 @@
                     <div class="contact-form__consent">
                         <label class="contact-form__check" for="formConsent">
                             <input type="checkbox" id="formConsent" name="consent" required>
-                            <span>Autorizo a EKAM PERU S.A.C. a registrar y usar mis datos para atender mi consulta comercial, según su <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>. <span aria-hidden="true">*</span></span>
+                            <span>Autorizo a EKAM PERU S.A.C. a registrar y usar mis datos para atender mi consulta comercial, según su <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>.&nbsp;<span aria-hidden="true">*</span></span>
                         </label>
                         <span class="contact-form__error" role="alert"></span>
                     </div>
