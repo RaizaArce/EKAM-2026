@@ -24,6 +24,7 @@
     const viewerImg = document.getElementById('posterViewerImg');
     const viewerTitle = document.getElementById('posterViewerTitle');
     const startedAt = Date.now();
+    let solicitudId = null;
     let current = null;
 
     /* ---- Convocatorias ---- */
@@ -53,11 +54,13 @@
         const li = el('li', { class: 'job' });
 
         const poster = el('button', { type: 'button', class: 'job__poster', 'aria-label': 'Ampliar el afiche de ' + job.puesto });
-        const img = el('img', { src: job.aficheMini, alt: 'Afiche de la convocatoria: ' + job.puesto + (job.ciudad ? ' en ' + job.ciudad : ''), width: '720', height: '1080', loading: 'lazy', decoding: 'async' });
+        const img = el('img', { referrerpolicy: 'no-referrer', alt: 'Afiche de la convocatoria: ' + job.puesto + (job.ciudad ? ' en ' + job.ciudad : ''), width: '720', height: '1080', loading: 'lazy', decoding: 'async' });
+        img.src = job.aficheMini;
         const zoom = el('span', { class: 'job__zoom' }, 'Ampliar afiche');
         poster.append(img, zoom);
         poster.addEventListener('click', function () {
             current = job;
+            viewerImg.referrerPolicy = 'no-referrer';
             viewerImg.src = job.afiche;
             viewerImg.alt = 'Afiche completo de la convocatoria: ' + job.puesto;
             viewerTitle.textContent = job.puesto;
@@ -152,10 +155,16 @@
         }
 
         submit.disabled = true;
+        if (!solicitudId) {
+            solicitudId = window.crypto && typeof window.crypto.randomUUID === 'function'
+                ? window.crypto.randomUUID()
+                : Date.now().toString(36) + '-' + Math.random().toString(36).slice(2) + '-' + Math.random().toString(36).slice(2);
+        }
         setStatus('Enviando tu postulación…');
 
         leerPdf(cv).then(function (data) {
             const payload = {
+                solicitudId: solicitudId,
                 website: form.website.value,
                 elapsed: Date.now() - startedAt,
                 convocatoria: jobSelect.value,
@@ -179,6 +188,7 @@
             .then(function (r) { return r.json(); })
             .then(function (res) {
                 if (res && res.ok) {
+                    solicitudId = null;
                     form.reset();
                     setStatus('¡Gracias! Recibimos tu postulación. Si tu perfil encaja, te contactaremos por WhatsApp o correo.', true);
                 } else {

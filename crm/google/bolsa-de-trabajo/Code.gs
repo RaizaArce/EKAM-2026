@@ -21,7 +21,7 @@ const ZONA = 'America/Lima';
 
 const COLUMNAS_OFERTAS = ['ID', 'Publicada el', 'Puesto', 'Área', 'Ciudad', 'Cierre', 'Afiche (ID)', 'Afiche', 'Estado'];
 const COLUMNAS_POSTULANTES = ['Fecha', 'Convocatoria', 'Área de interés', 'Nombres', 'Apellidos', 'Correo', 'WhatsApp', 'Ciudad',
-  'Universidad o instituto', 'Especialidad', 'Año de egreso', 'NAVASOFT', 'CV', 'Autoriza uso', 'Autoriza compartir'];
+  'Universidad o instituto', 'Especialidad', 'Año de egreso', 'NAVASOFT', 'CV', 'Autoriza uso', 'Autoriza compartir', 'ID solicitud', 'Estado aviso'];
 
 /* ------------------------------------------------------------------ */
 /* Instalación                                                         */
@@ -195,11 +195,6 @@ function doPost(e) {
     if (AREAS.indexOf(p.area) < 0) p.area = 'Otra';
     if (d.consentimiento !== true || d.compartir !== true) return json_({ ok: false, error: 'Debes aceptar las dos autorizaciones.' });
 
-    const cache = CacheService.getScriptCache();
-    const claveLimite = 'envios_' + p.correo;
-    const envios = Number(cache.get(claveLimite) || 0);
-    if (envios >= 3) return json_({ ok: false, error: 'Ya recibimos tus postulaciones. Inténtalo más tarde.' });
-
     // CV: solo PDF real de hasta 5 MB
     const cv = d.cv || {};
     const bytes = Utilities.base64Decode((cv.data || '').toString());
@@ -211,25 +206,55 @@ function doPost(e) {
     const nombreArchivo = [
       Utilities.formatDate(fecha, ZONA, 'yyyy-MM-dd'), limpio_(p.apellidos), limpio_(p.nombres), limpio_(p.convocatoria)
     ].join('_') + '.pdf';
-    const archivo = DriveApp.getFolderById(PropertiesService.getScriptProperties().getProperty('CARPETA_CV'))
-      .createFile(Utilities.newBlob(bytes, 'application/pdf', nombreArchivo));
-    const enlace = archivo.getUrl();
-
+    // El ID persiste en la hoja: también protege si se pierde la respuesta HTTP.
+    // La huella conserva compatibilidad con páginas antiguas que aún no envían ID.
+    const huella = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,
+      JSON.stringify(p) + ':' + cv.data).map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join('');
+    const solicitud = /^[a-zA-Z0-9-]{16,80}$/.test(d.solicitudId || '') ? d.solicitudId : huella;
     const lock = LockService.getScriptLock();
     lock.waitLock(20000);
+    let hoja, fila, enlace;
     try {
-      const hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(HOJA_POSTULANTES);
-      hoja.appendRow([
-        fecha, seguro_(p.convocatoria), p.area, seguro_(p.nombres), seguro_(p.apellidos), seguro_(p.correo), "'" + p.whatsapp,
-        seguro_(p.ciudad), seguro_(p.universidad), seguro_(p.especialidad), anio, p.navasoft,
-        '=HYPERLINK("' + enlace + '","Ver CV")', 'Sí', 'Sí'
-      ]);
+      hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(HOJA_POSTULANTES);
+      // Ampliar hojas existentes sin modificar las quince columnas originales.
+      hoja.getRange(1, 16, 1, 2).setValues([['ID solicitud', 'Estado aviso']]);
+      if (buscarSolicitud_(hoja, solicitud)) return json_({ ok: true });
+      const cache = CacheService.getScriptCache();
+      const claveLimite = 'envios_' + p.correo;
+      const envios = Number(cache.get(claveLimite) || 0);
+      if (envios >= 3) return json_({ ok: false, error: 'Ya recibimos tus postulaciones. Inténtalo más tarde.' });
+      let archivo;
+      try {
+        archivo = DriveApp.getFolderById(PropertiesService.getScriptProperties().getProperty('CARPETA_CV'))
+          .createFile(Utilities.newBlob(bytes, 'application/pdf', nombreArchivo));
+        enlace = archivo.getUrl();
+        hoja.appendRow([
+          fecha, seguro_(p.convocatoria), p.area, seguro_(p.nombres), seguro_(p.apellidos), seguro_(p.correo), "'" + p.whatsapp,
+          seguro_(p.ciudad), seguro_(p.universidad), seguro_(p.especialidad), anio, p.navasoft,
+          enlace, 'Sí', 'Sí', solicitud, 'Pendiente'
+        ]);
+        SpreadsheetApp.flush();
+      } catch (err) {
+        // Un error puede llegar después de que Sheets haya confirmado la escritura.
+        // Solo retirar el CV cuando comprobamos que no existe su registro.
+        if (!buscarSolicitud_(hoja, solicitud)) {
+          if (archivo) archivo.setTrashed(true);
+          throw err;
+        }
+      }
+      fila = buscarSolicitud_(hoja, solicitud);
+      // Un fallo de caché posterior no convierte un registro guardado en un error.
+      try { cache.put(claveLimite, String(envios + 1), 3600); } catch (err) { console.error(err); }
     } finally {
       lock.releaseLock();
     }
-    cache.put(claveLimite, String(envios + 1), 3600);
-
-    avisar_(p, enlace, fecha);
+    // El correo es un aviso: la postulación ya fue recibida y no debe repetirse.
+    try {
+      avisar_(p, enlace, fecha);
+      hoja.getRange(fila, 17).setValue('Enviado');
+    } catch (err) {
+      console.error('Postulación guardada; aviso pendiente: ' + solicitud + ' ' + err);
+    }
     return json_({ ok: true });
   } catch (err) {
     console.error(err);
@@ -237,9 +262,16 @@ function doPost(e) {
   }
 }
 
+function buscarSolicitud_(hoja, solicitud) {
+  const ultima = hoja.getLastRow();
+  if (ultima < 2) return 0;
+  const celda = hoja.getRange(2, 16, ultima - 1, 1).createTextFinder(solicitud).matchEntireCell(true).findNext();
+  return celda ? celda.getRow() : 0;
+}
+
 function avisar_(p, enlace, fecha) {
   const destino = PropertiesService.getScriptProperties().getProperty('CORREO_AVISO');
-  if (!destino) return;
+  if (!destino) throw new Error('Falta configurar CORREO_AVISO');
   const fila = function (k, v) {
     return '<tr><td style="padding:6px 12px 6px 0;color:#64748B">' + k + '</td><td style="padding:6px 0;color:#152536;font-weight:600">' + html_(v) + '</td></tr>';
   };

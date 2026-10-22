@@ -221,7 +221,8 @@ Aplicar el cambio en las 28 páginas respetando las rutas relativas de cada nive
 
 ## 8. Responsive y accesibilidad
 
-- Puntos de quiebre principales (en `em`, para que respeten el tamaño de letra del navegador): 1100 px (por debajo el menú pasa a hamburguesa, porque los siete enlaces y el botón no caben en una línea), 1024, 900, 768, 640 y 480 px.
+- La cabecera muestra seis enlaces y el botón destacado **Bolsa de trabajo**, que lleva a las convocatorias y al formulario de postulación. En móvil, ese botón aparece dentro del menú. Los botones comerciales de las secciones conservan su destino de contacto.
+- Puntos de quiebre principales (en `em`, para que respeten el tamaño de letra del navegador): 1100 px (por debajo el menú pasa a hamburguesa para mantener espacio suficiente), 1024, 900, 768, 640 y 480 px.
 - Enlace "Saltar al contenido" al inicio de cada página, visible al recibir foco con el teclado; lleva a `<main id="contenido">`.
 - HTML semántico con un solo `<h1>` por página y `aria-labelledby` en las secciones.
 - Menú móvil y asistente con `aria-expanded`, `aria-controls` y foco gestionado.

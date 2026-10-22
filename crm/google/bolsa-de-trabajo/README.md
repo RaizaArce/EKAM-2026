@@ -2,6 +2,8 @@
 
 La página `bolsa-de-trabajo/` no tiene backend propio: las convocatorias y las postulaciones pasan por un script de Google Apps Script (`Code.gs`) que usa una hoja de cálculo, dos carpetas de Drive y un formulario de Google. No está conectado al CRM.
 
+La instalación actual de pruebas pertenece a la cuenta personal que administra la bolsa. Se conserva esa cuenta, su carpeta, formulario, hoja y correo receptor hasta que se acuerde el traslado a EKAM. No ejecutar una instalación nueva para aplicar estas correcciones.
+
 ```
 Ingeniero ──(formulario "Publicar oferta EKAM")──► hoja "Ofertas" + afiche en Drive
 Web ──GET──► doGet: ofertas publicadas y vigentes (JSON)
@@ -13,7 +15,7 @@ Postulante ──(formulario de la web)──POST──► doPost: CV en Drive +
 | Elemento | Contenido |
 |---|---|
 | Hoja de cálculo, pestaña **Ofertas** | Una fila por convocatoria: puesto, área, ciudad, fecha de cierre, afiche y estado (`Publicada` / `Cerrada`) |
-| Hoja de cálculo, pestaña **Postulantes** | Una fila por postulación, con el enlace "Ver CV" y las dos autorizaciones |
+| Hoja de cálculo, pestaña **Postulantes** | Una fila por postulación, con la dirección del CV y las dos autorizaciones |
 | Drive › Bolsa de trabajo EKAM › **Afiches** | Imágenes de las convocatorias. Son públicas (cualquiera con el enlace) porque la web las muestra |
 | Drive › Bolsa de trabajo EKAM › **CV** | CV en PDF, privados. Nombre: `fecha_apellidos_nombres_convocatoria.pdf` |
 | Formulario **Publicar oferta EKAM** | Lo único que usa el ingeniero para publicar o cerrar ofertas |
@@ -44,7 +46,11 @@ Postulante ──(formulario de la web)──POST──► doPost: CV en Drive +
 
 El límite por correo usa la caché de Google durante una hora desde el último envío aceptado; es una protección básica y no una garantía contra envíos simultáneos.
 
-Los textos se guardan con `seguro_()` para que no se interpreten como fórmulas en la hoja.
+Los textos se guardan con `seguro_()` para que no se interpreten como fórmulas en la hoja. Cada envío incorpora un `solicitudId`, conservado durante los reintentos de la página. El servidor busca ese ID en la hoja antes de crear otro CV. Las páginas antiguas sin ID usan una huella de los datos y el CV para evitar duplicados idénticos.
+
+Las columnas originales se conservan; se añaden al final **ID solicitud** y **Estado aviso** automáticamente al recibir una postulación. No cambiar su orden. Si falla el correo después de guardar, la web confirma la recepción y el aviso queda **Pendiente**. Revisar esos registros en la hoja; no pedir al postulante que vuelva a enviarlos. Si falla la escritura y se comprueba que no existe el registro, el CV recién creado pasa a la papelera de Drive. Si la escritura sí se confirmó aunque se perdió su respuesta, se conserva el CV y se confirma la recepción.
+
+Las imágenes se solicitan con `referrerpolicy="no-referrer"` para evitar el bloqueo de la respuesta de Google en el navegador. Esto no cambia los permisos: los afiches siguen siendo públicos y los CV privados.
 
 ## Instalación en una cuenta nueva
 
@@ -59,11 +65,15 @@ Para cambiar el correo que recibe los avisos: *Configuración del proyecto › P
 
 Si se edita `Code.gs`, hay que crear una **nueva versión** de la implementación existente (*Implementar › Gestionar implementaciones › editar*) para que la URL no cambie.
 
+Para aplicar la corrección del 22/10/2026: reemplazar el contenido de `Code.gs` en el proyecto existente, guardar y actualizar esa implementación. No hace falta ejecutar `configurar()`, cambiar `CORREO_AVISO`, mover carpetas ni crear otro formulario. Publicar también `js/bolsa.js` y `bolsa-de-trabajo/index.html` (versión `20261022-2`). Probar un envío identificado como prueba en la cuenta actual y comprobar que hay una sola fila, un CV y un aviso.
+
+Pruebas locales del servidor: `node tools/pruebas_bolsa.cjs`. Usan servicios Google simulados; no envían correo ni actualizan la implementación de Google.
+
 ## Conservación de datos
 
 La política de privacidad (`privacidad.html#bolsa-de-trabajo`) indica que las postulaciones se conservan 12 meses desde su envío. Por ahora el borrado es manual: una vez al mes, eliminar las filas de *Postulantes* con más de 12 meses y sus CV de la carpeta *CV*. También se borran antes si el postulante lo pide a soporte@ekamperu.com.
 
-Antes de borrar una fila, identificar su CV con el enlace `Ver CV`. Eliminar el archivo y vaciar su papelera para completar la eliminación; revisar también las copias que se hayan compartido para selección. Asignar un responsable de esta revisión y registrar la fecha y cantidad eliminada sin copiar datos personales al registro.
+Antes de borrar una fila, identificar su archivo con la dirección de la columna `CV`. La dirección se guarda directamente, sin fórmulas que dependan del idioma de Sheets. Eliminar el archivo y vaciar su papelera para completar la eliminación; revisar también las copias que se hayan compartido para selección. Asignar un responsable de esta revisión y registrar la fecha y cantidad eliminada sin copiar datos personales al registro.
 
 ## Entrega y comprobación
 
