@@ -5,8 +5,10 @@ function prepararCierreOfertas() {
     .filter(function (item) { return item.getTitle() === '¿Qué quieres hacer?'; })[0].asMultipleChoiceItem();
   const puesto = form.getItems(FormApp.ItemType.TEXT)
     .filter(function (item) { return item.getTitle() === 'Puesto'; })[0].asTextItem();
-  const publicar = form.getItems(FormApp.ItemType.PAGE_BREAK)
-    .filter(function (item) { return item.getTitle() === 'Datos de la oferta'; })[0].asPageBreakItem();
+  const publicarExistente = form.getItems(FormApp.ItemType.PAGE_BREAK)
+    .filter(function (item) { return item.getTitle() === 'Datos de la oferta'; })[0];
+  const publicar = publicarExistente ? publicarExistente.asPageBreakItem()
+    : form.addPageBreakItem().setTitle('Datos de la oferta');
   // La primera pantalla solo pregunta la acción. El puesto escrito es exclusivo de publicación.
   if (publicar.getIndex() !== 1) form.moveItem(publicar.getIndex(), 1);
   if (puesto.getIndex() !== publicar.getIndex() + 1) form.moveItem(puesto.getIndex(), publicar.getIndex() + 1);
