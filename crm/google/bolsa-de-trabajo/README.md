@@ -23,6 +23,12 @@ Postulante ──(formulario de la web)──POST──► doPost: CV en Drive +
 
 ## Guía para el ingeniero
 
+**Administrar postulantes:** abrir en la carpeta de Drive el archivo **Registro de postulantes - EKAM**, pestaña **Registro de postulantes**. Cada fila reúne nombre completo, convocatoria, estado, enlace **Abrir CV**, contacto y formación. Los datos más recientes aparecen primero. Los filtros de los encabezados permiten buscar por convocatoria, área, nivel o estado.
+
+Editar únicamente **Estado** (Nuevo, Revisado, Contactado, Descartado) y **Observaciones**. Son datos internos; cambiar el estado no envía mensajes ni toma decisiones automáticas. El seguimiento se conserva por ID aunque se reordene la lista o entre otro postulante. Los CV continúan privados.
+
+Las columnas a la derecha contienen los demás datos solicitados; las dos primeras permanecen visibles al desplazarse. La pestaña original **Postulantes** sigue recibiendo los envíos. La vista de gestión se actualiza después de cada nueva recepción; si hay un problema de actualización, ejecutar `actualizarRegistroPostulantes()` desde Apps Script. No eliminar filas solo en la vista: la conservación de datos se gestiona en la hoja original y en Drive.
+
 **Publicar una oferta**
 
 1. Abrir el formulario "Publicar oferta EKAM".
@@ -31,7 +37,7 @@ Postulante ──(formulario de la web)──POST──► doPost: CV en Drive +
 
 **Cerrar una oferta antes de tiempo:** en el mismo formulario elegir *Cerrar una oferta* y escribir el puesto igual que al publicarlo. Esto cierra todas las ofertas publicadas con ese puesto (sin distinguir ciudad; se ignoran mayúsculas y tildes). Si no se cierra, la oferta se oculta sola el día siguiente a su fecha de cierre. Sin fecha de cierre, permanece visible hasta cerrarla manualmente.
 
-**Revisar postulantes:** cada postulación llega al correo con el botón *Descargar CV*, y queda en la pestaña *Postulantes* de la hoja. Se puede filtrar u ordenar la hoja, pero no cambiar el nombre de las pestañas ni el orden de las columnas.
+**Revisar postulantes:** cada postulación llega al correo con el botón *Descargar CV*, y aparece en el registro con el enlace *Abrir CV*. No cambiar el nombre de las pestañas ni el orden de las columnas de origen; usar los filtros de la vista de gestión.
 
 ## Protección contra spam y validaciones
 
@@ -55,11 +61,12 @@ Las imágenes se solicitan con `referrerpolicy="no-referrer"` para evitar el blo
 ## Instalación en una cuenta nueva
 
 1. Crear una hoja de cálculo de Google y abrir *Extensiones › Apps Script*.
-2. Pegar `Code.gs`. En *Configuración del proyecto*, activar "Mostrar el archivo de manifiesto" y pegar `appsscript.json`.
+2. Pegar `Code.gs` y añadir `Registro.gs` al mismo proyecto (también se pueden concatenar ambos en un único archivo). En *Configuración del proyecto*, activar "Mostrar el archivo de manifiesto" y pegar `appsscript.json`.
 3. Ejecutar `configurar()` y autorizar los permisos. Crea las pestañas, las carpetas, el formulario y el activador `alEnviarFormulario`, y guarda el correo de la cuenta en `CORREO_AVISO`.
 4. Abrir el formulario creado y añadir la pregunta **Afiche** de tipo *Subir archivo* (solo imágenes, 1 archivo). Apps Script no puede crear esa pregunta.
 5. *Implementar › Nueva implementación › Aplicación web*: Ejecutar como **Yo**, Acceso **Cualquier persona**. Copiar la URL `/exec`.
 6. Pegar esa URL en `BOLSA_ENDPOINT` al inicio de `js/bolsa.js`, subir la versión `?v=` en `bolsa-de-trabajo/index.html` y publicar.
+7. Ejecutar `organizarPostulantes()` una vez: crea la vista administrativa, configura filtros, estados, enlaces y formato, y renombra el archivo para encontrarlo fácilmente en Drive. Conserva la hoja original, formulario y carpetas. Publicar una nueva versión con ambos archivos del script para que las nuevas postulaciones actualicen la vista.
 
 Para cambiar el correo que recibe los avisos: *Configuración del proyecto › Propiedades del script › CORREO_AVISO*. No hace falta volver a implementar.
 
@@ -67,7 +74,7 @@ Si se edita `Code.gs`, hay que crear una **nueva versión** de la implementació
 
 Para aplicar la corrección del 22/10/2026: reemplazar el contenido de `Code.gs` en el proyecto existente, guardar y actualizar esa implementación. No hace falta ejecutar `configurar()`, cambiar `CORREO_AVISO`, mover carpetas ni crear otro formulario. Publicar también `js/bolsa.js` y `bolsa-de-trabajo/index.html` (versión `20261022-2`). Probar un envío identificado como prueba en la cuenta actual y comprobar que hay una sola fila, un CV y un aviso.
 
-Pruebas locales del servidor: `node tools/pruebas_bolsa.cjs`. Usan servicios Google simulados; no envían correo ni actualizan la implementación de Google.
+Pruebas locales: `node tools/pruebas_bolsa.cjs` y `node tools/pruebas_registro.cjs`. Usan servicios Google simulados; no envían correo ni actualizan la implementación de Google. Las del registro comprueban el orden, enlaces, recuperación de CV antiguos y conservación de estados y observaciones al entrar otra postulación.
 
 ## Conservación de datos
 

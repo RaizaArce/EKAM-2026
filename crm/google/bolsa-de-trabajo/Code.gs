@@ -255,6 +255,10 @@ function doPost(e) {
     } catch (err) {
       console.error('Postulación guardada; aviso pendiente: ' + solicitud + ' ' + err);
     }
+    // La vista de gestión no debe bloquear una postulación ya recibida.
+    try {
+      if (typeof actualizarRegistroPostulantes === 'function') actualizarRegistroPostulantes();
+    } catch (err) { console.error('Registro administrativo pendiente de actualizar: ' + err); }
     return json_({ ok: true });
   } catch (err) {
     console.error(err);
