@@ -2,7 +2,11 @@
 
 La página `bolsa-de-trabajo/` no tiene backend propio: las convocatorias y las postulaciones pasan por un script de Google Apps Script (`Code.gs`) que usa una hoja de cálculo, dos carpetas de Drive y un formulario de Google. No está conectado al CRM.
 
-La instalación actual de pruebas pertenece a la cuenta personal que administra la bolsa. Se conserva esa cuenta, su carpeta, formulario, hoja y correo receptor hasta que se acuerde el traslado a EKAM. No ejecutar una instalación nueva para aplicar estas correcciones.
+La instalación definitiva pertenece a **bolsadetrabajoekam@gmail.com**. Desde el 22/10/2026 la web local utiliza el servicio de esta cuenta. La instalación anterior se conserva como respaldo; sus postulaciones y CV no se trasladaron.
+
+Acceso del ingeniero: [Inicio del registro](https://docs.google.com/spreadsheets/d/1l_onI8hnZFFd9kbstj68N3zJgY3pDUz7njwWsfBDyLk/edit#gid=802496405). Desde allí puede publicar o cerrar ofertas, revisar postulantes y editar las preguntas de la web.
+
+[Publicar o cerrar ofertas](https://docs.google.com/forms/d/e/1FAIpQLSfY3_BXsHcnqN_bssRtcf0Nd6S5gH6-bumsG8EK608e_B6HKw/viewform): requiere iniciar sesión con la cuenta definitiva. El formulario, el registro y los CV son privados. Los afiches publicados sí son públicos. No reutilizar los enlaces del formulario de la cuenta personal.
 
 ```
 Ingeniero ──(formulario "Publicar oferta EKAM")──► hoja "Ofertas" + afiche en Drive
@@ -122,3 +126,14 @@ Verificación: `node tools/pruebas_formulario.cjs`, más las pruebas de bolsa, r
 Las dos primeras preguntas también se pueden desmarcar en **Mostrar en la web**. El formulario empieza entonces por **Tus datos**. No se solicitan respuestas de campos ocultos ni se bloquea el envío. Si se entra desde el botón de una oferta, la convocatoria y su área se conservan internamente; al entrar al formulario sin seleccionar oferta se usa Bolsa general.
 
 La administración muestra primero la casilla **Mostrar en la web**, seguida de la pregunta, su obligatoriedad, tipo, opciones y ayuda. Las claves internas están ocultas. Los datos esenciales muestran **Siempre visible / Siempre obligatoria**, en lugar de casillas que aparenten permitir ocultarlos. El lector conserva compatibilidad con el formato anterior; `prepararFormularioWeb()` migra los valores y las casillas sin restablecerlos.
+
+
+## Verificación de la cuenta definitiva — 22/10/2026
+
+- Servicio Google publicado y respuesta pública comprobada: una oferta vigente y once preguntas conservadas; convocatoria y área permanecen ocultas.
+- Postulación desde la web local: confirmación correcta, una fila en Registro de postulantes, enlace Abrir CV y aviso recibido en la cuenta definitiva. PDF ficticio abierto y privado.
+- Publicación y cierre de la oferta ficticia `0fbbe387` mediante el formulario del ingeniero; retirada automática en la web, conservando `8cea8485`.
+- Edición temporal de ayuda en Formulario web reflejada sin recargar la página y restaurada después.
+- 49 pruebas automatizadas correctas.
+- Queda una postulación identificada como PRUEBA CUENTA DEFINITIVA CODEX y su PDF ficticio como evidencia; la oferta de prueba quedó cerrada.
+- Pendiente: publicar los archivos locales actualizados en cPanel y verificar el envío desde el dominio público. Estas pruebas no acreditan esa publicación.
