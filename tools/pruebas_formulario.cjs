@@ -2,9 +2,9 @@ const {backend,payload}=require('./pruebas_bolsa.cjs');
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 let passed=0;
 function test(name,fn){fn();passed++;console.log('OK '+name);}
-function setup(rows=[]){
+function setup(rows=[],nuevo=false){
  const b=backend();const ss=b.ctx.SpreadsheetApp.getActiveSpreadsheet();
- b.ctx.SpreadsheetApp.getActiveSpreadsheet=()=>({getSheetByName:name=>name==='Formulario web'?{getLastRow:()=>rows.length+1,getRange:()=>({getValues:()=>rows})}:ss.getSheetByName(name)});
+ b.ctx.SpreadsheetApp.getActiveSpreadsheet=()=>({getSheetByName:name=>name==='Formulario web'?{getLastRow:()=>rows.length+1,getRange:row=>({getValues:()=>row===1?[[nuevo?'Mostrar en la web':'Clave (no cambiar)']]:rows})}:ss.getSheetByName(name)});
  vm.runInContext(fs.readFileSync('crm/google/bolsa-de-trabajo/Formulario.gs','utf8'),b.ctx);return b;
 }
 test('Sin configuración conserva envío actual',()=>{const b=setup();assert.equal(b.send(payload).ok,true);assert.equal(b.state.rows,1);});
@@ -18,4 +18,7 @@ test('Correo, PDF y autorizaciones siguen protegidos con configuración',()=>{fo
 test('Número y correo adicionales rechazan formato inválido',()=>{const b=setup([['pregunta_1','Número','número','',false,true,''],['pregunta_2','Otro correo','correo','',false,true,'']]);assert.equal(b.send({...payload,adicionales:{pregunta_1:'abc'}}).ok,false);assert.equal(b.send({...payload,adicionales:{pregunta_2:'abc'}}).ok,false);});
 test('Error de correo mantiene respuestas guardadas y éxito',()=>{const b=setup([['pregunta_1','Comentario','texto','',false,true,'']]);b.ctx.MailApp.sendEmail=()=>{throw Error('Correo');};assert.equal(b.send({...payload,adicionales:{pregunta_1:'Prueba'}}).ok,true);assert.equal(b.state.records[0][16],'Pendiente');assert.match(b.state.records[0][17],/Prueba/);});
 test('Reintento de página anterior conserva la misma huella sin ID',()=>{const b=backend();assert.equal(b.send(payload).ok,true);vm.runInContext(fs.readFileSync('crm/google/bolsa-de-trabajo/Formulario.gs','utf8'),b.ctx);b.ctx.formularioWeb_=()=>b.ctx.camposBase_();assert.equal(b.send(payload).ok,true);assert.equal(b.state.rows,1);assert.equal(b.state.files,1);});
+test('Ocultar las dos primeras no exige respuestas ni borra la convocatoria elegida',()=>{const b=setup([['convocatoria','¿A qué postulas?','convocatoria','',true,false,''],['area','Área de interés','lista','Sistemas',true,false,'']]);const campos=b.ctx.formularioWeb_();assert.equal(campos[0].visible,false);assert.equal(campos[1].visible,false);assert.equal(b.send(payload).ok,true);assert.equal(b.state.records[0][1],payload.convocatoria);assert.equal(b.state.records[0][2],'Sistemas');});
+test('Sin elección visible se registra en bolsa general',()=>{const b=setup([['convocatoria','Convocatoria','convocatoria','',true,false,''],['area','Área','lista','Sistemas',true,false,'']]);assert.equal(b.send({...payload,convocatoria:'',area:''}).ok,true);assert.equal(b.state.records[0][1],'Bolsa general');});
+test('Nueva pantalla conserva casillas, textos y opciones de la configuración anterior',()=>{const b=setup([[false,'Convocatoria',true,'convocatoria','','','convocatoria'],[false,'Área',true,'lista','Ventas | Sistemas','','area'],[true,'Disponibilidad',true,'lista','Inmediata | Un mes','Ayuda','pregunta_1']],true);const c=b.ctx.formularioWeb_();assert.equal(c[0].visible,false);assert.equal(c[1].visible,false);assert.equal(c[11].pregunta,'Disponibilidad');assert.equal(b.send({...payload,adicionales:{pregunta_1:'Inmediata'}}).ok,true);});
 console.log('Pruebas de configuración superadas: '+passed);

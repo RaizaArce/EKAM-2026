@@ -39,6 +39,15 @@
     form.addEventListener('input', function () { formDirty = true; });
     form.addEventListener('change', function () { formDirty = true; });
 
+    const description = document.getElementById('applyDescription');
+    const defaultDescription = description && description.textContent;
+    function updateDescription() {
+        if (!description) return;
+        const selected = jobSelect.selectedOptions[0];
+        description.textContent = !jobSelect.disabled ? defaultDescription : selected && selected.dataset.id
+            ? 'Estás postulando a ' + selected.textContent + '. Completa tus datos y adjunta tu CV.'
+            : 'Completa tus datos y adjunta tu CV para inscribirte en la bolsa general. También puedes postular a una oferta usando su botón “Postular a esta convocatoria”.';
+    }
     function configureForm(fields) {
         if (!Array.isArray(fields)) return;
         const signature = JSON.stringify(fields);
@@ -114,6 +123,7 @@
             if(wrappers.length) section.hidden=wrappers.every(function(w){return w.hidden;});
         });
         configSignature=signature; pendingConfig=null; configNotice.replaceChildren();
+        updateDescription();
     }
 
     /* ---- Convocatorias ---- */
@@ -138,6 +148,7 @@
         const option = Array.from(jobSelect.options).find(function (opt) { return opt.dataset.id === jobKey(job); });
         if (option) jobSelect.selectedIndex = option.index;
         if (job.area) areaSelect.value = job.area;
+        updateDescription();
     }
 
     function jobKey(job) { return String(job.id || job.puesto + '|' + (job.ciudad || '')); }
@@ -202,7 +213,7 @@
         options.push(el('option', { value: 'Bolsa general', 'data-area': '' }, 'Bolsa general (sin convocatoria específica)'));
         jobSelect.replaceChildren.apply(jobSelect, options);
         const preserved = previousId && options.find(function (opt) { return opt.dataset.id === previousId; });
-        jobSelect.selectedIndex = firstLoad ? 0 : preserved ? preserved.index : options.length - 1;
+        jobSelect.selectedIndex = firstLoad ? (jobSelect.disabled ? options.length - 1 : 0) : preserved ? preserved.index : options.length - 1;
         if (firstLoad && jobs[0] && jobs[0].area) areaSelect.value = jobs[0].area;
         if (previousId && !preserved) {
             setStatus('La convocatoria que elegiste se cerró. Conservamos tus datos; puedes elegir otra o enviar tu CV a la bolsa general.');
@@ -212,6 +223,7 @@
             current = null;
         }
         jobsSignature = signature;
+        updateDescription();
     }
 
     function refreshJobs() {
@@ -305,7 +317,7 @@
                 website: form.website.value,
                 elapsed: Date.now() - startedAt,
                 convocatoria: jobSelect.value,
-                area: areaSelect.value,
+                area: areaSelect.disabled ? ((jobSelect.selectedOptions[0] || {}).dataset?.area || '') : areaSelect.value,
                 nombres: form.nombres.value,
                 apellidos: form.apellidos.value,
                 correo: form.correo.value,
@@ -329,6 +341,8 @@
                     form.reset();
                     formDirty=false;
                     if(pendingConfig) configureForm(pendingConfig);
+                    if(jobSelect.disabled) jobSelect.value = 'Bolsa general';
+                    updateDescription();
                     setStatus('¡Gracias! Recibimos tu postulación. Si tu perfil encaja, te contactaremos por WhatsApp o correo.', true);
                 } else {
                     setStatus((res && res.error) || 'No pudimos enviar tu postulación. Inténtalo en unos minutos.');

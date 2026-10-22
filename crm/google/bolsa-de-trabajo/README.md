@@ -103,9 +103,9 @@ En el archivo de administración, abrir **Inicio → EDITAR EL FORMULARIO DE LA 
 
 - **Pregunta:** nombre que ve el postulante.
 - **Opciones:** para listas, separar cada opción con `|`. Ejemplo: `Contabilidad | Sistemas | Ventas`.
-- **Obligatoria / Mostrar:** marcar o desmarcar las casillas. Los datos esenciales (convocatoria, nombres, apellidos, correo y WhatsApp), el CV y las autorizaciones permanecen protegidos.
+- **Respuesta obligatoria / Mostrar en la web:** marcar o desmarcar las casillas. Los datos esenciales (nombres, apellidos, correo y WhatsApp), el CV y las autorizaciones permanecen protegidos.
 - **Ayuda:** explicación breve debajo del campo.
-- Para añadir una pregunta, completar una fila vacía `pregunta_1`, `pregunta_2`, etc. Elegir texto, párrafo, lista, número, correo o teléfono. Hay 20 filas preparadas. No cambiar las claves ni reutilizarlas para preguntas distintas después de recibir respuestas.
+- Para añadir una pregunta, completar la primera fila vacía de la columna Pregunta Elegir texto, párrafo, lista, número, correo o teléfono. Hay 20 filas preparadas. No cambiar las claves ni reutilizarlas para preguntas distintas después de recibir respuestas.
 - Para retirar una pregunta adicional, desmarcar Mostrar; las respuestas anteriores permanecen en el registro. En los campos existentes se conserva el tipo por compatibilidad.
 
 Los cambios se guardan en Google automáticamente. La web consulta cada 30 segundos. Si alguien ya está completando el formulario, se ofrece **Actualizar preguntas** sin borrar sus datos o CV; no se sustituye silenciosamente un formulario en uso.
@@ -115,3 +115,10 @@ Las respuestas nuevas se guardan en la columna final **Respuestas adicionales** 
 Instalación: añadir `Formulario.gs` al proyecto existente, actualizar `Code.gs` y `Registro.gs`, ejecutar `prepararFormularioWeb()` una vez y actualizar la implementación existente con una versión nueva, conservando la misma URL. Subir los archivos públicos `js/bolsa.js`, `css/bolsa.css` y `bolsa-de-trabajo/index.html` juntos. Repetir la preparación conserva las preguntas existentes.
 
 Verificación: `node tools/pruebas_formulario.cjs`, más las pruebas de bolsa, registro, cierre y el verificador del sitio. La configuración pública solo contiene preguntas y opciones; nunca respuestas, correos administrativos ni enlaces de CV.
+
+
+### Ocultar convocatoria y área
+
+Las dos primeras preguntas también se pueden desmarcar en **Mostrar en la web**. El formulario empieza entonces por **Tus datos**. No se solicitan respuestas de campos ocultos ni se bloquea el envío. Si se entra desde el botón de una oferta, la convocatoria y su área se conservan internamente; al entrar al formulario sin seleccionar oferta se usa Bolsa general.
+
+La administración muestra primero la casilla **Mostrar en la web**, seguida de la pregunta, su obligatoriedad, tipo, opciones y ayuda. Las claves internas están ocultas. Los datos esenciales muestran **Siempre visible / Siempre obligatoria**, en lugar de casillas que aparenten permitir ocultarlos. El lector conserva compatibilidad con el formato anterior; `prepararFormularioWeb()` migra los valores y las casillas sin restablecerlos.

@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="../css/soluciones.css?v=20261022-2">
     <link rel="stylesheet" href="../css/bolsa.css?v=20261022-4">
     <script src="../js/main.js?v=20261022-2" defer></script>
-    <script src="../js/bolsa.js?v=20261022-4" defer></script>
+    <script src="../js/bolsa.js?v=20261022-5" defer></script>
 </head>
 <body class="solutions-page content-page">
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -89,7 +89,7 @@
             <div class="container apply__inner">
                 <div class="apply__intro">
                     <h2 id="applyTitle">Postula o inscríbete en la bolsa</h2>
-                    <p>Elige la convocatoria a la que postulas. Si ahora no hay una para tu perfil, inscríbete en la bolsa general y te contactaremos cuando aparezca una oportunidad.</p>
+                    <p id="applyDescription">Elige la convocatoria a la que postulas. Si ahora no hay una para tu perfil, inscríbete en la bolsa general y te contactaremos cuando aparezca una oportunidad.</p>
                     <ol class="apply__steps">
                         <li>Completa tus datos y adjunta tu CV en PDF.</li>
                         <li>EKAM revisa tu perfil según la convocatoria.</li>
@@ -100,18 +100,18 @@
                 <form class="contact-form apply-form" id="applyForm" novalidate>
                     <div class="apply-form__trap" aria-hidden="true"><label for="applyWebsite">No completar</label><input type="text" id="applyWebsite" name="website" tabindex="-1" autocomplete="off"></div>
 
-                    <fieldset>
+                    <fieldset id="applicationContext" hidden>
                         <legend>Convocatoria</legend>
                         <div class="apply-form__grid">
                             <div class="apply-form__field apply-form__field--full">
                                 <label for="applyJob">¿A qué postulas? *</label>
-                                <select id="applyJob" name="convocatoria" class="contact-form__select" required>
+                                <select id="applyJob" name="convocatoria" class="contact-form__select" disabled>
                                     <option value="Bolsa general" data-area="">Bolsa general (sin convocatoria específica)</option>
                                 </select>
                             </div>
                             <div class="apply-form__field apply-form__field--full">
                                 <label for="applyArea">Área de interés *</label>
-                                <select id="applyArea" name="area" class="contact-form__select" required>
+                                <select id="applyArea" name="area" class="contact-form__select" disabled>
                                     <option value="Contabilidad">Contabilidad</option>
                                     <option value="Sistemas">Sistemas</option>
                                     <option value="Administración">Administración</option>

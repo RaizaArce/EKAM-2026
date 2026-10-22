@@ -22,8 +22,8 @@ function formularioWeb_() {
   const base = camposBase_();
   const hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(FORMULARIO_HOJA);
   if (!hoja || hoja.getLastRow() < 2) return base;
-  const filas = hoja.getRange(2, 1, Math.min(hoja.getLastRow() - 1, 100), 7).getValues();
-  const protegidas = ['convocatoria','nombres','apellidos','correo','whatsapp'];
+  const filas = filasFormulario_(hoja);
+  const protegidas = ['nombres','apellidos','correo','whatsapp'];
   const tipos = ['texto','párrafo','lista','número','correo','teléfono'];
   const usadas = {};
   filas.forEach(function (r) {
@@ -49,28 +49,51 @@ function formularioWeb_() {
   });
   return base;
 }
+function filasFormulario_(hoja) {
+  const filas = hoja.getRange(2,1,Math.min(hoja.getLastRow()-1,100),7).getValues();
+  const nuevo = String(hoja.getRange(1,1,1,1).getValues()[0][0]).indexOf('Mostrar') === 0;
+  return nuevo ? filas.map(function(r){return [r[6],r[1],r[3],r[4],r[2],r[0],r[5]];}) : filas;
+}
 function prepararFormularioWeb() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const hoja = ss.getSheetByName(FORMULARIO_HOJA) || ss.insertSheet(FORMULARIO_HOJA);
-  if (hoja.getLastRow() === 0) {
-    const filas = camposBase_().map(function (c) { return [c.clave,c.pregunta,c.tipo,c.opciones.join(' | '),c.obligatorio,c.visible,c.ayuda || '']; });
+  let filas;
+  if (hoja.getLastRow() < 2) {
+    filas = camposBase_().map(function (c) { return [c.clave,c.pregunta,c.tipo,c.opciones.join(' | '),c.obligatorio,c.visible,c.ayuda || '']; });
     for (let i=1;i<=20;i++) filas.push(['pregunta_'+i,'','texto','',false,true,'']);
-    hoja.getRange(1,1,1,7).setValues([['Clave (no cambiar)','Pregunta','Tipo','Opciones (separar con |)','Obligatoria','Mostrar','Ayuda para el postulante']]);
-    hoja.getRange(2,1,filas.length,7).setValues(filas);
-    hoja.getRange(2,5,filas.length,2).insertCheckboxes();
-    hoja.getRange(2,5,filas.length,2).setValues(filas.map(function(r){return [r[4],r[5]];}));
-    hoja.getRange(13,3,20,1).setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['texto','párrafo','lista','número','correo','teléfono'],true).setAllowInvalid(false).build());
-  }
-  hoja.setFrozenRows(1);
+  } else filas = filasFormulario_(hoja);
+  const protegidas = ['nombres','apellidos','correo','whatsapp'];
+  const nuevas = filas.map(function(r){
+    const fijo=protegidas.indexOf(String(r[0]))>=0;
+    return [fijo?'Siempre visible':r[5],r[1],fijo?'Siempre obligatoria':r[4],r[2],r[3],r[6],r[0]];
+  });
+  const rango=hoja.getRange(1,1,nuevas.length+1,7);
+  rango.clearDataValidations().clearNote();
+  rango.setValues([['Mostrar en la web','Pregunta que verá el postulante','Respuesta obligatoria','Tipo de respuesta','Opciones (separa con |)','Texto de ayuda','Clave interna'],...nuevas]);
+  nuevas.forEach(function(r,i){
+    const fila=i+2;
+    if(protegidas.indexOf(String(r[6]))<0) {
+      hoja.getRange(fila,1).insertCheckboxes().setValue(r[0] === true || normal_(r[0])==='si');
+      hoja.getRange(fila,3).insertCheckboxes().setValue(r[2] === true || normal_(r[2])==='si');
+    } else {
+      hoja.getRange(fila,1).setBackground('#eef2f6').setFontColor('#526171');
+      hoja.getRange(fila,3).setBackground('#eef2f6').setFontColor('#526171');
+    }
+    if(String(r[6]).indexOf('pregunta_')===0) hoja.getRange(fila,4).setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['texto','párrafo','lista','número','correo','teléfono'],true).setAllowInvalid(false).build());
+    else hoja.getRange(fila,4).setNote('El tipo de esta pregunta es fijo. En las preguntas nuevas puedes elegir otro tipo de respuesta.');
+  });
+  hoja.setFrozenRows(1); hoja.setFrozenColumns(2);
+  hoja.setHiddenGridlines(false);
   hoja.getRange(1,1,1,7).setBackground('#123B63').setFontColor('#ffffff').setFontWeight('bold').setWrap(true);
-  hoja.setColumnWidths(1,7,160);
-  hoja.setColumnWidth(2,260); hoja.setColumnWidth(4,320); hoja.setColumnWidth(7,320);
-  hoja.getDataRange().setWrap(true).setVerticalAlignment('middle');
-  hoja.getRange('A1').setNote('No cambies las claves. Para agregar preguntas, completa una fila pregunta_ que esté vacía. No reutilices una clave para otra pregunta si ya recibió respuestas.');
-  hoja.getRange('B1').setNote('Edita los nombres aquí. Escribe una pregunta en una fila vacía para agregarla a la web. Borra su texto o desmarca Mostrar para retirarla. Las respuestas anteriores se conservan.');
-  hoja.getRange('C1').setNote('En los campos existentes se conserva el tipo para mantener compatibilidad. Elige el tipo en las preguntas adicionales.');
-  hoja.getRange('D1').setNote('Ejemplo: Contabilidad | Sistemas | Ventas. Se aplica a las listas, también Área de interés y NAVASOFT.');
-  hoja.getRange('E1').setNote('Nombres, apellidos, correo, WhatsApp y convocatoria siempre son obligatorios y visibles. CV y autorizaciones permanecen protegidos.');
+  hoja.setRowHeight(1,46);
+  hoja.setColumnWidth(1,145); hoja.setColumnWidth(2,255); hoja.setColumnWidth(3,155);
+  hoja.setColumnWidth(4,150); hoja.setColumnWidth(5,300); hoja.setColumnWidth(6,260);
+  hoja.hideColumns(7);
+  rango.setWrap(true).setVerticalAlignment('middle');
+  hoja.getRange('A1').setNote('Marca para mostrar una pregunta y desmarca para ocultarla. También puedes ocultar las dos primeras. Los datos esenciales de contacto están identificados como Siempre visible.');
+  hoja.getRange('B1').setNote('Cambia el texto de una pregunta. Para añadir otra, escribe en la primera fila vacía. Para retirarla, desmarca Mostrar en la web.');
+  hoja.getRange('C1').setNote('Si una pregunta está oculta no se exige respuesta. Los datos esenciales de contacto, el CV y las autorizaciones se conservan para recibir postulaciones.');
+  hoja.getRange('E1').setNote('Para las listas escribe las opciones separadas con |. Ejemplo: Contabilidad | Sistemas | Ventas.');
   const origen = ss.getSheetByName(HOJA_POSTULANTES);
   if (origen.getMaxColumns() < 18) origen.insertColumnsAfter(origen.getMaxColumns(),18-origen.getMaxColumns());
   origen.getRange(1,18).setValue('Respuestas adicionales');
@@ -79,7 +102,7 @@ function prepararFormularioWeb() {
   const inicio = ss.getSheetByName('Inicio');
   if (inicio) {
     inicio.getRange('B15:E16').breakApart().merge().setBackground('#e8edf3').setRichTextValue(SpreadsheetApp.newRichTextValue().setText('EDITAR EL FORMULARIO DE LA WEB').setLinkUrl(ss.getUrl()+'#gid='+hoja.getSheetId()).build()).setFontSize(15).setFontWeight('bold');
-    inicio.getRange('B17:E19').breakApart().merge().setValue('Cambia preguntas y opciones, marca Obligatoria o Mostrar. Para añadir una pregunta, completa una fila vacía. Los cambios se guardan solos y aparecen en la web en unos 30 segundos.').setWrap(true).setFontWeight('normal').setFontSize(11);
+    inicio.getRange('B17:E19').breakApart().merge().setValue('1. Marca o desmarca Mostrar en la web. 2. Edita el texto de la pregunta. 3. Para añadir otra, escribe en una fila vacía. Todo se guarda automáticamente; la web se actualiza en unos 30 segundos.').setWrap(true).setFontWeight('normal').setFontSize(11);
   }
   SpreadsheetApp.flush();
   Logger.log('Formulario editable: '+ss.getUrl()+'#gid='+hoja.getSheetId());
@@ -88,7 +111,11 @@ function validarFormulario_(d, p, campos) {
   const extras = [];
   for (let i=0;i<campos.length;i++) {
     const c=campos[i];
-    if (!c.visible) { if (Object.prototype.hasOwnProperty.call(p,c.clave)) p[c.clave]=''; continue; }
+    if (!c.visible) {
+      if(c.clave==='convocatoria') p.convocatoria=p.convocatoria || 'Bolsa general';
+      else if(c.clave!=='area' && Object.prototype.hasOwnProperty.call(p,c.clave)) p[c.clave]='';
+      continue;
+    }
     const adicional=c.clave.indexOf('pregunta_')===0;
     const valor=String(adicional ? ((d.adicionales || {})[c.clave] || '') : (p[c.clave] || '')).trim().slice(0, c.tipo==='párrafo'?2000:160);
     if (c.obligatorio && !valor) return {error:'Completa: '+c.pregunta+'.'};
