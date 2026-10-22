@@ -5,7 +5,8 @@
 .jobs__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; margin-bottom: 1.5rem; }
 .jobs__head h2 { margin: 0; color: var(--color-primary-dark); font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.1rem); letter-spacing: -.02em; }
 .jobs__head p { margin: 0; color: var(--color-text-secondary); }
-.jobs__list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 22rem)); gap: clamp(1.25rem, 1rem + 1.5vw, 2rem); margin: 0; padding: 0; list-style: none; }
+.jobs__list { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(1.25rem, 1rem + 1.5vw, 2rem); margin: 0; padding: 0; list-style: none; }
+.jobs__list > .job { flex: 1 1 19rem; min-width: 0; max-width: 26rem; }
 
 .job { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-2xl); background: #fff; box-shadow: var(--shadow-md); }
 .job__poster { position: relative; display: block; padding: 0; border: 0; background: #eef4fa; cursor: zoom-in; }
@@ -20,7 +21,7 @@
 .job__deadline strong { color: var(--color-primary-dark); }
 .job__apply { justify-content: center; margin-top: .35rem; }
 
-.jobs__empty { grid-column: 1 / -1; padding: 1.5rem; border: 1.5px dashed var(--color-border); border-radius: var(--radius-xl); color: var(--color-text-secondary); text-align: center; }
+.jobs__empty { width: 100%; padding: 1.5rem; border: 1.5px dashed var(--color-border); border-radius: var(--radius-xl); color: var(--color-text-secondary); text-align: center; }
 
 /* Visor del afiche a pantalla completa (permite acercar con los dedos) */
 .poster-viewer { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(4, 16, 28, .94); }
