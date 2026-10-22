@@ -947,6 +947,10 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.75;
 }
 
+.legal-page p + p {
+    margin-top: var(--space-sm);
+}
+
 /* 19. FOOTER */
 .footer {
     background: var(--color-primary-dark);
@@ -1103,8 +1107,9 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* <= 900px: menu hamburguesa. Si cambia este valor, revisar el bloque 901-1024 de mas abajo. */
-@media (max-width: 56.25em) {
+/* <= 1100px: menu hamburguesa (siete enlaces + boton no caben en una linea en laptops pequenas).
+   Si cambia este valor, revisar .header__menu-cta y el JS (main.js, sectores.js). */
+@media (max-width: 68.75em) {
     .header__nav {
         position: fixed;
         top: 0;
@@ -2787,7 +2792,7 @@ h3,
     display: none;
 }
 
-@media (max-width: 56.25em) {
+@media (max-width: 68.75em) {
     .header__nav .header__menu {
         width: 100%;
     }
@@ -2825,4 +2830,11 @@ h3,
 /* Título de Academy: no se parte en 3 líneas en pantallas muy anchas */
 .academy .section__title {
     max-width: 18em;
+}
+
+/* >= 1101px: la caja del logo solo mide lo que ocupa el dibujo (antes tenía hasta 270px vacíos) */
+@media (min-width: 68.8125em) {
+    .header__logo--brand {
+        width: 200px;
+    }
 }

@@ -2,7 +2,7 @@
 
 Sitio web de **EKAM PERU S.A.C.**, empresa con sede en Chiclayo que implementa el ERP **NAVASOFT** y desarrolla software a medida para empresas de todo el norte del Perú.
 
-Es un sitio estático: HTML, CSS y JavaScript sin frameworks, sin dependencias npm y sin backend. El dominio previsto es `https://www.ekamperu.com`.
+Es un sitio estático: HTML, CSS y JavaScript sin frameworks, sin dependencias npm y sin backend propio. La bolsa de trabajo usa un script de Google Apps Script (ver `crm/google/bolsa-de-trabajo/`). El dominio previsto es `https://www.ekamperu.com`.
 
 > **Estado:** rediseño en desarrollo. Antes de publicar, EKAM Perú debe validar cifras, textos y datos de contacto (ver [Pendientes](#pendientes)).
 
@@ -29,6 +29,7 @@ Abrir los `.html` con doble clic también funciona, pero las rutas con carpeta (
 | `sectores/<sector>/` | Una página por sector (10): agroindustria, comercio, construcción, educación, grifos, hoteles y restaurantes, industria, salud, servicios, transporte |
 | `nosotros.html` | Historia, misión, visión y servicios de la empresa |
 | `clientes/` | Relación de clientes: logos fijos en una grilla, en orden alfabético |
+| `bolsa-de-trabajo/` | Convocatorias con su afiche y formulario de postulación con CV en PDF |
 | `recursos/` | Guías: cómo elegir un ERP, facturación electrónica en Perú, PLE y libros electrónicos |
 | `privacidad.html` | Política de privacidad |
 
@@ -39,7 +40,7 @@ Todas las páginas están registradas en `sitemap.xml`.
 ```
 EKAM-2026/
 ├── index.html, soluciones.html, sectores.html, nosotros.html, privacidad.html
-├── soluciones/ · sectores/ · clientes/ · recursos/    ← una carpeta con index.html por página
+├── soluciones/ · sectores/ · clientes/ · bolsa-de-trabajo/ · recursos/    ← una carpeta con index.html por página
 ├── 404.html, favicon.ico
 ├── robots.txt, sitemap.xml
 ├── css/
@@ -47,10 +48,14 @@ EKAM-2026/
 │   ├── home.css          ← estilos que solo usa la portada
 │   ├── soluciones.css    ← hero, tarjetas y CTA de las páginas internas
 │   ├── sectores.css
-│   └── nosotros.css
+│   ├── nosotros.css
+│   ├── clientes.css
+│   └── bolsa.css         ← solo la bolsa de trabajo
 ├── js/
 │   ├── main.js           ← menú, formulario, WhatsApp y asistente (portada y páginas internas)
 │   ├── sectores.js
+│   ├── clientes.js
+│   ├── bolsa.js          ← convocatorias y postulación (conector de Google)
 │   └── chatbot.js        ← asistente en las páginas que no cargan main.js
 ├── assets/
 │   ├── icons/            ← logotipos y favicons
@@ -58,6 +63,7 @@ EKAM-2026/
 │   ├── images/           ← asistente virtual, NavaMóvil e imagen para redes (og-ekam.jpg)
 │   ├── screenshots/      ← capturas de NAVASOFT (.webp, con variante -640 para celular)
 │   └── videos/           ← video de demostración y su portada
+├── crm/google/bolsa-de-trabajo/  ← script de Google de la bolsa (no se publica)
 ├── tools/                ← verificación del sitio, cambio de número de WhatsApp y capturas antes/después (no se publica)
 ├── README.md
 └── WEB-DOCUMENTACION.md  ← guía técnica y de contenido
@@ -71,6 +77,7 @@ Los datos de contacto y las integraciones se definen al inicio de `js/main.js`:
 |---|---|
 | `WHATSAPP_NUMBER` | Número que reciben el formulario, el botón flotante y el asistente |
 | `CONTACT_EMAIL` | Correo alternativo del formulario |
+| `BOLSA_ENDPOINT` (en `js/bolsa.js`) | URL `/exec` del script de Google de la bolsa de trabajo |
 | `SUPABASE_URL`, `SUPABASE_PUBLIC_KEY` | Opcional. Proyecto Supabase del CRM donde se registra cada solicitud (ver `crm/supabase/`). Vacías: el formulario solo abre WhatsApp |
 
 El número de WhatsApp también está escrito en los enlaces `wa.me` y `tel:` de cada página. Para cambiarlo en todo el sitio de una vez:
@@ -92,9 +99,11 @@ El verificador falla si queda más de un número distinto.
 
 ## Publicación
 
-Subir al directorio público del servidor los `.html`, `robots.txt`, `sitemap.xml` y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/`, `clientes/` y `recursos/`.
+Subir al directorio público del servidor los `.html`, `robots.txt`, `sitemap.xml` y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/`, `clientes/`, `bolsa-de-trabajo/` y `recursos/`.
 
-No subir `.git/`, `.github/`, `tools/` ni los archivos `.md`.
+No subir `.git/`, `.github/`, `tools/`, `crm/` ni los archivos `.md`.
+
+Para la bolsa, seguir la instalación y la guía del ingeniero en [crm/google/bolsa-de-trabajo/README.md](crm/google/bolsa-de-trabajo/README.md) y las pruebas de [DEPLOY-SERVIDOR.md](DEPLOY-SERVIDOR.md). El hosting publica la página; la aplicación de Google se implementa por separado. La conservación acordada es de **12 meses desde cada envío**, con eliminación manual mensual de registros y CV.
 
 ## Pendientes
 
@@ -103,6 +112,7 @@ No subir `.git/`, `.github/`, `tools/` ni los archivos `.md`.
 - [ ] Añadir el código de Google Analytics 4 o Tag Manager (los eventos ya se envían)
 - [ ] Definir si el formulario guardará las solicitudes (`LEAD_ENDPOINT`)
 - [ ] Añadir el equipo a la página Nosotros
+- [ ] Pasar la bolsa de trabajo a la cuenta de Google de EKAM y al correo de la empresa
 
 ## Licencia
 

@@ -6,8 +6,8 @@ Guía para quien mantenga el sitio: cómo está organizado, qué hace cada archi
 
 - Sitio corporativo estático de **EKAM PERU S.A.C.** (sede en Chiclayo), partner de **NAVASOFT ERP**.
 - Al mencionar la sede, acompañarla siempre de la cobertura ("Sede en Chiclayo · Atención en todo el norte del Perú"), para que no parezca que EKAM solo trabaja en Chiclayo.
-- HTML, CSS y JavaScript sin frameworks, sin proceso de compilación y sin backend.
-- 26 páginas: portada, catálogo de soluciones, sectores, clientes, nosotros, recursos, privacidad y una página por solución, sector y guía.
+- HTML, CSS y JavaScript sin frameworks, sin proceso de compilación y sin backend propio. La bolsa de trabajo usa Google Apps Script (sección 6).
+- 28 páginas: portada, catálogo de soluciones, sectores, clientes, bolsa de trabajo, nosotros, recursos, privacidad y una página por solución, sector y guía.
 - Contacto por WhatsApp: el formulario, el botón flotante y el asistente virtual preparan un mensaje para `wa.me`.
 - Dominio previsto: `https://www.ekamperu.com` (canónicas, sitemap y datos estructurados ya lo usan).
 
@@ -40,6 +40,7 @@ Para cambios de estilo, `tools/capturas.py` y `tools/comparar.py` generan captur
 | `sectores/<slug>/` | 10 páginas: `agroindustria`, `comercio`, `construccion`, `educacion`, `grifos`, `hoteles-restaurantes`, `industria`, `salud`, `servicios`, `transporte` | `soluciones.css` | `main.js` |
 | `nosotros.html` | Historia, misión, visión y servicios | `soluciones.css`, `nosotros.css` | `main.js` |
 | `clientes/` | Escenario azul con el índice de 9 sectores a la izquierda y los 42 logos a la derecha; el selector filtra por sector (enlace compartible `clientes/#construccion`) y cada tarjeta gira al pasar el mouse y muestra el nombre. Para agregar uno: guardar el `.webp` en `assets/LogosClientes/`, copiar un `<li>` con el `data-sector` de su rubro y sumar 1 a los contadores | `soluciones.css`, `clientes.css` | `main.js`, `clientes.js` |
+| `bolsa-de-trabajo/` | Convocatorias (tarjetas con afiche ampliable) y formulario de postulación con CV. Las ofertas no se editan aquí: el ingeniero las publica desde un formulario de Google | `soluciones.css`, `bolsa.css` | `main.js`, `bolsa.js` |
 | `recursos/` y `recursos/<slug>/` | Índice y 3 guías: `como-elegir-un-erp`, `facturacion-electronica-peru`, `ple-libros-electronicos` | `soluciones.css` | `main.js` |
 | `privacidad.html` | Política de privacidad | — | `main.js` |
 
@@ -72,17 +73,21 @@ Fuera del `<main>`: footer, visor de imágenes, botón flotante de WhatsApp y as
 ```
 EKAM-2026/
 ├── *.html                     ← portada y páginas de primer nivel
-├── soluciones/ · sectores/ · clientes/ · recursos/   ← una carpeta con index.html por página
+├── soluciones/ · sectores/ · clientes/ · bolsa-de-trabajo/ · recursos/   ← una carpeta con index.html por página
 ├── robots.txt · sitemap.xml
 ├── css/
 │   ├── style.css              ← variables, base y componentes compartidos por todas las páginas
 │   ├── home.css               ← secciones que solo existen en la portada
 │   ├── soluciones.css         ← hero, tarjetas, detalle y CTA de las páginas internas
 │   ├── sectores.css           ← solo sectores.html
-│   └── nosotros.css           ← solo nosotros.html
+│   ├── nosotros.css           ← solo nosotros.html
+│   ├── clientes.css           ← solo clientes/
+│   └── bolsa.css              ← solo bolsa-de-trabajo/
 ├── js/
 │   ├── main.js                ← comportamiento de la portada y páginas internas
 │   ├── sectores.js            ← datos y pestañas de sectores.html
+│   ├── clientes.js            ← filtro por sector de clientes/
+│   ├── bolsa.js               ← convocatorias y postulación de bolsa-de-trabajo/
 │   └── chatbot.js             ← asistente para las páginas que no cargan main.js
 ├── assets/
 │   ├── icons/                 ← logos de EKAM y NAVASOFT, favicons
@@ -91,6 +96,7 @@ EKAM-2026/
 │   ├── screenshots/           ← capturas de NAVASOFT (.webp y variante -640.webp)
 │   └── videos/                ← demostracion-navasoft-web.mp4 y su póster
 ├── 404.html · favicon.ico     ← página de error y favicon para navegadores antiguos
+├── crm/google/bolsa-de-trabajo/  ← script de Google de la bolsa y su guía (no se publica)
 ├── tools/                     ← verificación, cambio de WhatsApp y capturas (no se publica)
 └── .github/workflows/         ← verificación automática en pull requests
 ```
@@ -170,6 +176,7 @@ El flujo listo para importar en n8n está en `crm/n8n/asistente-web.workflow.jso
 
 - **`sectores.js`:** contiene los textos e ilustraciones de cada sector en el objeto `sectors` y pinta el detalle de `sectores.html`.
 - **`chatbot.js`:** versión reducida del asistente para `soluciones.html` y `sectores.html`.
+- **`bolsa.js`:** pide las convocatorias vigentes a `BOLSA_ENDPOINT` (script de Google), pinta las tarjetas sin `innerHTML`, abre el afiche en un `<dialog>` con zoom y envía la postulación con el CV en base64. El `POST` va como `text/plain` para evitar la consulta previa CORS, que Apps Script no responde. El script, la protección contra spam, la guía para publicar ofertas y la instalación están en `crm/google/bolsa-de-trabajo/README.md`.
 
 El número de WhatsApp está repetido en `main.js`, `sectores.js` y en los enlaces `wa.me` y `tel:` del HTML. Para cambiarlo en todo el sitio: `python tools/cambiar_whatsapp.py 51XXXXXXXXX`. El verificador falla si queda más de un número.
 
@@ -210,11 +217,11 @@ Los logos se muestran siempre a color. Deben ser los oficiales de cada empresa (
 
 ### Cambiar el menú o el footer
 
-Aplicar el cambio en las 26 páginas respetando las rutas relativas de cada nivel. En la portada, el enlace "Nosotros" del header apunta a `#empresa` para que funcione el resaltado al hacer scroll; en el resto apunta a `nosotros.html`.
+Aplicar el cambio en las 28 páginas respetando las rutas relativas de cada nivel. En la portada, el enlace "Nosotros" del header apunta a `#empresa` para que funcione el resaltado al hacer scroll; en el resto apunta a `nosotros.html`.
 
 ## 8. Responsive y accesibilidad
 
-- Puntos de quiebre principales: 1150, 1024, 900 (el menú pasa a hamburguesa), 768, 640 y 480 px. Entre 901 y 1024 px el menú completo sigue visible con el logo y los enlaces más compactos.
+- Puntos de quiebre principales (en `em`, para que respeten el tamaño de letra del navegador): 1100 px (por debajo el menú pasa a hamburguesa, porque los siete enlaces y el botón no caben en una línea), 1024, 900, 768, 640 y 480 px.
 - Enlace "Saltar al contenido" al inicio de cada página, visible al recibir foco con el teclado; lleva a `<main id="contenido">`.
 - HTML semántico con un solo `<h1>` por página y `aria-labelledby` en las secciones.
 - Menú móvil y asistente con `aria-expanded`, `aria-controls` y foco gestionado.
@@ -231,7 +238,7 @@ Aplicar el cambio en las 26 páginas respetando las rutas relativas de cada nive
 
 ## 10. Publicación
 
-Subir al directorio público: los `.html` (incluido `404.html`), `favicon.ico`, `robots.txt`, `sitemap.xml`, `.htaccess` (solo con el SSL activo) y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/`, `clientes/` y `recursos/`.
+Subir al directorio público: los `.html` (incluido `404.html`), `favicon.ico`, `robots.txt`, `sitemap.xml`, `.htaccess` (solo con el SSL activo) y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/`, `clientes/`, `bolsa-de-trabajo/` y `recursos/`.
 
 No subir: `.git/`, `.github/`, `.claude/`, `tools/`, `crm/` ni los `.md`.
 
@@ -242,4 +249,6 @@ GitHub no publica el sitio automáticamente; fusionar en `main` no cambia lo que
 - Añadir el código de Google Analytics 4 o Tag Manager.
 - Activar el asistente con IA cuando exista el servidor n8n (Hostinger): pasar el flujo `crm/n8n/asistente-web.workflow.json` a GPT, copiar su URL en `CHAT_AI_ENDPOINT` y actualizar la política de privacidad.
 - Subir `.htaccess` (HTTPS, `404.html`, compresión y caché) después de activar el SSL en cPanel.
+- Pasar la bolsa de trabajo a la cuenta de Google de EKAM: instalar el script allí, poner el correo de la empresa en `CORREO_AVISO` y actualizar `BOLSA_ENDPOINT`.
+- Borrar cada mes las postulaciones con más de 12 meses desde su envío y sus CV (plazo de la política de privacidad). El borrado es manual: asignar un responsable y seguir `crm/google/bolsa-de-trabajo/README.md`.
 - Deuda técnica: header y footer duplicados en 27 páginas, y capas de ajuste acumuladas en el CSS.

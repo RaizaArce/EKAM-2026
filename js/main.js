@@ -111,7 +111,7 @@
 
     document.querySelectorAll('#mainNav a').forEach(function (link) {
         link.addEventListener('click', function () {
-            if (window.matchMedia('(max-width: 64em)').matches) {
+            if (window.matchMedia('(max-width: 68.75em)').matches) {
                 closeMenu();
             }
         });
