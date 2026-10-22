@@ -12,7 +12,7 @@ function sheet(rows,formulas={}) {
     setWrap(){return this;},setNumberFormat(){return this;},
     clearContent:()=>{for(let i=0;i<count;i++)s.rows[row+i-1]=Array(width).fill('');},
     setRichTextValues:values=>values.forEach((v,i)=>{s.links[row+i]=v[0].url;s.rows[row+i-1][col-1]=v[0].text;}),
-    createFilter:()=>s.filter={getRange:()=>({getNumRows:()=>1000})}
+    createFilter:()=>s.filter={getRange:()=>({getNumRows:()=>1000,getNumColumns:()=>19})}
   });return s;
 }
 let uuid=0;const ctx={Utilities:{getUuid:()=> 'legacy-id-'+(++uuid)},seguro_:s=>/^[=+\-@]/.test(String(s||''))?"'"+s:String(s||''),
@@ -26,3 +26,5 @@ view.rows[2][3]='Contactado';view.rows[2][15]='Llamar el lunes';source.rows.push
 ctx.construirRegistro_(source,view);
 assert.equal(view.rows[1][1],'Maria Ruiz');const ana=view.rows.find(r=>r[16]==='id-ana');assert.equal(ana[3],'Contactado');assert.equal(ana[15],'Llamar el lunes');assert.equal(view.rows.length,4);assert.equal(uuid,1);console.log('OK Postulación nueva conserva estado y observaciones vinculados al ID');
 ctx.construirRegistro_(source,view);assert.equal(view.rows.length,4);assert.equal(view.rows.find(r=>r[16]==='id-ana')[3],'Contactado');console.log('OK Actualización repetida no duplica registros ni borra seguimiento');
+
+source.rows[1][17]=JSON.stringify([{pregunta:"Disponibilidad",respuesta:"Inmediata"}]);ctx.construirRegistro_(source,view);assert.equal(view.rows.find(r=>r[16]==="id-ana")[18],"Disponibilidad: Inmediata");console.log("OK Respuestas nuevas no desplazan estado, notas ni enlace CV");

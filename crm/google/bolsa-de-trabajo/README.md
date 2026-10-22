@@ -67,7 +67,7 @@ Las imágenes se solicitan con `referrerpolicy="no-referrer"` para evitar el blo
 ## Instalación en una cuenta nueva
 
 1. Crear una hoja de cálculo de Google y abrir *Extensiones › Apps Script*.
-2. Pegar `Code.gs` y añadir `Registro.gs`, `Accesos.gs` y `Cierre.gs` al mismo proyecto (también se pueden concatenar en un único archivo). En *Configuración del proyecto*, activar "Mostrar el archivo de manifiesto" y pegar `appsscript.json`.
+2. Pegar `Code.gs` y añadir `Registro.gs`, `Accesos.gs`, `Cierre.gs` y `Formulario.gs` al mismo proyecto (también se pueden concatenar en un único archivo). En *Configuración del proyecto*, activar "Mostrar el archivo de manifiesto" y pegar `appsscript.json`.
 3. Ejecutar `configurar()` y autorizar los permisos. Crea las pestañas, las carpetas, el formulario y el activador `alEnviarFormulario`, y guarda el correo de la cuenta en `CORREO_AVISO`.
 4. Abrir el formulario creado y añadir la pregunta **Afiche** de tipo *Subir archivo* (solo imágenes, 1 archivo). Apps Script no puede crear esa pregunta.
 5. *Implementar › Nueva implementación › Aplicación web*: Ejecutar como **Yo**, Acceso **Cualquier persona**. Copiar la URL `/exec`.
@@ -95,3 +95,23 @@ Antes de borrar una fila, identificar su archivo con la dirección de la columna
 ## Entrega y comprobación
 
 Las pruebas de aceptación y la reversión están en `DEPLOY-SERVIDOR.md`. La revisión del código local no acredita que la implementación de Google esté actualizada ni que el correo, los permisos de los CV o el envío desde el dominio publicado funcionen. Confirmar estos puntos en la cuenta de EKAM antes de dar la bolsa por operativa.
+
+
+## Editar el formulario de postulación sin código
+
+En el archivo de administración, abrir **Inicio → EDITAR EL FORMULARIO DE LA WEB** o la pestaña **Formulario web**.
+
+- **Pregunta:** nombre que ve el postulante.
+- **Opciones:** para listas, separar cada opción con `|`. Ejemplo: `Contabilidad | Sistemas | Ventas`.
+- **Obligatoria / Mostrar:** marcar o desmarcar las casillas. Los datos esenciales (convocatoria, nombres, apellidos, correo y WhatsApp), el CV y las autorizaciones permanecen protegidos.
+- **Ayuda:** explicación breve debajo del campo.
+- Para añadir una pregunta, completar una fila vacía `pregunta_1`, `pregunta_2`, etc. Elegir texto, párrafo, lista, número, correo o teléfono. Hay 20 filas preparadas. No cambiar las claves ni reutilizarlas para preguntas distintas después de recibir respuestas.
+- Para retirar una pregunta adicional, desmarcar Mostrar; las respuestas anteriores permanecen en el registro. En los campos existentes se conserva el tipo por compatibilidad.
+
+Los cambios se guardan en Google automáticamente. La web consulta cada 30 segundos. Si alguien ya está completando el formulario, se ofrece **Actualizar preguntas** sin borrar sus datos o CV; no se sustituye silenciosamente un formulario en uso.
+
+Las respuestas nuevas se guardan en la columna final **Respuestas adicionales** de Postulantes, se muestran en el registro administrativo y se incluyen en el correo. Se conserva el título de cada pregunta al recibir la respuesta, aunque después cambie su nombre. Los campos originales y sus posiciones no se modifican.
+
+Instalación: añadir `Formulario.gs` al proyecto existente, actualizar `Code.gs` y `Registro.gs`, ejecutar `prepararFormularioWeb()` una vez y actualizar la implementación existente con una versión nueva, conservando la misma URL. Subir los archivos públicos `js/bolsa.js`, `css/bolsa.css` y `bolsa-de-trabajo/index.html` juntos. Repetir la preparación conserva las preguntas existentes.
+
+Verificación: `node tools/pruebas_formulario.cjs`, más las pruebas de bolsa, registro, cierre y el verificador del sitio. La configuración pública solo contiene preguntas y opciones; nunca respuestas, correos administrativos ni enlaces de CV.

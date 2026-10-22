@@ -80,3 +80,8 @@
 .job--loading { min-height: 32rem; background: linear-gradient(100deg, #f2f7fc 30%, #e6f0f9 50%, #f2f7fc 70%) 0 0 / 200% 100%; animation: jobLoading 1.4s linear infinite; }
 @keyframes jobLoading { to { background-position: -200% 0; } }
 @media (prefers-reduced-motion: reduce) { .job--loading { animation: none; } }
+
+/* Campos administrados desde Google Sheets. */
+.apply-form [hidden] { display: none !important; }
+.apply-form__extras .apply-form__field + .apply-form__field { margin-top: 1rem; }
+.apply-form__extras textarea { min-height: 7rem; resize: vertical; }

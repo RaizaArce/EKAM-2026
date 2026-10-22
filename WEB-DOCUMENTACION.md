@@ -253,3 +253,8 @@ GitHub no publica el sitio automáticamente; fusionar en `main` no cambia lo que
 - Pasar la bolsa de trabajo a la cuenta de Google de EKAM: instalar el script allí, poner el correo de la empresa en `CORREO_AVISO` y actualizar `BOLSA_ENDPOINT`.
 - Borrar cada mes las postulaciones con más de 12 meses desde su envío y sus CV (plazo de la política de privacidad). El borrado es manual: asignar un responsable y seguir `crm/google/bolsa-de-trabajo/README.md`.
 - Deuda técnica: header y footer duplicados en 27 páginas, y capas de ajuste acumuladas en el CSS.
+
+
+### Administración del formulario de postulación
+
+El archivo de Google Sheets incluye **Formulario web**, accesible desde Inicio. Permite cambiar etiquetas, ayuda, áreas y niveles, mostrar u ocultar campos no esenciales, y añadir hasta 20 preguntas mediante filas preparadas. La web consulta la configuración cada 30 segundos y conserva formularios en curso. Las respuestas adicionales se guardan al final de Postulantes y aparecen en el registro y el correo; las columnas y los datos anteriores se conservan. Instrucciones en `crm/google/bolsa-de-trabajo/README.md`.

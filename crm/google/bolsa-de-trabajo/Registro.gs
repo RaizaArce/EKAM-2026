@@ -3,7 +3,7 @@ const REGISTRO_NOMBRE = 'Registro de postulantes';
 const REGISTRO_ESTADOS = ['Nuevo', 'Revisado', 'Contactado', 'Descartado'];
 const REGISTRO_COLUMNAS = ['Fecha', 'Postulante', 'Convocatoria', 'Estado', 'CV', 'WhatsApp', 'Correo', 'Ciudad',
   'Área de interés', 'NAVASOFT', 'Universidad o instituto', 'Especialidad', 'Año de egreso',
-  'Autoriza uso', 'Autoriza compartir', 'Observaciones', 'ID solicitud', 'Estado aviso'];
+  'Autoriza uso', 'Autoriza compartir', 'Observaciones', 'ID solicitud', 'Estado aviso', 'Respuestas adicionales'];
 
 function organizarPostulantes() {
   const lock = LockService.getScriptLock();
@@ -15,13 +15,13 @@ function organizarPostulantes() {
     const registro = ss.getSheetByName(REGISTRO_NOMBRE) || ss.insertSheet(REGISTRO_NOMBRE);
     construirRegistro_(origen, registro);
     const alto = registro.getMaxRows();
-    registro.getRange(1, 1, alto, 18).setFontFamily('Arial').setFontSize(10).setVerticalAlignment('middle');
-    registro.getRange(1, 1, 1, 18).setBackground('#e8edf3').setFontColor('#172b40').setFontWeight('bold').setWrap(true);
+    registro.getRange(1, 1, alto, 19).setFontFamily('Arial').setFontSize(10).setVerticalAlignment('middle');
+    registro.getRange(1, 1, 1, 19).setBackground('#e8edf3').setFontColor('#172b40').setFontWeight('bold').setWrap(true);
     registro.setRowHeight(1, 44);
     registro.setFrozenRows(1);
     registro.setFrozenColumns(2);
     registro.setHiddenGridlines(false);
-    const anchos = [145, 240, 220, 125, 105, 135, 240, 145, 150, 115, 240, 200, 100, 115, 125, 280, 200, 125];
+    const anchos = [145, 240, 220, 125, 105, 135, 240, 145, 150, 115, 240, 200, 100, 115, 125, 280, 200, 125, 360];
     anchos.forEach(function (ancho, i) { registro.setColumnWidth(i + 1, ancho); });
     registro.getRange(1, 1).setNote('Cada fila corresponde a una postulación. Filtra por convocatoria o estado. Edita solo Estado y Observaciones; los demás datos se actualizan desde la web.');
     registro.getRange(1, 4).setNote('Elige Nuevo, Revisado, Contactado o Descartado. Este estado es interno y no envía mensajes al postulante.');
@@ -64,7 +64,7 @@ function construirRegistro_(origen, registro) {
   anteriores.forEach(function (fila) {
     if (fila[16]) seguimiento[fila[16]] = { estado: fila[3], notas: fila[15] };
   });
-  const datos = origen.getLastRow() > 1 ? origen.getRange(2, 1, origen.getLastRow() - 1, 17).getValues() : [];
+  const datos = origen.getLastRow() > 1 ? origen.getRange(2, 1, origen.getLastRow() - 1, Math.min(18, origen.getMaxColumns())).getValues() : [];
   const formulas = datos.length ? origen.getRange(2, 13, datos.length, 1).getFormulas() : [];
   const enlaces = datos.length ? origen.getRange(2, 13, datos.length, 1).getRichTextValues() : [];
   const filas = [];
@@ -85,15 +85,15 @@ function construirRegistro_(origen, registro) {
     const estado = REGISTRO_ESTADOS.indexOf(previo.estado) >= 0 ? previo.estado : 'Nuevo';
     filas.push([fila[0], seguro_((fila[3] + ' ' + fila[4]).trim()), seguro_(fila[1]), estado, cv,
       "'" + (fila[6] || ''), seguro_(fila[5]), seguro_(fila[7]), seguro_(fila[2]), seguro_(fila[11]),
-      seguro_(fila[8]), seguro_(fila[9]), fila[10], fila[13], fila[14], seguro_(previo.notas || ''), fila[15], fila[16]]);
+      seguro_(fila[8]), seguro_(fila[9]), fila[10], fila[13], fila[14], seguro_(previo.notas || ''), fila[15], fila[16], respuestasAdicionalesRegistro_(fila[17])]);
   });
   filas.sort(function (a, b) { return new Date(b[0]) - new Date(a[0]); });
   // Expandir antes de escribir; no recortar filas manualmente.
-  if (registro.getMaxColumns() < 18) registro.insertColumnsAfter(registro.getMaxColumns(), 18 - registro.getMaxColumns());
+  if (registro.getMaxColumns() < 19) registro.insertColumnsAfter(registro.getMaxColumns(), 19 - registro.getMaxColumns());
   if (registro.getMaxRows() < filas.length + 2) registro.insertRowsAfter(registro.getMaxRows(), filas.length + 2 - registro.getMaxRows());
-  registro.getRange(1, 1, 1, 18).setValues([REGISTRO_COLUMNAS]);
+  registro.getRange(1, 1, 1, 19).setValues([REGISTRO_COLUMNAS]);
   if (filas.length) {
-    registro.getRange(2, 1, filas.length, 18).setValues(filas).setWrap(true);
+    registro.getRange(2, 1, filas.length, 19).setValues(filas).setWrap(true);
     registro.getRange(2, 1, filas.length, 1).setNumberFormat('dd/MM/yyyy HH:mm');
     registro.setRowHeights(2, filas.length, 52);
     registro.getRange(2, 5, filas.length, 1).setRichTextValues(filas.map(function (fila) {
@@ -102,17 +102,22 @@ function construirRegistro_(origen, registro) {
       return [texto.build()];
     }));
   }
-  if (anteriores.length > filas.length) registro.getRange(filas.length + 2, 1, anteriores.length - filas.length, 18).clearContent();
+  if (anteriores.length > filas.length) registro.getRange(filas.length + 2, 1, anteriores.length - filas.length, 19).clearContent();
   // Ampliar el filtro para incluir también los próximos registros.
   let filtro = registro.getFilter();
   const criterios = [];
-  if (filtro && filtro.getRange().getNumRows() < registro.getMaxRows()) {
-    for (let columna = 1; columna <= 18; columna++) criterios.push(filtro.getColumnFilterCriteria(columna));
+  if (filtro && (filtro.getRange().getNumRows() < registro.getMaxRows() || filtro.getRange().getNumColumns() < 19)) {
+    for (let columna = 1; columna <= Math.min(19, filtro.getRange().getNumColumns()); columna++) criterios.push(filtro.getColumnFilterCriteria(columna));
     filtro.remove();
     filtro = null;
   }
   if (!filtro) {
-    filtro = registro.getRange(1, 1, registro.getMaxRows(), 18).createFilter();
+    filtro = registro.getRange(1, 1, registro.getMaxRows(), 19).createFilter();
     criterios.forEach(function (criterio, i) { if (criterio) filtro.setColumnFilterCriteria(i + 1, criterio); });
   }
+}
+
+function respuestasAdicionalesRegistro_(valor) {
+  try { return seguro_(JSON.parse(valor || '[]').map(function(c){return c.pregunta+': '+c.respuesta;}).join('\n')); }
+  catch (e) { return seguro_(String(valor || '')); }
 }

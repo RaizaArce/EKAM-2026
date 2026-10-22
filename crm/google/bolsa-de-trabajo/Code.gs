@@ -171,7 +171,8 @@ function doGet() {
       };
     })
     .reverse();
-  return json_({ ok: true, ofertas: ofertas, areas: AREAS });
+  const formulario = typeof formularioWeb_ === 'function' ? formularioWeb_() : null;
+  return json_({ ok: true, ofertas: ofertas, areas: formulario ? formulario.find(function(c){return c.clave === 'area';}).opciones : AREAS, formulario: formulario });
 }
 
 /* ------------------------------------------------------------------ */
@@ -188,20 +189,26 @@ function doPost(e) {
 
     const texto = function (k, max) { return (d[k] || '').toString().trim().slice(0, max || 120); };
     const p = {
-      convocatoria: texto('convocatoria'), area: texto('area', 40), nombres: texto('nombres'), apellidos: texto('apellidos'),
+      convocatoria: texto('convocatoria'), area: texto('area', 160), nombres: texto('nombres'), apellidos: texto('apellidos'),
       correo: texto('correo').toLowerCase(), whatsapp: texto('whatsapp', 30), ciudad: texto('ciudad'),
       universidad: texto('universidad', 160), especialidad: texto('especialidad'), egreso: texto('egreso', 4),
-      navasoft: texto('navasoft', 20)
+      navasoft: texto('navasoft', 160)
     };
-    const faltan = ['convocatoria', 'nombres', 'apellidos', 'correo', 'whatsapp', 'ciudad', 'universidad', 'especialidad', 'egreso', 'navasoft']
-      .filter(function (k) { return !p[k]; });
-    if (faltan.length) return json_({ ok: false, error: 'Completa todos los campos obligatorios.' });
+    const campos = typeof formularioWeb_ === 'function' ? formularioWeb_() : null;
+    if (campos) {
+      const validacion = validarFormulario_(d,p,campos);
+      if (validacion.error) return json_({ok:false,error:validacion.error});
+      p.adicionales = validacion.adicionales;
+    } else {
+      const faltan = ['convocatoria','nombres','apellidos','correo','whatsapp','ciudad','universidad','especialidad','egreso','navasoft'].filter(function(k){return !p[k];});
+      if (faltan.length) return json_({ok:false,error:'Completa todos los campos obligatorios.'});
+      if (NIVELES.indexOf(p.navasoft)<0) return json_({ok:false,error:'Elige tu nivel de NAVASOFT.'});
+      if (AREAS.indexOf(p.area)<0) p.area='Otra';
+    }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(p.correo)) return json_({ ok: false, error: 'Revisa tu correo.' });
     if (!/^[0-9+()\s-]{6,20}$/.test(p.whatsapp)) return json_({ ok: false, error: 'Revisa tu número de WhatsApp.' });
-    const anio = Number(p.egreso);
-    if (!(anio >= 1960 && anio <= new Date().getFullYear() + 1)) return json_({ ok: false, error: 'Revisa el año de egreso.' });
-    if (NIVELES.indexOf(p.navasoft) < 0) return json_({ ok: false, error: 'Elige tu nivel de NAVASOFT.' });
-    if (AREAS.indexOf(p.area) < 0) p.area = 'Otra';
+    const anio = p.egreso ? Number(p.egreso) : '';
+    if (p.egreso && !(anio >= 1960 && anio <= new Date().getFullYear() + 1)) return json_({ ok: false, error: 'Revisa el año de egreso.' });
     if (d.consentimiento !== true || d.compartir !== true) return json_({ ok: false, error: 'Debes aceptar las dos autorizaciones.' });
 
     // CV: solo PDF real de hasta 5 MB
@@ -217,8 +224,10 @@ function doPost(e) {
     ].join('_') + '.pdf';
     // El ID persiste en la hoja: también protege si se pierde la respuesta HTTP.
     // La huella conserva compatibilidad con páginas antiguas que aún no envían ID.
+    const datosHuella = Object.assign({}, p);
+    if (!p.adicionales || !p.adicionales.length) delete datosHuella.adicionales;
     const huella = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,
-      JSON.stringify(p) + ':' + cv.data).map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join('');
+      JSON.stringify(datosHuella) + ':' + cv.data).map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join('');
     const solicitud = /^[a-zA-Z0-9-]{16,80}$/.test(d.solicitudId || '') ? d.solicitudId : huella;
     const lock = LockService.getScriptLock();
     lock.waitLock(20000);
@@ -238,9 +247,9 @@ function doPost(e) {
           .createFile(Utilities.newBlob(bytes, 'application/pdf', nombreArchivo));
         enlace = archivo.getUrl();
         hoja.appendRow([
-          fecha, seguro_(p.convocatoria), p.area, seguro_(p.nombres), seguro_(p.apellidos), seguro_(p.correo), "'" + p.whatsapp,
-          seguro_(p.ciudad), seguro_(p.universidad), seguro_(p.especialidad), anio, p.navasoft,
-          enlace, 'Sí', 'Sí', solicitud, 'Pendiente'
+          fecha, seguro_(p.convocatoria), seguro_(p.area), seguro_(p.nombres), seguro_(p.apellidos), seguro_(p.correo), "'" + p.whatsapp,
+          seguro_(p.ciudad), seguro_(p.universidad), seguro_(p.especialidad), anio, seguro_(p.navasoft),
+          enlace, 'Sí', 'Sí', solicitud, 'Pendiente', JSON.stringify(p.adicionales || [])
         ]);
         SpreadsheetApp.flush();
       } catch (err) {
@@ -296,6 +305,7 @@ function avisar_(p, enlace, fecha) {
     fila('Área de interés', p.area) + fila('Ciudad', p.ciudad) + fila('Universidad o instituto', p.universidad) +
     fila('Especialidad', p.especialidad) + fila('Año de egreso', p.egreso) + fila('NAVASOFT', p.navasoft) +
     fila('Correo', p.correo) + fila('WhatsApp', p.whatsapp) +
+    (p.adicionales || []).map(function(c){return fila(html_(c.pregunta),c.respuesta);}).join('') +
     '</table>' +
     '<p style="margin:20px 0"><a href="' + enlace + '" style="background:#F59E0B;color:#071A2B;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700">Descargar CV</a></p>' +
     '<p style="color:#94A3B8;font-size:12px">El postulante autorizó el uso de sus datos para selección y que se comparta su CV con empresas aliadas.</p>' +

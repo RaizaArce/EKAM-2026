@@ -30,6 +30,91 @@
     let loaded = false;
     let refreshing = false;
     let jobsSignature = null;
+    let configSignature = null;
+    let extraFields = [];
+    let formDirty = false;
+    let pendingConfig = null;
+    const configNotice = el('p', {class:'apply-form__hint', role:'status'});
+    form.prepend(configNotice);
+    form.addEventListener('input', function () { formDirty = true; });
+    form.addEventListener('change', function () { formDirty = true; });
+
+    function configureForm(fields) {
+        if (!Array.isArray(fields)) return;
+        const signature = JSON.stringify(fields);
+        if (signature === configSignature) return;
+        if (formDirty) {
+            pendingConfig = fields;
+            configNotice.replaceChildren(document.createTextNode('El formulario tiene cambios disponibles. Tus datos se conservarán. '));
+            const update = el('button', {type:'button',class:'btn btn--secondary'}, 'Actualizar preguntas');
+            update.addEventListener('click', function () { formDirty = false; configureForm(pendingConfig); formDirty = true; });
+            configNotice.append(update);
+            return;
+        }
+        const saved = {};
+        form.querySelectorAll('[data-extra-field]').forEach(function(input){ saved[input.name] = input.value; });
+        let extraSection = document.getElementById('extraQuestions');
+        if (!extraSection) {
+            extraSection = el('fieldset', {id:'extraQuestions'});
+            form.querySelector('.apply-form__consent').before(extraSection);
+        }
+        extraSection.replaceChildren(el('legend', null, 'Información adicional'));
+        extraFields = [];
+        fields.forEach(function(c){
+            if (!c || !/^[a-z][a-z0-9_]{1,39}$/.test(c.clave)) return;
+            const extra = c.clave.indexOf('pregunta_') === 0;
+            if (extra) {
+                if (!c.visible) return;
+                const wrapper = el('div', {class:'apply-form__field'});
+                const id = 'extra_' + c.clave;
+                wrapper.append(el('label',{for:id}, c.pregunta + (c.obligatorio ? ' *' : '')));
+                const input = el(c.tipo === 'lista' ? 'select' : c.tipo === 'párrafo' ? 'textarea' : 'input', {id:id,name:c.clave,'data-extra-field':'true',class:c.tipo === 'lista'?'contact-form__select':'contact-form__input'});
+                if (c.tipo === 'lista') {
+                    input.append(el('option',{value:''}, 'Selecciona una opción'));
+                    (c.opciones || []).forEach(function(v){input.append(el('option',{value:v},v));});
+                } else if (c.tipo !== 'párrafo') input.type = ({'número':'number','correo':'email','teléfono':'tel'})[c.tipo] || 'text';
+                input.required = !!c.obligatorio;
+                input.maxLength = c.tipo === 'párrafo' ? 2000 : 160;
+                if (c.tipo === 'número') input.step = 'any';
+                if (saved[c.clave]) input.value = saved[c.clave];
+                wrapper.append(input);
+                if (c.ayuda) {const help=el('small',{id:id+'_help',class:'apply-form__hint'},c.ayuda);wrapper.append(help);input.setAttribute('aria-describedby',help.id);}
+                extraSection.append(wrapper);
+                extraFields.push(c.clave);
+                return;
+            }
+            const inputs = Array.from(form.querySelectorAll('[name="'+c.clave+'"]'));
+            if (!inputs.length) return;
+            const wrapper = inputs[0].closest('.apply-form__field');
+            if (!wrapper) return;
+            wrapper.hidden = !c.visible;
+            inputs.forEach(function(input){ input.disabled=!c.visible; input.required=!!c.visible && !!c.obligatorio && (input.type!=='radio' || input===inputs[0]); });
+            const label = wrapper.querySelector('.apply-form__label') || wrapper.querySelector('label');
+            if (label) label.textContent = c.pregunta + (c.obligatorio ? ' *' : '');
+            if (c.clave === 'navasoft') {
+                const group = wrapper.querySelector('.apply-form__levels');
+                const previous = (group.querySelector(':checked') || {}).value;
+                group.replaceChildren();
+                (c.opciones || []).forEach(function(value,i){const l=el('label');const r=el('input',{type:'radio',name:'navasoft',value:value});r.required=!!c.visible&&!!c.obligatorio&&i===0;r.disabled=!c.visible;r.checked=value===previous;l.append(r,document.createTextNode(' '+value));group.append(l);});
+            } else if (inputs[0].tagName === 'SELECT' && c.clave !== 'convocatoria') {
+                const previous=inputs[0].value;
+                inputs[0].replaceChildren();
+                (c.opciones || []).forEach(function(value){inputs[0].append(el('option',{value:value},value));});
+                if ((c.opciones || []).includes(previous)) inputs[0].value=previous;
+            }
+            let help=wrapper.querySelector('[data-config-help]');
+            if (!help) {help=el('small',{'data-config-help':'true',id:'help_'+c.clave,class:'apply-form__hint'});wrapper.append(help);}
+            help.textContent=c.ayuda || ''; help.hidden=!c.ayuda;
+            inputs.forEach(function(input){if(c.ayuda)input.setAttribute('aria-describedby',help.id);else input.removeAttribute('aria-describedby');});
+        });
+        extraSection.hidden = !extraFields.length;
+        extraSection.className = 'apply-form__extras';
+        form.querySelectorAll('fieldset').forEach(function(section){
+            const wrappers=Array.from(section.querySelectorAll('.apply-form__field'));
+            if(wrappers.length) section.hidden=wrappers.every(function(w){return w.hidden;});
+        });
+        configSignature=signature; pendingConfig=null; configNotice.replaceChildren();
+    }
 
     /* ---- Convocatorias ---- */
     const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -139,6 +224,7 @@
             .then(function (data) {
                 if (!data || data.ok !== true || !Array.isArray(data.ofertas)) throw new Error('Respuesta inválida');
                 if (submit.disabled) return;
+                configureForm(data.formulario);
                 updateJobs(data.ofertas);
                 loaded = true;
             })
@@ -215,6 +301,7 @@
         leerPdf(cv).then(function (data) {
             const payload = {
                 solicitudId: solicitudId,
+                adicionales: Object.fromEntries(extraFields.map(function(key){return [key,form.elements.namedItem(key).value];})),
                 website: form.website.value,
                 elapsed: Date.now() - startedAt,
                 convocatoria: jobSelect.value,
@@ -240,6 +327,8 @@
                 if (res && res.ok) {
                     solicitudId = null;
                     form.reset();
+                    formDirty=false;
+                    if(pendingConfig) configureForm(pendingConfig);
                     setStatus('¡Gracias! Recibimos tu postulación. Si tu perfil encaja, te contactaremos por WhatsApp o correo.', true);
                 } else {
                     setStatus((res && res.error) || 'No pudimos enviar tu postulación. Inténtalo en unos minutos.');

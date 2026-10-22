@@ -35,6 +35,7 @@ function prepararAccesos() {
   ss.setActiveSheet(inicio);
   ss.moveActiveSheet(1);
   inicio.setActiveSelection('B2');
+  if (typeof prepararFormularioWeb === 'function') prepararFormularioWeb();
   SpreadsheetApp.flush();
   Logger.log('Inicio: ' + ss.getUrl() + '#gid=' + inicio.getSheetId());
   Logger.log('Publicar o cerrar: ' + formulario.getPublishedUrl());
