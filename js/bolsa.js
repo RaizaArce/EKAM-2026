@@ -10,6 +10,7 @@
 
     const BOLSA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzaFLc51wcjdedjiHRADMJWHINTjEOV4VrfkTydjNht8Zvj7Xu6ugPeFjKDIDsIJa85/exec';
     const MAX_CV = 5 * 1024 * 1024;
+    const REFRESH_MS = 30000;
 
     const list = document.getElementById('jobsList');
     const hint = document.getElementById('jobsHint');
@@ -26,6 +27,9 @@
     const startedAt = Date.now();
     let solicitudId = null;
     let current = null;
+    let loaded = false;
+    let refreshing = false;
+    let jobsSignature = null;
 
     /* ---- Convocatorias ---- */
     const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -46,9 +50,12 @@
     }
 
     function selectJob(job) {
-        jobSelect.value = job.puesto;
+        const option = Array.from(jobSelect.options).find(function (opt) { return opt.dataset.id === jobKey(job); });
+        if (option) jobSelect.selectedIndex = option.index;
         if (job.area) areaSelect.value = job.area;
     }
+
+    function jobKey(job) { return String(job.id || job.puesto + '|' + (job.ciudad || '')); }
 
     function renderJob(job) {
         const li = el('li', { class: 'job' });
@@ -91,26 +98,69 @@
         if (hint) hint.hidden = true;
     }
 
-    fetch(BOLSA_ENDPOINT)
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-            const jobs = (data && data.ofertas) || [];
-            if (!jobs.length) {
-                renderEmpty('Por ahora no hay convocatorias abiertas. Déjanos tu CV en la bolsa general y te avisaremos cuando aparezca una oportunidad.');
-                return;
-            }
-            list.replaceChildren.apply(list, jobs.map(renderJob));
-            jobs.slice().reverse().forEach(function (job) {
-                const opt = el('option', { value: job.puesto, 'data-area': job.area || '' }, job.puesto + (job.ciudad ? ' · ' + job.ciudad : ''));
-                jobSelect.insertBefore(opt, jobSelect.firstChild);
+    function updateJobs(jobs) {
+        const signature = JSON.stringify(jobs);
+        if (hint) {
+            hint.textContent = 'Toca un afiche para verlo en grande.';
+            hint.hidden = !jobs.length;
+        }
+        if (signature === jobsSignature) return;
+        const previous = jobSelect.selectedOptions[0];
+        const previousId = previous && previous.dataset.id;
+        const firstLoad = !loaded;
+        if (jobs.length) list.replaceChildren.apply(list, jobs.map(renderJob));
+        else renderEmpty('Por ahora no hay convocatorias abiertas. Déjanos tu CV en la bolsa general y te avisaremos cuando aparezca una oportunidad.');
+
+        const options = jobs.map(function (job) {
+            return el('option', { value: job.puesto, 'data-id': jobKey(job), 'data-area': job.area || '' }, job.puesto + (job.ciudad ? ' · ' + job.ciudad : ''));
+        });
+        options.push(el('option', { value: 'Bolsa general', 'data-area': '' }, 'Bolsa general (sin convocatoria específica)'));
+        jobSelect.replaceChildren.apply(jobSelect, options);
+        const preserved = previousId && options.find(function (opt) { return opt.dataset.id === previousId; });
+        jobSelect.selectedIndex = firstLoad ? 0 : preserved ? preserved.index : options.length - 1;
+        if (firstLoad && jobs[0] && jobs[0].area) areaSelect.value = jobs[0].area;
+        if (previousId && !preserved) {
+            setStatus('La convocatoria que elegiste se cerró. Conservamos tus datos; puedes elegir otra o enviar tu CV a la bolsa general.');
+        }
+        if (current && !jobs.some(function (job) { return jobKey(job) === jobKey(current); })) {
+            if (viewer.open) viewer.close();
+            current = null;
+        }
+        jobsSignature = signature;
+    }
+
+    function refreshJobs() {
+        if (refreshing || submit.disabled || navigator.onLine === false) return;
+        refreshing = true;
+        const controller = new AbortController();
+        const timeout = window.setTimeout(function () { controller.abort(); }, 20000);
+        fetch(BOLSA_ENDPOINT, { cache: 'no-store', signal: controller.signal })
+            .then(function (r) { if (!r.ok) throw new Error('No se pudo consultar la bolsa'); return r.json(); })
+            .then(function (data) {
+                if (!data || data.ok !== true || !Array.isArray(data.ofertas)) throw new Error('Respuesta inválida');
+                if (submit.disabled) return;
+                updateJobs(data.ofertas);
+                loaded = true;
+            })
+            .catch(function () {
+                if (!loaded) renderEmpty('No pudimos cargar las convocatorias en este momento. Reintentaremos automáticamente. Igual puedes dejar tu CV en la bolsa general.');
+                else if (hint) {
+                    hint.textContent = 'No pudimos actualizar las convocatorias. Reintentaremos automáticamente.';
+                    hint.hidden = false;
+                }
+            })
+            .finally(function () {
+                window.clearTimeout(timeout);
+                refreshing = false;
+                list.removeAttribute('aria-busy');
             });
-            jobSelect.selectedIndex = 0;
-            if (jobs[0].area) areaSelect.value = jobs[0].area;
-        })
-        .catch(function () {
-            renderEmpty('No pudimos cargar las convocatorias en este momento. Igual puedes dejar tu CV en la bolsa general.');
-        })
-        .finally(function () { list.removeAttribute('aria-busy'); });
+    }
+
+    refreshJobs();
+    window.setInterval(function () { if (!document.hidden) refreshJobs(); }, REFRESH_MS);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) refreshJobs(); });
+    window.addEventListener('focus', refreshJobs);
+    window.addEventListener('online', refreshJobs);
 
     jobSelect.addEventListener('change', function () {
         const area = jobSelect.selectedOptions[0] && jobSelect.selectedOptions[0].dataset.area;

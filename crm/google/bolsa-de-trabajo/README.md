@@ -10,6 +10,8 @@ Web ──GET──► doGet: ofertas publicadas y vigentes (JSON)
 Postulante ──(formulario de la web)──POST──► doPost: CV en Drive + fila en "Postulantes" + correo de aviso
 ```
 
+La página consulta las convocatorias automáticamente cada **30 segundos** mientras está visible, y también al volver a la pestaña o recuperar la conexión. Las altas y cierres aparecen sin recargar. Actualiza las tarjetas y las opciones de postulación conservando los datos escritos y el CV. Si se cierra la convocatoria elegida, avisa y deja seleccionada Bolsa general para que la persona pueda elegir otra. Ante un fallo temporal conserva las últimas ofertas recibidas y reintenta; no recarga toda la página. La demora depende del intervalo y del tiempo de respuesta de Google, no es una notificación instantánea.
+
 ## Qué hay en Google
 
 | Elemento | Contenido |
@@ -79,6 +81,8 @@ Para cambiar el correo que recibe los avisos: *Configuración del proyecto › P
 Si se edita `Code.gs`, hay que crear una **nueva versión** de la implementación existente (*Implementar › Gestionar implementaciones › editar*) para que la URL no cambie.
 
 Para aplicar la corrección del 22/10/2026: reemplazar el contenido de `Code.gs` en el proyecto existente, guardar y actualizar esa implementación. No hace falta ejecutar `configurar()`, cambiar `CORREO_AVISO`, mover carpetas ni crear otro formulario. Publicar también `js/bolsa.js` y `bolsa-de-trabajo/index.html` (versión `20261022-2`). Probar un envío identificado como prueba en la cuenta actual y comprobar que hay una sola fila, un CV y un aviso.
+
+La mejora de actualización automática del listado usa `js/bolsa.js?v=20261022-3`. Subir `js/bolsa.js` y `bolsa-de-trabajo/index.html` juntos al hosting. Quien ya tenga la versión anterior abierta necesita recargarla una sola vez para recibir el código nuevo; después las convocatorias se actualizan solas.
 
 Pruebas locales: `node tools/pruebas_bolsa.cjs`, `node tools/pruebas_registro.cjs` y `node tools/pruebas_cierre.cjs`. Usan servicios Google simulados; no envían correo ni actualizan la implementación de Google. Las del registro comprueban el orden, enlaces, recuperación de CV antiguos y conservación de estados y observaciones al entrar otra postulación. Las de cierre verifican identificación exacta, nombres repetidos, reintentos, lista vacía y actualización al publicar.
 
