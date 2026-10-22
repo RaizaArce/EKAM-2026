@@ -391,6 +391,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
     color: var(--color-text-secondary);
     border-radius: var(--radius-md);
+    white-space: nowrap;
     transition: all var(--transition-fast);
 }
 
@@ -1708,10 +1709,21 @@ section[id],
     }
 }
 
+/* 1025-1279px: seis enlaces + boton; logo y enlaces un poco mas compactos para que quepan en una linea. */
+@media (min-width: 1025px) and (max-width: 1279px) {
+    .header__logo--brand {
+        width: clamp(280px, 24vw, 330px);
+    }
+
+    .header__link {
+        padding: 0.5rem 0.6rem;
+    }
+}
+
 /* 901-1024px: el menu completo sigue visible; logo y enlaces mas compactos para que quepa. */
 @media (min-width: 901px) and (max-width: 1024px) {
     .header__logo--brand {
-        width: 236px;
+        width: 210px;
         height: 72px;
     }
 
@@ -1720,7 +1732,7 @@ section[id],
     }
 
     .header__link {
-        padding: 0.5rem 0.55rem;
+        padding: 0.5rem 0.5rem;
     }
 
     .header__cta {
