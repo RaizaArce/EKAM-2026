@@ -1,0 +1,13 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const datos=[['ID'],['id-uno',new Date(),'Contador','Contabilidad','Chiclayo','','','','Publicada'],['id-dos',new Date(),'Contador','Contabilidad','Chiclayo','','','','Publicada'],['id-cerrado',new Date(),'Anterior','Sistemas','Lima','','','','Cerrada']];
+let opciones=[];const sheet={getDataRange:()=>({getValues:()=>datos.map(r=>r.slice())}),getRange:(r,c)=>({setValue:v=>datos[r-1][c-1]=v}),appendRow:r=>datos.push(r)};
+const item={getTitle:()=> 'Oferta que deseas cerrar',asListItem:()=>({setChoiceValues:v=>opciones=v})};
+const ctx={console,FormApp:{ItemType:{LIST:'LIST'},openById:()=>({getItems:()=>[item]})},PropertiesService:{getScriptProperties:()=>({getProperty:()=> 'form-id'})},SpreadsheetApp:{getActiveSpreadsheet:()=>({getSheetByName:()=>sheet})},Utilities:{getUuid:()=> 'nuevo-id-unico'}};
+vm.createContext(ctx);for(const f of ['Code.gs','Cierre.gs'])vm.runInContext(fs.readFileSync('crm/google/bolsa-de-trabajo/'+f,'utf8'),ctx);
+ctx.actualizarOfertasParaCerrar();assert.equal(opciones.length,2);assert.ok(opciones.includes('Contador · Chiclayo [ID: id-uno]'));assert.ok(opciones.includes('Contador · Chiclayo [ID: id-dos]'));console.log('OK Lista distingue ofertas del mismo puesto y ciudad');
+const cerrar={namedValues:{'¿Qué quieres hacer?':['Cerrar una oferta'],'Oferta que deseas cerrar':['Contador · Chiclayo [ID: id-dos]']}};
+ctx.alEnviarFormulario(cerrar);assert.equal(datos[1][8],'Publicada');assert.equal(datos[2][8],'Cerrada');assert.equal(opciones.length,1);assert.ok(opciones[0].includes('id-uno'));console.log('OK Cierra solo el ID elegido sin pedir puesto escrito');
+ctx.alEnviarFormulario(cerrar);assert.equal(datos[1][8],'Publicada');console.log('OK Repetir cierre no afecta otra oferta del mismo nombre');
+assert.throws(()=>ctx.alEnviarFormulario({namedValues:{'¿Qué quieres hacer?':['Cerrar una oferta'],'Puesto':['Contador']}}));assert.equal(datos[1][8],'Publicada');console.log('OK Formulario antiguo no cierra ofertas por coincidencia de texto');
+ctx.alEnviarFormulario({namedValues:{'¿Qué quieres hacer?':['Publicar una oferta'],'Puesto':['Analista'],'Ciudad':['Lima'],'Área':['Sistemas']}});assert.ok(opciones.some(s=>s.includes('Analista · Lima')));console.log('OK Nueva publicación actualiza automáticamente la lista de cierre');
+datos.slice(1).forEach(r=>r[8]='Cerrada');ctx.actualizarOfertasParaCerrar();assert.equal(opciones.length,1);assert.equal(opciones[0],'No hay ofertas abiertas');ctx.alEnviarFormulario({namedValues:{'¿Qué quieres hacer?':['Cerrar una oferta'],'Oferta que deseas cerrar':['No hay ofertas abiertas']}});console.log('OK Sin ofertas abiertas, informa y no modifica datos');

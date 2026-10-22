@@ -96,17 +96,25 @@ function alEnviarFormulario(e) {
   const hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(HOJA_OFERTAS);
   const accion = dato('¿Qué quieres hacer?');
   const puesto = dato('Puesto');
-  if (!puesto) return;
 
   if (accion.indexOf('Cerrar') === 0) {
+    const seleccion = dato('Oferta que deseas cerrar');
+    const coincidencia = seleccion.match(/\[ID: ([^\]]+)\]$/);
+    if (!coincidencia) {
+      if (seleccion === 'No hay ofertas abiertas') return;
+      throw new Error('Selecciona una oferta desde la lista del formulario actualizado.');
+    }
     const datos = hoja.getDataRange().getValues();
     for (let i = 1; i < datos.length; i++) {
-      if (normal_(datos[i][2]) === normal_(puesto) && datos[i][8] === 'Publicada') {
+      if (String(datos[i][0]) === coincidencia[1] && datos[i][8] === 'Publicada') {
         hoja.getRange(i + 1, 9).setValue('Cerrada');
+        break;
       }
     }
+    actualizarOfertasParaCerrar();
     return;
   }
+  if (!puesto) return;
 
   const idAfiche = idDeDrive_(dato('Afiche'));
   if (idAfiche) {
@@ -119,6 +127,7 @@ function alEnviarFormulario(e) {
     Utilities.getUuid().slice(0, 8), new Date(), seguro_(puesto), dato('Área') || 'Otra', seguro_(dato('Ciudad')),
     cierre, idAfiche, idAfiche ? 'https://drive.google.com/file/d/' + idAfiche + '/view' : '', 'Publicada'
   ]);
+  actualizarOfertasParaCerrar();
 }
 
 // La fecha llega como texto según el idioma de la hoja: 23/10/2026 o 2026-10-23. Cierra al final de ese día (hora de Lima).

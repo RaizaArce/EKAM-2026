@@ -5,19 +5,7 @@ function prepararAccesos() {
   if (!idFormulario) throw new Error('No se encontró el formulario existente');
   const formulario = FormApp.openById(idFormulario);
   formulario.setTitle('PUBLICAR O CERRAR OFERTAS');
-  // El cierre solo necesita el puesto: no exigir otro afiche para retirar una oferta.
-  const puesto = formulario.getItems().filter(function (item) { return item.getTitle() === 'Puesto'; })[0];
-  const accion = formulario.getItems(FormApp.ItemType.MULTIPLE_CHOICE)
-    .filter(function (item) { return item.getTitle() === '¿Qué quieres hacer?'; })[0].asMultipleChoiceItem();
-  const seccionExistente = formulario.getItems(FormApp.ItemType.PAGE_BREAK)
-    .filter(function (item) { return item.getTitle() === 'Datos de la oferta'; })[0];
-  const seccion = seccionExistente ? seccionExistente.asPageBreakItem()
-    : formulario.addPageBreakItem().setTitle('Datos de la oferta');
-  if (seccion.getIndex() !== puesto.getIndex() + 1) formulario.moveItem(seccion.getIndex(), puesto.getIndex() + 1);
-  accion.setChoices([
-    accion.createChoice('Publicar una oferta', seccion),
-    accion.createChoice('Cerrar una oferta', FormApp.PageNavigationType.SUBMIT)
-  ]);
+  prepararCierreOfertas();
   const archivoFormulario = DriveApp.getFileById(idFormulario);
   archivoFormulario.setName('PUBLICAR O CERRAR OFERTAS');
   // Mantener el formulario junto al registro en la carpeta existente.

@@ -37,7 +37,9 @@ Las columnas a la derecha contienen los demás datos solicitados; las dos primer
 2. Elegir *Publicar una oferta*, escribir el puesto, el área, la ciudad y la fecha de cierre, y subir el afiche (imagen JPG o PNG).
 3. Enviar. La oferta aparece al recargar `ekamperu.com/bolsa-de-trabajo/`.
 
-**Cerrar una oferta antes de tiempo:** en el mismo formulario elegir *Cerrar una oferta*, escribir el puesto igual que al publicarlo y enviar. No pide otro afiche ni los datos de publicación. Esto cierra todas las ofertas publicadas con ese puesto (sin distinguir ciudad; se ignoran mayúsculas y tildes). Si no se cierra, la oferta se oculta sola el día siguiente a su fecha de cierre. Sin fecha de cierre, permanece visible hasta cerrarla manualmente.
+**Cerrar una oferta antes de tiempo:** elegir *Cerrar una oferta*, pulsar Siguiente, seleccionar la convocatoria en **Oferta que deseas cerrar** y enviar. No hay que escribir el puesto ni adjuntar un afiche. La lista identifica cada convocatoria por puesto, ciudad y código; solo cierra la seleccionada, incluso si hay dos con el mismo nombre. Se actualiza al publicar o cerrar ofertas y excluye las ya cerradas. El cierre retira la convocatoria de la web y conserva el historial, postulantes y CV. Si el formulario llevaba tiempo abierto, recargarlo para ver la lista actual.
+
+Una oferta sin fecha de cierre permanece visible hasta cerrarla; con fecha, se oculta automáticamente después de ese día. El listado administrativo permite cerrar también las que vencieron pero aún tienen estado Publicada.
 
 **Revisar postulantes:** cada postulación llega al correo con el botón *Descargar CV*, y aparece en el registro con el enlace *Abrir CV*. No cambiar el nombre de las pestañas ni el orden de las columnas de origen; usar los filtros de la vista de gestión.
 
@@ -63,13 +65,14 @@ Las imágenes se solicitan con `referrerpolicy="no-referrer"` para evitar el blo
 ## Instalación en una cuenta nueva
 
 1. Crear una hoja de cálculo de Google y abrir *Extensiones › Apps Script*.
-2. Pegar `Code.gs` y añadir `Registro.gs` y `Accesos.gs` al mismo proyecto (también se pueden concatenar los tres en un único archivo). En *Configuración del proyecto*, activar "Mostrar el archivo de manifiesto" y pegar `appsscript.json`.
+2. Pegar `Code.gs` y añadir `Registro.gs`, `Accesos.gs` y `Cierre.gs` al mismo proyecto (también se pueden concatenar en un único archivo). En *Configuración del proyecto*, activar "Mostrar el archivo de manifiesto" y pegar `appsscript.json`.
 3. Ejecutar `configurar()` y autorizar los permisos. Crea las pestañas, las carpetas, el formulario y el activador `alEnviarFormulario`, y guarda el correo de la cuenta en `CORREO_AVISO`.
 4. Abrir el formulario creado y añadir la pregunta **Afiche** de tipo *Subir archivo* (solo imágenes, 1 archivo). Apps Script no puede crear esa pregunta.
 5. *Implementar › Nueva implementación › Aplicación web*: Ejecutar como **Yo**, Acceso **Cualquier persona**. Copiar la URL `/exec`.
 6. Pegar esa URL en `BOLSA_ENDPOINT` al inicio de `js/bolsa.js`, subir la versión `?v=` en `bolsa-de-trabajo/index.html` y publicar.
 7. Ejecutar `organizarPostulantes()` una vez: crea la vista administrativa, configura filtros, estados, enlaces y formato, y renombra el archivo para encontrarlo fácilmente en Drive. Conserva la hoja original, formulario y carpetas. Publicar una nueva versión con ambos archivos del script para que las nuevas postulaciones actualicen la vista.
 8. Ejecutar `prepararAccesos()` una vez: crea **Inicio** con los dos enlaces, renombra el formulario y lo ubica en la misma carpeta del registro. Es una preparación administrativa; los enlaces funcionan sin cambiar la implementación pública del servicio.
+9. En instalaciones existentes, ejecutar `prepararCierreOfertas()` para actualizar el formulario al cierre por selección. Conserva el mismo formulario, preguntas de publicación y activador. El activador `alEnviarFormulario` usa el código guardado del proyecto; no hace falta cambiar la URL pública para esta mejora. Si se edita directamente la pestaña Ofertas, ejecutar `actualizarOfertasParaCerrar()` para reflejar esos cambios en el desplegable.
 
 Para cambiar el correo que recibe los avisos: *Configuración del proyecto › Propiedades del script › CORREO_AVISO*. No hace falta volver a implementar.
 
@@ -77,7 +80,7 @@ Si se edita `Code.gs`, hay que crear una **nueva versión** de la implementació
 
 Para aplicar la corrección del 22/10/2026: reemplazar el contenido de `Code.gs` en el proyecto existente, guardar y actualizar esa implementación. No hace falta ejecutar `configurar()`, cambiar `CORREO_AVISO`, mover carpetas ni crear otro formulario. Publicar también `js/bolsa.js` y `bolsa-de-trabajo/index.html` (versión `20261022-2`). Probar un envío identificado como prueba en la cuenta actual y comprobar que hay una sola fila, un CV y un aviso.
 
-Pruebas locales: `node tools/pruebas_bolsa.cjs` y `node tools/pruebas_registro.cjs`. Usan servicios Google simulados; no envían correo ni actualizan la implementación de Google. Las del registro comprueban el orden, enlaces, recuperación de CV antiguos y conservación de estados y observaciones al entrar otra postulación.
+Pruebas locales: `node tools/pruebas_bolsa.cjs`, `node tools/pruebas_registro.cjs` y `node tools/pruebas_cierre.cjs`. Usan servicios Google simulados; no envían correo ni actualizan la implementación de Google. Las del registro comprueban el orden, enlaces, recuperación de CV antiguos y conservación de estados y observaciones al entrar otra postulación. Las de cierre verifican identificación exacta, nombres repetidos, reintentos, lista vacía y actualización al publicar.
 
 ## Conservación de datos
 
