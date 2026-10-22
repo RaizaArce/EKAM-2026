@@ -7,7 +7,7 @@ Guía para quien mantenga el sitio: cómo está organizado, qué hace cada archi
 - Sitio corporativo estático de **EKAM PERU S.A.C.** (sede en Chiclayo), partner de **NAVASOFT ERP**.
 - Al mencionar la sede, acompañarla siempre de la cobertura ("Sede en Chiclayo · Atención en todo el norte del Perú"), para que no parezca que EKAM solo trabaja en Chiclayo.
 - HTML, CSS y JavaScript sin frameworks, sin proceso de compilación y sin backend.
-- 25 páginas: portada, catálogo de soluciones, sectores, nosotros, recursos, privacidad y una página por solución, sector y guía.
+- 26 páginas: portada, catálogo de soluciones, sectores, clientes, nosotros, recursos, privacidad y una página por solución, sector y guía.
 - Contacto por WhatsApp: el formulario, el botón flotante y el asistente virtual preparan un mensaje para `wa.me`.
 - Dominio previsto: `https://www.ekamperu.com` (canónicas, sitemap y datos estructurados ya lo usan).
 
@@ -39,6 +39,7 @@ Para cambios de estilo, `tools/capturas.py` y `tools/comparar.py` generan captur
 | `sectores.html` | Sectores con pestañas | `sectores.css` | `sectores.js`, `chatbot.js` |
 | `sectores/<slug>/` | 10 páginas: `agroindustria`, `comercio`, `construccion`, `educacion`, `grifos`, `hoteles-restaurantes`, `industria`, `salud`, `servicios`, `transporte` | `soluciones.css` | `main.js` |
 | `nosotros.html` | Historia, misión, visión y servicios | `soluciones.css`, `nosotros.css` | `main.js` |
+| `clientes/` | Escenario azul con el índice de 9 sectores a la izquierda y los 42 logos a la derecha; el selector filtra por sector (enlace compartible `clientes/#construccion`) y cada tarjeta gira al pasar el mouse y muestra el nombre. Para agregar uno: guardar el `.webp` en `assets/LogosClientes/`, copiar un `<li>` con el `data-sector` de su rubro y sumar 1 a los contadores | `soluciones.css`, `clientes.css` | `main.js`, `clientes.js` |
 | `recursos/` y `recursos/<slug>/` | Índice y 3 guías: `como-elegir-un-erp`, `facturacion-electronica-peru`, `ple-libros-electronicos` | `soluciones.css` | `main.js` |
 | `privacidad.html` | Política de privacidad | — | `main.js` |
 
@@ -71,7 +72,7 @@ Fuera del `<main>`: footer, visor de imágenes, botón flotante de WhatsApp y as
 ```
 EKAM-2026/
 ├── *.html                     ← portada y páginas de primer nivel
-├── soluciones/ · sectores/ · recursos/   ← una carpeta con index.html por página
+├── soluciones/ · sectores/ · clientes/ · recursos/   ← una carpeta con index.html por página
 ├── robots.txt · sitemap.xml
 ├── css/
 │   ├── style.css              ← variables, base y componentes compartidos por todas las páginas
@@ -123,7 +124,7 @@ Definido como variables en `:root`, al inicio de `css/style.css`. Usar siempre l
 
 ### Organización del CSS
 
-- `style.css` lo cargan las 26 páginas: variables, base, header, footer, botones, formulario, asistente y componentes de las páginas internas.
+- `style.css` lo cargan las 27 páginas: variables, base, header, footer, botones, formulario, asistente y componentes de las páginas internas.
 - `home.css` solo lo carga `index.html`, después de `style.css`: hero, módulos, capturas, IA, sectores, metodología, Nosotros, EKAM Academy y cierre.
 - Regla práctica: si una clase aparece solo en `index.html`, su regla va en `home.css`; si la usa alguna otra página o un script, va en `style.css`.
 - Algunas reglas de la portada siguen en `style.css` a propósito: moverlas habría cambiado qué regla gana cuando dos empatan en especificidad.
@@ -209,7 +210,7 @@ Los logos se muestran siempre a color. Deben ser los oficiales de cada empresa (
 
 ### Cambiar el menú o el footer
 
-Aplicar el cambio en las 25 páginas respetando las rutas relativas de cada nivel. En la portada, el enlace "Nosotros" del header apunta a `#empresa` para que funcione el resaltado al hacer scroll; en el resto apunta a `nosotros.html`.
+Aplicar el cambio en las 26 páginas respetando las rutas relativas de cada nivel. En la portada, el enlace "Nosotros" del header apunta a `#empresa` para que funcione el resaltado al hacer scroll; en el resto apunta a `nosotros.html`.
 
 ## 8. Responsive y accesibilidad
 
@@ -230,7 +231,7 @@ Aplicar el cambio en las 25 páginas respetando las rutas relativas de cada nive
 
 ## 10. Publicación
 
-Subir al directorio público: los `.html` (incluido `404.html`), `favicon.ico`, `robots.txt`, `sitemap.xml`, `.htaccess` (solo con el SSL activo) y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/` y `recursos/`.
+Subir al directorio público: los `.html` (incluido `404.html`), `favicon.ico`, `robots.txt`, `sitemap.xml`, `.htaccess` (solo con el SSL activo) y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/`, `clientes/` y `recursos/`.
 
 No subir: `.git/`, `.github/`, `.claude/`, `tools/`, `crm/` ni los `.md`.
 
@@ -241,4 +242,4 @@ GitHub no publica el sitio automáticamente; fusionar en `main` no cambia lo que
 - Añadir el código de Google Analytics 4 o Tag Manager.
 - Activar el asistente con IA cuando exista el servidor n8n (Hostinger): pasar el flujo `crm/n8n/asistente-web.workflow.json` a GPT, copiar su URL en `CHAT_AI_ENDPOINT` y actualizar la política de privacidad.
 - Subir `.htaccess` (HTTPS, `404.html`, compresión y caché) después de activar el SSL en cPanel.
-- Deuda técnica: header y footer duplicados en 26 páginas, y capas de ajuste acumuladas en el CSS.
+- Deuda técnica: header y footer duplicados en 27 páginas, y capas de ajuste acumuladas en el CSS.

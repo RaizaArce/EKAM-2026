@@ -28,6 +28,7 @@ Abrir los `.html` con doble clic también funciona, pero las rutas con carpeta (
 | `sectores.html` | Soluciones por sector |
 | `sectores/<sector>/` | Una página por sector (10): agroindustria, comercio, construcción, educación, grifos, hoteles y restaurantes, industria, salud, servicios, transporte |
 | `nosotros.html` | Historia, misión, visión y servicios de la empresa |
+| `clientes/` | Relación de clientes: logos fijos en una grilla, en orden alfabético |
 | `recursos/` | Guías: cómo elegir un ERP, facturación electrónica en Perú, PLE y libros electrónicos |
 | `privacidad.html` | Política de privacidad |
 
@@ -38,7 +39,7 @@ Todas las páginas están registradas en `sitemap.xml`.
 ```
 EKAM-2026/
 ├── index.html, soluciones.html, sectores.html, nosotros.html, privacidad.html
-├── soluciones/ · sectores/ · recursos/    ← una carpeta con index.html por página
+├── soluciones/ · sectores/ · clientes/ · recursos/    ← una carpeta con index.html por página
 ├── 404.html, favicon.ico
 ├── robots.txt, sitemap.xml
 ├── css/
@@ -91,7 +92,7 @@ El verificador falla si queda más de un número distinto.
 
 ## Publicación
 
-Subir al directorio público del servidor los `.html`, `robots.txt`, `sitemap.xml` y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/` y `recursos/`.
+Subir al directorio público del servidor los `.html`, `robots.txt`, `sitemap.xml` y las carpetas `css/`, `js/`, `assets/`, `soluciones/`, `sectores/`, `clientes/` y `recursos/`.
 
 No subir `.git/`, `.github/`, `tools/` ni los archivos `.md`.
 
