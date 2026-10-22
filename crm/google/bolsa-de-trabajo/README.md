@@ -141,4 +141,4 @@ La administración muestra primero la casilla **Mostrar en la web**, seguida de 
 
 ### Colores del seguimiento
 
-En Registro de postulantes, cambiar Estado colorea automáticamente toda la fila (A:S): Nuevo azul, Revisado amarillo, Contactado verde y Descartado gris. Las reglas nativas de formato condicional evalúan la columna D; no requieren recargar, ejecutar scripts ni enviar correos. Para preparar una instalación existente, guardar Registro.gs actualizado y ejecutar organizarPostulantes() una vez. Los estados y observaciones se conservan.
+En Registro de postulantes, cambiar Estado colorea automáticamente toda la fila (A:S): Nuevo azul, Revisado amarillo, Contactado verde y Descartado rojo suave. Las reglas nativas de formato condicional evalúan la columna D; no requieren recargar, ejecutar scripts ni enviar correos. Para preparar una instalación existente, guardar Registro.gs actualizado y ejecutar organizarPostulantes() una vez. Los estados y observaciones se conservan.

@@ -29,7 +29,7 @@ function organizarPostulantes() {
     registro.getRange(1, 16).setNote('Notas internas del proceso. Se conservan al actualizar la lista.');
     const rangoEstado = registro.getRange(2, 4, alto - 1, 1);
     rangoEstado.setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(REGISTRO_ESTADOS, true).setAllowInvalid(false).build());
-    const colores = ['#e8f0fe', '#fff3cd', '#e6f4ea', '#eeeeee'];
+    const colores = ['#e8f0fe', '#fff3cd', '#e6f4ea', '#fce8e6'];
     registro.setConditionalFormatRules(REGISTRO_ESTADOS.map(function (estado, i) {
       return SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied('=$D2="' + estado + '"').setBackground(colores[i]).setRanges([registro.getRange(2, 1, alto - 1, REGISTRO_COLUMNAS.length)]).build();
     }));
