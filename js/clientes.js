@@ -12,8 +12,30 @@
     if (!grid || !lema || !filters.length) return;
 
     const cards = grid.querySelectorAll('.client-card');
-    const lemaTodos = lema.textContent;
+    const strip = filters[0].closest('ul');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Contadores calculados desde la grilla, para que no se desfasen al agregar clientes
+    filters.forEach(function (f) {
+        const count = f.dataset.sector === 'todos' ? cards.length : grid.querySelectorAll('[data-sector="' + f.dataset.sector + '"]').length;
+        const b = f.querySelector('b');
+        if (b) b.textContent = count;
+    });
+    const lemaTodos = lema.textContent.replace(/^\d+/, cards.length);
+    lema.textContent = lemaTodos;
+
+    // Tarjeta que invita a sumarse cuando un sector deja la última fila incompleta
+    const invite = document.createElement('li');
+    invite.className = 'client-card client-card--invite';
+    invite.innerHTML = '<p>¿Tu empresa es de este rubro?<br><a href="../index.html#contacto">Sé la próxima</a></p>';
+
+    function centerTab(button) {
+        if (strip.scrollWidth <= strip.clientWidth) return;
+        strip.scrollTo({
+            left: button.offsetLeft - (strip.clientWidth - button.offsetWidth) / 2,
+            behavior: reduceMotion.matches ? 'auto' : 'smooth'
+        });
+    }
 
     function select(sector, updateUrl) {
         let button = Array.prototype.find.call(filters, function (f) { return f.dataset.sector === sector; });
@@ -27,9 +49,11 @@
         });
 
         let order = 0;
+        let shown = 0;
         cards.forEach(function (card) {
             const visible = sector === 'todos' || card.dataset.sector === sector;
             card.hidden = !visible;
+            if (visible) shown += 1;
             card.classList.remove('client-card--enter');
             if (visible && !reduceMotion.matches) {
                 card.style.setProperty('--enter-delay', Math.min(order, 12) * 28 + 'ms');
@@ -37,6 +61,12 @@
             }
         });
         grid.classList.toggle('clients-grid--all', sector === 'todos');
+
+        if (sector !== 'todos' && shown % 4 !== 0) {
+            grid.appendChild(invite);
+        } else if (invite.parentNode) {
+            invite.remove();
+        }
 
         if (!reduceMotion.matches) {
             void grid.offsetWidth;
@@ -55,6 +85,8 @@
             lema.appendChild(link);
         }
 
+        centerTab(button);
+
         if (updateUrl) {
             history.replaceState(null, '', sector === 'todos' ? location.pathname : '#' + sector);
         }
@@ -63,10 +95,20 @@
     filters.forEach(function (button) {
         button.addEventListener('click', function () {
             select(button.dataset.sector, true);
-            if (window.innerWidth <= 900) {
-                button.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion.matches ? 'auto' : 'smooth' });
-            }
         });
+    });
+
+    // En pantallas táctiles la tarjeta gira con un toque
+    grid.addEventListener('click', function (e) {
+        if (window.matchMedia('(hover: hover)').matches) return;
+        const card = e.target.closest('.client-card:not(.client-card--invite)');
+        if (!card) return;
+        cards.forEach(function (c) { if (c !== card) c.classList.remove('is-flipped'); });
+        card.classList.toggle('is-flipped');
+    });
+
+    window.addEventListener('hashchange', function () {
+        select(location.hash.slice(1), false);
     });
 
     if (location.hash) {
