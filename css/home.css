@@ -245,6 +245,11 @@
     animation-direction: reverse;
 }
 
+/* Carrusel corto de la portada (7 clientes destacados): misma velocidad aparente que los de 17 logos */
+.clients-carousel--featured {
+    --carousel-duration: 38s;
+}
+
 .clients-carousel__viewport {
     overflow: hidden;
     mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
@@ -1761,6 +1766,29 @@
 
 .about__clients {
     margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+}
+
+.about__clients-more {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.about__clients-more a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.4rem;
+    border: 1px solid rgba(125, 204, 255, 0.45);
+    border-radius: 999px;
+    color: #fff;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.about__clients-more a:hover {
+    border-color: #7dccff;
+    background: rgba(125, 204, 255, 0.12);
 }
 
 /* Problemas + cierre en una sola seccion oscura */
