@@ -36,6 +36,9 @@ ErrorDocument 404 /404.html
     RewriteRule ^soluciones\.html$ /soluciones/activos-fijos/? [L,R=301]
     RewriteCond %{QUERY_STRING} (^|&)solucion=navamovil(&|$)
     RewriteRule ^soluciones\.html$ /soluciones/navamovil/? [L,R=301]
+
+    # URLs antiguas con .html -> URL limpia (las páginas viven en carpeta/index.html).
+    RewriteRule ^(soluciones|nosotros|sectores|privacidad)\.html$ /$1/ [L,R=301]
 </IfModule>
 
 # Documentos internos que no deben quedar públicos si se suben por error.
