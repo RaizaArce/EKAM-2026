@@ -16,7 +16,7 @@ import sys
 from urllib.parse import unquote
 
 DOMINIO = 'https://www.ekamperu.com/'
-EXCLUIR = {'.git', '.github', '.claude', 'tmp', 'tools', 'crm', 'node_modules'}
+EXCLUIR = {'.git', '.github', '.claude', 'tmp', 'tools', 'crm', 'node_modules', 'brag-output'}
 EXTERNO = re.compile(r'^(https?:|mailto:|tel:|data:|javascript:|//)')
 
 
