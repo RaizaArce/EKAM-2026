@@ -2,7 +2,7 @@
 
 La página `bolsa-de-trabajo/` no tiene backend propio: las convocatorias y las postulaciones pasan por un script de Google Apps Script (`Code.gs`) que usa una hoja de cálculo, dos carpetas de Drive y un formulario de Google. No está conectado al CRM.
 
-La instalación definitiva pertenece a **bolsadetrabajoekam@gmail.com**. Desde el 22/10/2026 la web local y la web pública utilizan el servicio de esta cuenta. La instalación anterior se conserva como respaldo; sus postulaciones y CV no se trasladaron.
+La instalación definitiva pertenece a **bolsadetrabajo@ekamperu.com**. El 22/10/2026 se transfirieron a esta cuenta la carpeta, las hojas, el formulario, los CV y los afiches conservando sus enlaces. El servicio público se ejecuta con la cuenta corporativa y los avisos llegan a su Webmail. El activador y la implementación de la cuenta Gmail anterior quedaron retirados; ya no tiene acceso a los elementos migrados.
 
 Acceso del ingeniero: [Inicio del registro](https://docs.google.com/spreadsheets/d/1l_onI8hnZFFd9kbstj68N3zJgY3pDUz7njwWsfBDyLk/edit#gid=802496405). Desde allí puede publicar o cerrar ofertas, revisar postulantes y editar las preguntas de la web.
 
@@ -142,3 +142,11 @@ La administración muestra primero la casilla **Mostrar en la web**, seguida de 
 ### Colores del seguimiento
 
 En Registro de postulantes, cambiar Estado colorea automáticamente toda la fila (A:S): Nuevo azul, Revisado amarillo, Contactado verde y Descartado rojo suave. Las reglas nativas de formato condicional evalúan la columna D; no requieren recargar, ejecutar scripts ni enviar correos. Para preparar una instalación existente, guardar Registro.gs actualizado y ejecutar organizarPostulantes() una vez. Los estados y observaciones se conservan.
+
+## Migración corporativa verificada (22/10/2026)
+
+- Propiedad y acceso exclusivo corporativo comprobados; se mantuvieron dos postulantes y sus estados, dos CV y dos ofertas originales.
+- Pruebas reales: postulación pública, registro, CV privado, correo recibido en Webmail, publicación y cierre mediante selector, edición de ayuda de una pregunta.
+- Publicación en cPanel limitada a `js/bolsa.js` y `bolsa-de-trabajo/index.html`; ambos coinciden por SHA-256 con los archivos locales.
+- Las respuestas internas de las dos pruebas de publicación/cierre permanecen en Google Forms como historial; la oferta sintética se retiró de Ofertas y sus archivos/correo fueron enviados a papelera.
+- `MigracionCorporativa.gs` es mantenimiento puntual, no forma parte de la web pública. No repetir la limpieza sin revisar sus identificadores.

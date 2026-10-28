@@ -101,7 +101,7 @@ EKAM-2026/
 └── .github/workflows/         ← verificación automática en pull requests
 ```
 
-No hay plantillas: el header y el footer están copiados en cada página. Un cambio en el menú o en el pie debe aplicarse en las 25.
+No hay plantillas: el header y el footer están copiados en cada página. Un cambio en el menú o en el pie debe aplicarse en las 28.
 
 ## 5. Sistema de diseño
 
@@ -130,7 +130,7 @@ Definido como variables en `:root`, al inicio de `css/style.css`. Usar siempre l
 
 ### Organización del CSS
 
-- `style.css` lo cargan las 27 páginas: variables, base, header, footer, botones, formulario, asistente y componentes de las páginas internas.
+- `style.css` lo cargan las 28 páginas: variables, base, header, footer, botones, formulario, asistente y componentes de las páginas internas.
 - `home.css` solo lo carga `index.html`, después de `style.css`: hero, módulos, capturas, IA, sectores, metodología, Nosotros, EKAM Academy y cierre.
 - Regla práctica: si una clase aparece solo en `index.html`, su regla va en `home.css`; si la usa alguna otra página o un script, va en `style.css`.
 - Algunas reglas de la portada siguen en `style.css` a propósito: moverlas habría cambiado qué regla gana cuando dos empatan en especificidad.
@@ -249,12 +249,14 @@ GitHub no publica el sitio automáticamente; fusionar en `main` no cambia lo que
 
 - Añadir el código de Google Analytics 4 o Tag Manager.
 - Activar el asistente con IA cuando exista el servidor n8n (Hostinger): pasar el flujo `crm/n8n/asistente-web.workflow.json` a GPT, copiar su URL en `CHAT_AI_ENDPOINT` y actualizar la política de privacidad.
-- Subir `.htaccess` (HTTPS, `404.html`, compresión y caché) después de activar el SSL en cPanel.
-- Cuenta definitiva de la bolsa configurada el 22/10/2026: `bolsadetrabajoekam@gmail.com`. Se migraron la oferta vigente y las preguntas; registro y CV anteriores permanecen en la cuenta de pruebas. La conexión local y pública está actualizada. Publicado en cPanel el 22/10/2026: 112 archivos verificados, envío real de prueba correcto y datos ficticios retirados. Accesos en la guía `crm/google/bolsa-de-trabajo/README.md`.
+- Bolsa de trabajo: desde el 22/10/2026 funciona con la cuenta `bolsadetrabajo@ekamperu.com` y está publicada en cPanel. Accesos y operación en `crm/google/bolsa-de-trabajo/README.md`.
+- Archivar la implementación de pruebas de la bolsa que quedó en la cuenta personal de la practicante (sigue respondiendo, aunque la web ya no la usa).
 - Borrar cada mes las postulaciones con más de 12 meses desde su envío y sus CV (plazo de la política de privacidad). El borrado es manual: asignar un responsable y seguir `crm/google/bolsa-de-trabajo/README.md`.
-- Deuda técnica: header y footer duplicados en 27 páginas, y capas de ajuste acumuladas en el CSS.
+- Deuda técnica: header y footer duplicados en 28 páginas, y capas de ajuste acumuladas en el CSS.
 
 
 ### Administración del formulario de postulación
 
 El archivo de Google Sheets incluye **Formulario web**, accesible desde Inicio. Permite cambiar etiquetas, ayuda, áreas y niveles, mostrar u ocultar campos no esenciales, y añadir hasta 20 preguntas mediante filas preparadas. La web consulta la configuración cada 30 segundos y conserva formularios en curso. Las respuestas adicionales se guardan al final de Postulantes y aparecen en el registro y el correo; las columnas y los datos anteriores se conservan. Instrucciones en `crm/google/bolsa-de-trabajo/README.md`.
+
+- Migración corporativa completada el 22/10/2026: propiedad de Drive, formulario, hoja, CV y afiches transferida; servicio público y activador ejecutados por la cuenta corporativa. Avisos recibidos en Webmail. La implementación y el activador anteriores fueron retirados. Pruebas reales de postulación y publicación/cierre correctas.

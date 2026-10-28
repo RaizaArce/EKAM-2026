@@ -15,3 +15,12 @@ tmp/
 *.md
 !README.md
 !WEB-DOCUMENTACION.md
+
+# Videos generados por /brag
+brag-output/
+
+# Cache de Python de tools/
+__pycache__/
+
+# Mantenimiento puntual de la bolsa con IDs de Drive: no va al repositorio publico
+crm/google/bolsa-de-trabajo/MigracionCorporativa.gs

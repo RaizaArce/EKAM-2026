@@ -8,7 +8,7 @@
 (function () {
     'use strict';
 
-    const BOLSA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwSMLjRdi_OtF2bWAtfZFex3Gnjlg-vEvYb3abGj-BLr81ozJeNE9jzxuZNH1SzDKfE/exec';
+    const BOLSA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyFfriJeap0-3Et4NnyGpU5wEE3YYkgderiU4QZ6zmgrMrfXJL88ofd6VeGu31z1ZHP/exec';
     const MAX_CV = 5 * 1024 * 1024;
     const REFRESH_MS = 30000;
 

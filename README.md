@@ -110,9 +110,8 @@ Para la bolsa, seguir la instalación y la guía del ingeniero en [crm/google/bo
 - [ ] Validar con EKAM Perú las cifras de la portada (años de experiencia, empresas implementadas)
 - [ ] Validar los textos de `nosotros.html`
 - [ ] Añadir el código de Google Analytics 4 o Tag Manager (los eventos ya se envían)
-- [ ] Definir si el formulario guardará las solicitudes (`LEAD_ENDPOINT`)
 - [ ] Añadir el equipo a la página Nosotros
-- [ ] Pasar la bolsa de trabajo a la cuenta de Google de EKAM y al correo de la empresa
+- [ ] Borrar cada mes las postulaciones de la bolsa con más de 12 meses (ver `crm/google/bolsa-de-trabajo/README.md`)
 
 ## Licencia
 
